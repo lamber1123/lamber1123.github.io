@@ -15,15 +15,18 @@
 <meta property="og:site_name" content="Lamber&#39;s Blog">
 <meta property="og:description" content="HTML CSSCSS (Cascading Style Sheets) 用于渲染HTML元素标签的样式。   1. 如何使用CSSCSS 是在 HTML 4 开始使用的,目的是为更好的渲染HTML元素。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2021/12/31/hSrgAXakLP7ItRd.png">
+<meta property="og:image" content="https://s2.loli.net/2021/12/31/UTdIzDeQf71gHoP.png">
 <meta property="article:published_time" content="2021-12-30T15:22:12.000Z">
-<meta property="article:modified_time" content="2021-12-30T16:22:52.309Z">
+<meta property="article:modified_time" content="2021-12-31T03:05:18.222Z">
 <meta property="article:author" content="Lamber">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2021/12/31/hSrgAXakLP7ItRd.png">
   
     <link rel="alternative" href="/atom.xml" title="Lamber&#39;s Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/img/favicon.ico">
   
   <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
   <style type="text/css">
@@ -295,7 +298,7 @@
 <h3 id="4-HTML-列表标签"><a href="#4-HTML-列表标签" class="headerlink" title="4. HTML 列表标签"></a>4. HTML 列表标签</h3><p>&lt;ol&gt;    定义有序列表<br>&lt;ul&gt;    定义无序列表<br>&lt;li&gt;    定义列表项<br>&lt;dl&gt;    定义列表<br>&lt;dt&gt;    自定义列表项目<br>&lt;dd&gt;    定义自定列表项的描述</p>
 <br/>
 
-<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><p>HTML 可以通过 &lt;div&gt; 和 &lt;span&gt;将元素组合起来。</p>
+<h2 id="HTML-区块"><a href="#HTML-区块" class="headerlink" title="HTML 区块"></a>HTML 区块</h2><p>HTML 可以通过 &lt;div&gt; 和 &lt;span&gt;将元素组合起来。</p>
 <br/>
 
 <h3 id="1-HTML-区块元素"><a href="#1-HTML-区块元素" class="headerlink" title="1. HTML 区块元素"></a>1. HTML 区块元素</h3><p>大多数 HTML 元素被定义为块级元素或内联元素。<br>块级元素在浏览器显示时，通常会以新行来开始（和结束）。<br>实例: &lt;h1&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;table&gt;</p>
@@ -312,9 +315,41 @@
 <h3 id="4-HTML-lt-span-gt-元素"><a href="#4-HTML-lt-span-gt-元素" class="headerlink" title="4. HTML &lt;span&gt; 元素"></a>4. HTML &lt;span&gt; 元素</h3><p>HTML &lt;span&gt; 元素是内联元素，可用作文本的容器。<br>&lt;span&gt; 元素也没有特定的含义。<br>当与 CSS 一同使用时，&lt;span&gt; 元素可用于为部分文本设置样式属性。</p>
 <br/>
 
+<h2 id="HTML-布局"><a href="#HTML-布局" class="headerlink" title="HTML 布局"></a>HTML 布局</h2><p>网页布局对改善网站的外观非常重要，要慎重设计您的网页布局。</p>
+<br/>
 
+<h3 id="1-网站布局"><a href="#1-网站布局" class="headerlink" title="1. 网站布局"></a>1. 网站布局</h3><p>大多数网站会把内容安排到多个列中（就像杂志或报纸那样）。<br>大多数网站可以使用 &lt;div&gt; 或者 &lt;table&gt; 元素来创建多列。CSS 用于对元素进行定位，或者为页面创建背景以及色彩丰富的外观。<br>注意，虽然我们可以使用HTML的table标签来设计出漂亮的布局，但是table标签是不建议作为布局工具使用的，表格不是布局工具。</p>
+<br/>
 
+<h3 id="2-使用-lt-div-gt-元素"><a href="#2-使用-lt-div-gt-元素" class="headerlink" title="2. 使用&lt;div&gt; 元素"></a>2. 使用&lt;div&gt; 元素</h3><p>div 元素是用于分组 HTML 元素的块级元素。</p>
+<p>下面的例子使用五个 div 元素来创建多列布局：</p>
+<blockquote>
+<p>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;meta charset=”utf-8”&gt;<br>&lt;title&gt;Lamber的博客(lamber1123.github.io)&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br><br/><br>&lt;div id=”container” style=”width:500px”&gt;<br><br/><br>&lt;div id=”header” style=”background-color:#FFA500;”&gt;<br>&lt;h1 style=”margin-bottom:0;”&gt;主要的网页标题&lt;/h1&gt;&lt;/div&gt;<br><br/><br>&lt;div id=”menu” style=”background-color:#FFD700;height:200px;width:100px;float:left;”&gt;<br>&lt;b&gt;菜单&lt;/b&gt;&lt;br&gt;<br>HTML&lt;br&gt;<br>CSS&lt;br&gt;<br>JavaScript&lt;/div&gt;<br><br/><br>&lt;div id=”content” style=”background-color:#EEEEEE;height:200px;width:400px;float:left;”&gt;<br>内容在这里&lt;/div&gt;<br><br/><br>&lt;div id=”footer” style=”background-color:#FFA500;clear:both;text-align:center;”&gt;<br>版权 Lamber&lt;/div&gt;<br><br/><br>&lt;/div&gt;<br><br/><br>&lt;/body&gt;<br>&lt;/html&gt;</p>
+</blockquote>
+<p>效果图如下：</p>
+<p><img src="https://s2.loli.net/2021/12/31/hSrgAXakLP7ItRd.png" alt="div布局效果图"></p>
+<br/>
 
+<h3 id="3-使用-lt-table-gt-元素"><a href="#3-使用-lt-table-gt-元素" class="headerlink" title="3. 使用&lt;table&gt; 元素"></a>3. 使用&lt;table&gt; 元素</h3><p>使用 HTML &lt;table&gt; 标签是创建布局的一种简单的方式。<br>大多数站点可以使用 &lt;div&gt; 或者 &lt;table&gt; 元素来创建多列。CSS 用于对元素进行定位，或者为页面创建背景以及色彩丰富的外观。</p>
+<blockquote>
+<p>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;meta charset=”utf-8”&gt;<br>&lt;title&gt;Lamber的博客(lamber1123.github.io)&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br><br/><br>&lt;table width=”500” border=”0”&gt;<br>&lt;tr&gt;<br>&lt;td colspan=”2” style=”background-color:#81c7db;”&gt;<br>&lt;h1&gt;主要的网页标题&lt;/h1&gt;<br>&lt;/td&gt;<br>&lt;/tr&gt;<br><br/><br>&lt;tr&gt;<br>&lt;td style=”background-color:#00cdff;width:100px;”&gt;<br>&lt;b&gt;菜单&lt;/b&gt;&lt;br&gt;<br>HTML&lt;br&gt;<br>CSS&lt;br&gt;<br>JavaScript<br>&lt;/td&gt;<br>&lt;td style=”background-color:#eeeeee;height:200px;width:400px;”&gt;<br>内容在这里&lt;/td&gt;<br>&lt;/tr&gt;<br><br/><br>&lt;tr&gt;<br>&lt;td colspan=”2” style=”background-color:#81c7db;text-align:center;”&gt;<br>版权 Lamber&lt;/td&gt;<br>&lt;/tr&gt;<br>&lt;/table&gt;<br><br/><br>&lt;/body&gt;<br>&lt;/html&gt;</p>
+</blockquote>
+<p>效果图如下：</p>
+<p><img src="https://s2.loli.net/2021/12/31/UTdIzDeQf71gHoP.png" alt="table布局效果图"></p>
+<br/>
+
+<h3 id="4-更好的布局选择"><a href="#4-更好的布局选择" class="headerlink" title="4. 更好的布局选择"></a>4. 更好的布局选择</h3><p>使用 CSS 最大的好处是，如果把 CSS 代码存放到外部样式表中，那么站点会更易于维护。通过编辑单一的文件，就可以改变所有页面的布局。</p>
+<p>由于创建高级的布局非常耗时，使用模板是一个快速的选项。通过搜索引擎可以找到很多免费的网站模板。</p>
+<br/>
+
+<h2 id="HTML-表单"><a href="#HTML-表单" class="headerlink" title="HTML 表单"></a>HTML 表单</h2><p>HTML 表单用于收集不同类型的用户输入。</p>
+<blockquote>
+<p>&lt;form action=””&gt;<br>Username: &lt;input type=”text” name=”user”&gt;&lt;br&gt;<br>Password: &lt;input type=”password” name=”password”&gt;<br>&lt;/form&gt;</p>
+</blockquote>
+<p>效果如下，其中密码会隐藏成黑圆点。</p>
+<br/>
+
+<h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3>
       
 
       
@@ -412,6 +447,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2021/12/31/%E7%BB%99hexo%E6%B7%BB%E5%8A%A0%E7%BD%91%E9%A1%B5%E5%9B%BE%E6%A0%87/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          给hexo添加网页图标
+        
+      </div>
+    </a>
+  
   
     <a href="/2021/12/30/HTML%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">HTML笔记（一）</div>
@@ -441,7 +485,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-CSS"><span class="toc-number">1.</span> <span class="toc-text">HTML CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CSS"><span class="toc-number">1.1.</span> <span class="toc-text">1. 如何使用CSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2. 内联样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%86%85%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">3. 内部样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%A4%96%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">1.4.</span> <span class="toc-text">4. 外部样式表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E5%9B%BE%E5%83%8F"><span class="toc-number">2.</span> <span class="toc-text">HTML 图像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E5%9B%BE%E5%83%8F-%E5%9B%BE%E5%83%8F%E6%A0%87%E7%AD%BE-lt-img-gt-%E5%92%8C%E6%BA%90%E5%B1%9E%E6%80%A7Src"><span class="toc-number">2.1.</span> <span class="toc-text">1. HTML 图像-图像标签&lt;img&gt;和源属性Src</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E5%9B%BE%E5%83%8F-Alt%E5%B1%9E%E6%80%A7"><span class="toc-number">2.2.</span> <span class="toc-text">2. HTML 图像-Alt属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-%E5%9B%BE%E5%83%8F-%E9%AB%98%E5%BA%A6%E4%B8%8E%E5%AE%BD%E5%BA%A6"><span class="toc-number">2.3.</span> <span class="toc-text">3. HTML 图像-高度与宽度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E8%A1%A8%E6%A0%BC"><span class="toc-number">3.</span> <span class="toc-text">HTML 表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E8%A1%A8%E6%A0%BC%E5%92%8C%E8%BE%B9%E6%A1%86%E5%B1%9E%E6%80%A7"><span class="toc-number">3.1.</span> <span class="toc-text">1. HTML 表格和边框属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E8%A1%A8%E6%A0%BC%E8%A1%A8%E5%A4%B4"><span class="toc-number">3.2.</span> <span class="toc-text">2. HTML 表格表头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE"><span class="toc-number">3.3.</span> <span class="toc-text">3. HTML 表格标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E5%88%97%E8%A1%A8"><span class="toc-number">4.</span> <span class="toc-text">HTML 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E6%97%A0%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">4.1.</span> <span class="toc-text">1. HTML 无序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">4.2.</span> <span class="toc-text">2. HTML 有序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%97%E8%A1%A8"><span class="toc-number">4.3.</span> <span class="toc-text">3. HTML 自定义列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-HTML-%E5%88%97%E8%A1%A8%E6%A0%87%E7%AD%BE"><span class="toc-number">4.4.</span> <span class="toc-text">4. HTML 列表标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97"><span class="toc-number">5.</span> <span class="toc-text">区块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E5%8C%BA%E5%9D%97%E5%85%83%E7%B4%A0"><span class="toc-number">5.1.</span> <span class="toc-text">1. HTML 区块元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E5%86%85%E8%81%94%E5%85%83%E7%B4%A0"><span class="toc-number">5.2.</span> <span class="toc-text">2. HTML 内联元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-lt-div-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">5.3.</span> <span class="toc-text">3. HTML &lt;div&gt; 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-HTML-lt-span-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">5.4.</span> <span class="toc-text">4. HTML &lt;span&gt; 元素</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-CSS"><span class="toc-number">1.</span> <span class="toc-text">HTML CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8CSS"><span class="toc-number">1.1.</span> <span class="toc-text">1. 如何使用CSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2. 内联样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%86%85%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">3. 内部样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%A4%96%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">1.4.</span> <span class="toc-text">4. 外部样式表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E5%9B%BE%E5%83%8F"><span class="toc-number">2.</span> <span class="toc-text">HTML 图像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E5%9B%BE%E5%83%8F-%E5%9B%BE%E5%83%8F%E6%A0%87%E7%AD%BE-lt-img-gt-%E5%92%8C%E6%BA%90%E5%B1%9E%E6%80%A7Src"><span class="toc-number">2.1.</span> <span class="toc-text">1. HTML 图像-图像标签&lt;img&gt;和源属性Src</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E5%9B%BE%E5%83%8F-Alt%E5%B1%9E%E6%80%A7"><span class="toc-number">2.2.</span> <span class="toc-text">2. HTML 图像-Alt属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-%E5%9B%BE%E5%83%8F-%E9%AB%98%E5%BA%A6%E4%B8%8E%E5%AE%BD%E5%BA%A6"><span class="toc-number">2.3.</span> <span class="toc-text">3. HTML 图像-高度与宽度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E8%A1%A8%E6%A0%BC"><span class="toc-number">3.</span> <span class="toc-text">HTML 表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E8%A1%A8%E6%A0%BC%E5%92%8C%E8%BE%B9%E6%A1%86%E5%B1%9E%E6%80%A7"><span class="toc-number">3.1.</span> <span class="toc-text">1. HTML 表格和边框属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E8%A1%A8%E6%A0%BC%E8%A1%A8%E5%A4%B4"><span class="toc-number">3.2.</span> <span class="toc-text">2. HTML 表格表头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE"><span class="toc-number">3.3.</span> <span class="toc-text">3. HTML 表格标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E5%88%97%E8%A1%A8"><span class="toc-number">4.</span> <span class="toc-text">HTML 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E6%97%A0%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">4.1.</span> <span class="toc-text">1. HTML 无序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">4.2.</span> <span class="toc-text">2. HTML 有序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%97%E8%A1%A8"><span class="toc-number">4.3.</span> <span class="toc-text">3. HTML 自定义列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-HTML-%E5%88%97%E8%A1%A8%E6%A0%87%E7%AD%BE"><span class="toc-number">4.4.</span> <span class="toc-text">4. HTML 列表标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E5%8C%BA%E5%9D%97"><span class="toc-number">5.</span> <span class="toc-text">HTML 区块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HTML-%E5%8C%BA%E5%9D%97%E5%85%83%E7%B4%A0"><span class="toc-number">5.1.</span> <span class="toc-text">1. HTML 区块元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HTML-%E5%86%85%E8%81%94%E5%85%83%E7%B4%A0"><span class="toc-number">5.2.</span> <span class="toc-text">2. HTML 内联元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HTML-lt-div-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">5.3.</span> <span class="toc-text">3. HTML &lt;div&gt; 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-HTML-lt-span-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">5.4.</span> <span class="toc-text">4. HTML &lt;span&gt; 元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E5%B8%83%E5%B1%80"><span class="toc-number">6.</span> <span class="toc-text">HTML 布局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BD%91%E7%AB%99%E5%B8%83%E5%B1%80"><span class="toc-number">6.1.</span> <span class="toc-text">1. 网站布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-lt-div-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">6.2.</span> <span class="toc-text">2. 使用&lt;div&gt; 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8-lt-table-gt-%E5%85%83%E7%B4%A0"><span class="toc-number">6.3.</span> <span class="toc-text">3. 使用&lt;table&gt; 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%B8%83%E5%B1%80%E9%80%89%E6%8B%A9"><span class="toc-number">6.4.</span> <span class="toc-text">4. 更好的布局选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-%E8%A1%A8%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">HTML 表单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1"><span class="toc-number">7.1.</span> <span class="toc-text">1.</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
