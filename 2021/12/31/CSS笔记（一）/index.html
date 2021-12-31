@@ -8,16 +8,19 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>CSS笔记（一） | Lamber&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CSS简介 CSS 语法 CSS Id 和 Class 选择器 CSS 创建 CSS Backgrounds(背景) CSS Text(文本) CSS Fonts(字体) CSS 链接(link) CSS 列表 CSS Table(表格)    CSS 简介在学习 CSS 之前，你需要对 HTML &#x2F; XHTML 的知识有基本的了解。   1. 什么是 CSS ? CSS 指层叠样式表 (Cas">
+  <meta name="description" content="CSS简介 CSS 语法 CSS Id 和 Class 选择器 CSS 创建 CSS Backgrounds(背景) CSS Text(文本) CSS Fonts(字体) CSS 链接(link)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSS笔记（一）">
 <meta property="og:url" content="http://example.com/2021/12/31/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Lamber&#39;s Blog">
-<meta property="og:description" content="CSS简介 CSS 语法 CSS Id 和 Class 选择器 CSS 创建 CSS Backgrounds(背景) CSS Text(文本) CSS Fonts(字体) CSS 链接(link) CSS 列表 CSS Table(表格)    CSS 简介在学习 CSS 之前，你需要对 HTML &#x2F; XHTML 的知识有基本的了解。   1. 什么是 CSS ? CSS 指层叠样式表 (Cas">
+<meta property="og:description" content="CSS简介 CSS 语法 CSS Id 和 Class 选择器 CSS 创建 CSS Backgrounds(背景) CSS Text(文本) CSS Fonts(字体) CSS 链接(link)">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.w3school.com.cn/i/css/selector.gif">
+<meta property="og:image" content="https://s2.loli.net/2021/12/31/QFNj8UbmCuVxLHA.png">
+<meta property="og:image" content="https://s2.loli.net/2021/12/31/R6aDqSFCKn3MBIt.png">
+<meta property="og:image" content="https://www.runoob.com/images/serif.gif">
 <meta property="article:published_time" content="2021-12-31T14:11:03.000Z">
-<meta property="article:modified_time" content="2021-12-31T15:24:06.058Z">
+<meta property="article:modified_time" content="2021-12-31T16:10:21.955Z">
 <meta property="article:author" content="Lamber">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.w3school.com.cn/i/css/selector.gif">
@@ -189,9 +192,8 @@
 <li>CSS Text(文本)</li>
 <li>CSS Fonts(字体)</li>
 <li>CSS 链接(link)</li>
-<li>CSS 列表</li>
-<li>CSS Table(表格)</li>
 </ul>
+<span id="more"></span>
 <br/>
 
 <h2 id="CSS-简介"><a href="#CSS-简介" class="headerlink" title="CSS 简介"></a>CSS 简介</h2><p>在学习 CSS 之前，你需要对 HTML / XHTML 的知识有基本的了解。</p>
@@ -403,6 +405,225 @@
 <blockquote>
 <p>body {color:red;}<br>h1 {color:#00ff00;}<br>h2 {color:rgb(255,0,0);}</p>
 </blockquote>
+<br/>
+
+<h3 id="2-文本的对齐方式"><a href="#2-文本的对齐方式" class="headerlink" title="2. 文本的对齐方式"></a>2. 文本的对齐方式</h3><p>文本排列属性是用来设置文本的水平对齐方式。<br>文本可居中或对齐到左或右,两端对齐.<br>当text-align设置为”justify”，每一行被展开为宽度相等，左，右外边距是对齐（如杂志和报纸）。</p>
+<blockquote>
+<p>h1 {text-align:center;}<br>p.date {text-align:right;}<br>p.main {text-align:justify;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-文本修饰"><a href="#3-文本修饰" class="headerlink" title="3. 文本修饰"></a>3. 文本修饰</h3><p>text-decoration 属性用来设置或删除文本的装饰。<br>从设计的角度看 text-decoration属性主要是用来删除链接的下划线：</p>
+<blockquote>
+<p>a {text-decoration:none;}</p>
+</blockquote>
+<p>也可以为非链接文本加划线:</p>
+<blockquote>
+<p>h1 {text-decoration:overline;}<br>h2 {text-decoration:line-through;}<br>h3 {text-decoration:underline;}</p>
+</blockquote>
+<p>浏览器显示效果如下:</p>
+<p><img src="https://s2.loli.net/2021/12/31/QFNj8UbmCuVxLHA.png" alt="文本修饰效果图"></p>
+<br/>
+
+<h3 id="4-文本转换"><a href="#4-文本转换" class="headerlink" title="4. 文本转换"></a>4. 文本转换</h3><p>文本转换属性是用来指定在一个文本中的大写和小写字母。<br>可用于所有字句变成大写或小写字母，或每个单词的首字母大写。</p>
+<blockquote>
+<p>p.uppercase {text-transform:uppercase;}<br>p.lowercase {text-transform:lowercase;}<br>p.capitalize {text-transform:capitalize;}</p>
+</blockquote>
+<p>浏览器显示效果如下:</p>
+<p><img src="https://s2.loli.net/2021/12/31/R6aDqSFCKn3MBIt.png" alt="文本转换效果图"></p>
+<br/>
+
+<h3 id="5-文本缩进"><a href="#5-文本缩进" class="headerlink" title="5. 文本缩进"></a>5. 文本缩进</h3><p>文本缩进属性是用来指定文本的第一行的缩进。</p>
+<blockquote>
+<p>p {text-indent:50px;}</p>
+</blockquote>
+<br/>
+
+<h3 id="6-所有文本属性"><a href="#6-所有文本属性" class="headerlink" title="6. 所有文本属性"></a>6. 所有文本属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>color</td>
+<td>设置文本颜色</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>设置文本方向</td>
+</tr>
+<tr>
+<td>letter-spacing</td>
+<td>设置字符间距</td>
+</tr>
+<tr>
+<td>line-height</td>
+<td>设置行高</td>
+</tr>
+<tr>
+<td>text-align</td>
+<td>对齐元素中的文本</td>
+</tr>
+<tr>
+<td>text-decoration</td>
+<td>向文本添加修饰</td>
+</tr>
+<tr>
+<td>text-indent</td>
+<td>缩进元素中文本的首行</td>
+</tr>
+<tr>
+<td>text-shadow</td>
+<td>设置文本阴影</td>
+</tr>
+<tr>
+<td>text-transform</td>
+<td>控制元素中的字母</td>
+</tr>
+<tr>
+<td>unicode-bidi</td>
+<td>设置或返回文本是否被重写</td>
+</tr>
+<tr>
+<td>vertical-align</td>
+<td>设置元素的垂直对齐</td>
+</tr>
+<tr>
+<td>white-space</td>
+<td>设置元素中空白的处理方式</td>
+</tr>
+<tr>
+<td>word-spacing</td>
+<td>设置字间距</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-Fonts-字体"><a href="#CSS-Fonts-字体" class="headerlink" title="CSS Fonts(字体)"></a>CSS Fonts(字体)</h2><p>CSS字体属性定义字体，加粗，大小，文字样式。<br>在计算机屏幕上，sans-serif字体被认为是比serif字体容易阅读。</p>
+<p><img src="https://www.runoob.com/images/serif.gif" alt="CSS字体效果图"></p>
+<br/>
+
+<h3 id="1-CSS字型"><a href="#1-CSS字型" class="headerlink" title="1. CSS字型"></a>1. CSS字型</h3><p>font-family 规定元素的字体系列。<br>font-family 可以把多个字体名称作为一个“回退”系统来保存。如果浏览器不支持第一个字体，则会尝试下一个。也就是说，font-family 属性的值是用于某个元素的字体族名称或/及类族名称的一个优先表。浏览器会使用它可识别的第一个值。<br>使用逗号分割每个值，并始终提供一个类族名称作为最后的选择。推荐使用一个通用字体系列名作为后路。</p>
+<p>有两种类型的字体系列名称：</p>
+<ul>
+<li>指定的系列名称：具体字体的名称，比如：”times”、”courier”、”arial”。</li>
+<li>通常字体系列名称：比如：”serif”、”sans-serif”、”cursive”、”fantasy”、”monospace”。</li>
+</ul>
+<blockquote>
+<p>p{font-family:Arial, Times, serif;}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-字体样式"><a href="#2-字体样式" class="headerlink" title="2. 字体样式"></a>2. 字体样式</h3><p>主要是用于指定斜体文字的字体样式属性。</p>
+<p>这个属性有三个值：</p>
+<ul>
+<li>正常 - 正常显示文本</li>
+<li>斜体 - 以斜体字显示的文字</li>
+<li>倾斜的文字 - 文字向一边倾斜（和斜体非常类似，但不太支持）</li>
+</ul>
+<blockquote>
+<p>p.normal {font-style:normal;}<br>p.italic {font-style:italic;}<br>p.oblique {font-style:oblique;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-字体大小"><a href="#3-字体大小" class="headerlink" title="3. 字体大小"></a>3. 字体大小</h3><p>font-size 属性设置文本的大小。<br>能否管理文字的大小，在网页设计中是非常重要的。但是，你不能通过调整字体大小使段落看上去像标题，或者使标题看上去像段落。<br>请务必使用正确的HTML标签，就&lt;h1&gt; - &lt;h6&gt;表示标题和&lt;p&gt;表示段落：<br>字体大小的值可以是绝对或相对的大小。</p>
+<p>绝对大小：</p>
+<ul>
+<li>设置一个指定大小的文本</li>
+<li>不允许用户在所有浏览器中改变文本大小</li>
+<li>确定了输出的物理尺寸时绝对大小很有用</li>
+</ul>
+<p>相对大小：</p>
+<ul>
+<li>相对于周围的元素来设置大小</li>
+<li>允许用户在浏览器中改变文字大小</li>
+<li>Remark 如果你不指定一个字体的大小，默认大小和普通文本段落一样，是16像素（16px=1em）。</li>
+</ul>
+<br/>
+
+<h3 id="4-设置字体大小像素"><a href="#4-设置字体大小像素" class="headerlink" title="4. 设置字体大小像素"></a>4. 设置字体大小像素</h3><p>设置文字的大小与像素，让您完全控制文字大小：</p>
+<blockquote>
+<p>h1 {font-size:40px;}<br>h2 {font-size:30px;}<br>p {font-size:14px;}</p>
+</blockquote>
+<br/>
+
+<h3 id="5-用em来设置字体大小"><a href="#5-用em来设置字体大小" class="headerlink" title="5. 用em来设置字体大小"></a>5. 用em来设置字体大小</h3><p>为了避免Internet Explorer 中无法调整文本的问题，许多开发者使用 em 单位代替像素。<br>em的尺寸单位由W3C建议。<br>1em和当前字体大小相等。在浏览器中默认的文字大小是16px。<br>因此，1em的默认大小是16px。可以通过下面这个公式将像素转换为em：px/16=em</p>
+<blockquote>
+<p>h1 {font-size:2.5em;} /* 40px/16=2.5em <em>/<br>h2 {font-size:1.875em;} /</em> 30px/16=1.875em <em>/<br>p {font-size:0.875em;} /</em> 14px/16=0.875em */</p>
+</blockquote>
+<br/>
+
+<h3 id="6-使用百分比和EM组合"><a href="#6-使用百分比和EM组合" class="headerlink" title="6. 使用百分比和EM组合"></a>6. 使用百分比和EM组合</h3><p>在所有浏览器的解决方案中，设置 <body>元素的默认字体大小的是百分比：</p>
+<blockquote>
+<p>body {font-size:100%;}<br>h1 {font-size:2.5em;}<br>h2 {font-size:1.875em;}<br>p {font-size:0.875em;}</p>
+</blockquote>
+<br/>
+
+<h3 id="7-所有CSS字体属性"><a href="#7-所有CSS字体属性" class="headerlink" title="7. 所有CSS字体属性"></a>7. 所有CSS字体属性</h3><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>font</td>
+<td>在一个声明中设置所有的字体属性</td>
+</tr>
+<tr>
+<td>font-family</td>
+<td>指定文本的字体系列</td>
+</tr>
+<tr>
+<td>font-size</td>
+<td>指定文本的字体大小</td>
+</tr>
+<tr>
+<td>font-style</td>
+<td>指定文本的字体样式</td>
+</tr>
+<tr>
+<td>font-variant</td>
+<td>以小型大写字体或者正常字体显示文本</td>
+</tr>
+<tr>
+<td>font-weight</td>
+<td>指定字体的粗细</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-链接"><a href="#CSS-链接" class="headerlink" title="CSS 链接"></a>CSS 链接</h2><p>不同的链接可以有不同的样式。</p>
+<br/>
+
+<h3 id="1-链接样式"><a href="#1-链接样式" class="headerlink" title="1. 链接样式"></a>1. 链接样式</h3><p>链接的样式，可以用任何CSS属性（如颜色，字体，背景等）。<br>特别的链接，可以有不同的样式，这取决于他们是什么状态。<br>这四个链接状态是：</p>
+<ul>
+<li>a:link - 正常，未访问过的链接</li>
+<li>a:visited - 用户已访问过的链接</li>
+<li>a:hover - 当用户鼠标放在链接上时</li>
+<li>a:active - 链接被点击的那一刻</li>
+</ul>
+<p>使用方式如下:</p>
+<blockquote>
+<p>a:link {color:#000000;}      /* 未访问链接*/<br>a:visited {color:#00FF00;}  /* 已访问链接 <em>/<br>a:hover {color:#FF00FF;}  /</em> 鼠标移动到链接上 <em>/<br>a:active {color:#0000FF;}  /</em> 鼠标点击时 */</p>
+</blockquote>
+<br/>
+
+<p>当设置为若干链路状态的样式，也有一些顺序规则：<br>a:hover 必须跟在 a:link 和 a:visited后面<br>a:active 必须跟在 a:hover后面</p>
+<br/>
+
+<h3 id="2-文本修饰"><a href="#2-文本修饰" class="headerlink" title="2. 文本修饰"></a>2. 文本修饰</h3><p>text-decoration 属性主要用于删除链接中的下划线：</p>
+<blockquote>
+<p>a:link {text-decoration:none;}<br>a:visited {text-decoration:none;}<br>a:hover {text-decoration:underline;}<br>a:active {text-decoration:underline;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-背景颜色"><a href="#3-背景颜色" class="headerlink" title="3. 背景颜色"></a>3. 背景颜色</h3><p>背景颜色属性指定链接背景色：</p>
+<blockquote>
+<p>a:link {background-color:#B2FF99;}<br>a:visited {background-color:#FFFF85;}<br>a:hover {background-color:#FF704D;}<br>a:active {background-color:#FF704D;}</p>
+</blockquote>
 
       
 
@@ -530,7 +751,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">CSS 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-CSS"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是 CSS ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CSS-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">2. CSS 解决了什么问题?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">CSS 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CSS-%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.1.</span> <span class="toc-text">1. CSS 实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CSS-%E6%B3%A8%E9%87%8A"><span class="toc-number">2.2.</span> <span class="toc-text">2. CSS 注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Id-%E5%92%8C-Class-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">CSS Id 和 Class 选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-id-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">1. id 选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-class-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">3.2.</span> <span class="toc-text">2. class 选择器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E5%88%9B%E5%BB%BA"><span class="toc-number">4.</span> <span class="toc-text">CSS 创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A6%82%E4%BD%95%E6%8F%92%E5%85%A5%E6%A0%B7%E5%BC%8F%E8%A1%A8%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">1. 如何插入样式表？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A4%96%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">4.2.</span> <span class="toc-text">2. 外部样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%86%85%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">4.3.</span> <span class="toc-text">3. 内部样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F"><span class="toc-number">4.4.</span> <span class="toc-text">4. 内联样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A4%9A%E9%87%8D%E6%A0%B7%E5%BC%8F"><span class="toc-number">4.5.</span> <span class="toc-text">5. 多重样式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%83%8C%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">CSS 背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-background-color"><span class="toc-number">5.1.</span> <span class="toc-text">1. background-color</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-background-image"><span class="toc-number">5.2.</span> <span class="toc-text">2. background-image</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-background-repeat"><span class="toc-number">5.3.</span> <span class="toc-text">3. background-repeat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-background-position"><span class="toc-number">5.4.</span> <span class="toc-text">4. background-position</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-background-attachment"><span class="toc-number">5.5.</span> <span class="toc-text">5. background-attachment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-background-origin"><span class="toc-number">5.6.</span> <span class="toc-text">6. background-origin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Text-%E6%96%87%E6%9C%AC"><span class="toc-number">6.</span> <span class="toc-text">CSS Text(文本)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%87%E6%9C%AC%E9%A2%9C%E8%89%B2"><span class="toc-number">6.1.</span> <span class="toc-text">1. 文本颜色</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">CSS 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-CSS"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是 CSS ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CSS-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">2. CSS 解决了什么问题?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">CSS 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CSS-%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.1.</span> <span class="toc-text">1. CSS 实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-CSS-%E6%B3%A8%E9%87%8A"><span class="toc-number">2.2.</span> <span class="toc-text">2. CSS 注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Id-%E5%92%8C-Class-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">CSS Id 和 Class 选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-id-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">1. id 选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-class-%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">3.2.</span> <span class="toc-text">2. class 选择器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E5%88%9B%E5%BB%BA"><span class="toc-number">4.</span> <span class="toc-text">CSS 创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A6%82%E4%BD%95%E6%8F%92%E5%85%A5%E6%A0%B7%E5%BC%8F%E8%A1%A8%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">1. 如何插入样式表？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A4%96%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">4.2.</span> <span class="toc-text">2. 外部样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%86%85%E9%83%A8%E6%A0%B7%E5%BC%8F%E8%A1%A8"><span class="toc-number">4.3.</span> <span class="toc-text">3. 内部样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F"><span class="toc-number">4.4.</span> <span class="toc-text">4. 内联样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A4%9A%E9%87%8D%E6%A0%B7%E5%BC%8F"><span class="toc-number">4.5.</span> <span class="toc-text">5. 多重样式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%83%8C%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">CSS 背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-background-color"><span class="toc-number">5.1.</span> <span class="toc-text">1. background-color</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-background-image"><span class="toc-number">5.2.</span> <span class="toc-text">2. background-image</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-background-repeat"><span class="toc-number">5.3.</span> <span class="toc-text">3. background-repeat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-background-position"><span class="toc-number">5.4.</span> <span class="toc-text">4. background-position</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-background-attachment"><span class="toc-number">5.5.</span> <span class="toc-text">5. background-attachment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-background-origin"><span class="toc-number">5.6.</span> <span class="toc-text">6. background-origin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Text-%E6%96%87%E6%9C%AC"><span class="toc-number">6.</span> <span class="toc-text">CSS Text(文本)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%87%E6%9C%AC%E9%A2%9C%E8%89%B2"><span class="toc-number">6.1.</span> <span class="toc-text">1. 文本颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%96%87%E6%9C%AC%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F"><span class="toc-number">6.2.</span> <span class="toc-text">2. 文本的对齐方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%87%E6%9C%AC%E4%BF%AE%E9%A5%B0"><span class="toc-number">6.3.</span> <span class="toc-text">3. 文本修饰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%87%E6%9C%AC%E8%BD%AC%E6%8D%A2"><span class="toc-number">6.4.</span> <span class="toc-text">4. 文本转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%96%87%E6%9C%AC%E7%BC%A9%E8%BF%9B"><span class="toc-number">6.5.</span> <span class="toc-text">5. 文本缩进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%89%80%E6%9C%89%E6%96%87%E6%9C%AC%E5%B1%9E%E6%80%A7"><span class="toc-number">6.6.</span> <span class="toc-text">6. 所有文本属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Fonts-%E5%AD%97%E4%BD%93"><span class="toc-number">7.</span> <span class="toc-text">CSS Fonts(字体)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CSS%E5%AD%97%E5%9E%8B"><span class="toc-number">7.1.</span> <span class="toc-text">1. CSS字型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AD%97%E4%BD%93%E6%A0%B7%E5%BC%8F"><span class="toc-number">7.2.</span> <span class="toc-text">2. 字体样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="toc-number">7.3.</span> <span class="toc-text">3. 字体大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F%E5%83%8F%E7%B4%A0"><span class="toc-number">7.4.</span> <span class="toc-text">4. 设置字体大小像素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%94%A8em%E6%9D%A5%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="toc-number">7.5.</span> <span class="toc-text">5. 用em来设置字体大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%BD%BF%E7%94%A8%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8CEM%E7%BB%84%E5%90%88"><span class="toc-number">7.6.</span> <span class="toc-text">6. 使用百分比和EM组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E6%89%80%E6%9C%89CSS%E5%AD%97%E4%BD%93%E5%B1%9E%E6%80%A7"><span class="toc-number">7.7.</span> <span class="toc-text">7. 所有CSS字体属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E9%93%BE%E6%8E%A5"><span class="toc-number">8.</span> <span class="toc-text">CSS 链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%93%BE%E6%8E%A5%E6%A0%B7%E5%BC%8F"><span class="toc-number">8.1.</span> <span class="toc-text">1. 链接样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%96%87%E6%9C%AC%E4%BF%AE%E9%A5%B0"><span class="toc-number">8.2.</span> <span class="toc-text">2. 文本修饰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2"><span class="toc-number">8.3.</span> <span class="toc-text">3. 背景颜色</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -559,7 +780,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 Lamber
+    		&copy; 2022 Lamber
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
