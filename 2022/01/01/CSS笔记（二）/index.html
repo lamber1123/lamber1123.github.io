@@ -16,8 +16,9 @@
 <meta property="og:description" content="CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充）">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.runoob.com/images/box-model.gif">
+<meta property="og:image" content="https://www.runoob.com/images/box_outline.gif">
 <meta property="article:published_time" content="2021-12-31T16:00:01.000Z">
-<meta property="article:modified_time" content="2022-01-01T04:59:05.065Z">
+<meta property="article:modified_time" content="2022-01-01T05:42:15.991Z">
 <meta property="article:author" content="Lamber">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.runoob.com/images/box-model.gif">
@@ -329,9 +330,225 @@
 <p>元素的总高度最终计算公式是这样的：<br>总元素的高度 = 高度 + 顶部填充 + 底部填充 + 上边框 + 下边框 + 上边距 + 下边距</p>
 <br/>
 
+<h2 id="CSS-Border-边框"><a href="#CSS-Border-边框" class="headerlink" title="CSS Border(边框)"></a>CSS Border(边框)</h2><p>CSS边框属性允许你指定一个元素边框的<strong>样式</strong>和<strong>颜色</strong>。</p>
+<div style="border: 1px solid #ccc!important;    border-color: #000!important;padding: 10px;">
+    <p>在四边都有边框</p>
+</div>
+<br>
+<div style="border-bottom: 1px solid #ccc!important;padding:14px;border-color: #f44336!important;">
+    <p>红色底部边框</p>
+</div>
+<br>
+<div style="border: 1px solid #ccc!important;padding:14px;border-radius: 16px!important;">
+    <p>圆角边框</p>
+</div>
+<br>
+<div style="background-color: #ddffff!important;padding: 14px;border-left: 6px solid #ccc!important;border-color: #2196F3!important;">
+<p>左侧边框带宽度，颜色为蓝色</p>
+</div>
 
+<br/>
 
+<h3 id="1-边框样式"><a href="#1-边框样式" class="headerlink" title="1. 边框样式"></a>1. 边框样式</h3><p>边框样式属性指定要显示什么样的边界。<br><strong>border-style</strong> 属性用来定义边框的样式</p>
+<p style="border: 1px none #000000;padding:3px">none: 默认无边框</p>
+<p style="border: 1px dotted #000000;padding:3px">dotted: 定义一个点线边框</p>
+<p style="border: 1px dashed #000000;padding:3px">dashed: 定义一个虚线边框</p>
+<p style="border: 1px solid #000000;padding:3px">solid: 定义实线边框</p>
+<p style="border: 3px double #000000;padding:3px">double: 定义两个边框。 两个边框的宽度和 border-width 的值相同</p>
+<p style="border: 5px groove #98bf21;padding:3px">groove: 定义3D沟槽边框。效果取决于边框的颜色值</p>
+<p style="border: 5px ridge #98bf21;padding:3px">ridge: 定义3D脊边框。效果取决于边框的颜色值</p>
+<p style="border: 5px inset #98bf21;padding:3px">inset:定义一个3D的嵌入边框。效果取决于边框的颜色值</p>
+<p style="border: 5px outset #98bf21;padding:3px">outset: 定义一个3D突出边框。 效果取决于边框的颜色值</p>
 
+<br/>
+
+<h3 id="2-边框宽度"><a href="#2-边框宽度" class="headerlink" title="2. 边框宽度"></a>2. 边框宽度</h3><p>您可以通过 <strong>border-width</strong> 属性为边框指定宽度。<br>为边框指定宽度有两种方法：可以指定长度值，比如 2px 或 0.1em(单位为 px, pt, cm, em 等)，或者使用 3 个关键字之一，它们分别是 thick 、medium（默认） 和 thin。<br>注：CSS 没有定义 3 个关键字的具体宽度，所以一个用户可能把 thick 、medium 和 thin 分别设置为等于 5px、3px 和 2px，而另一个用户则分别设置为 3px、2px 和 1px。</p>
+<blockquote>
+<p>p.one<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-style:solid;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-width:5px;<br>}<br>p.two<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-style:solid;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-width:medium;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-边框-单独设置各边"><a href="#3-边框-单独设置各边" class="headerlink" title="3. 边框-单独设置各边"></a>3. 边框-单独设置各边</h3><p>在CSS中，可以指定不同的侧面不同的边框：</p>
+<blockquote>
+<p>p<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-top-style:dotted;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-right-style:solid;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-bottom-style:dotted;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-left-style:solid;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="4-border-style-属性"><a href="#4-border-style-属性" class="headerlink" title="4. border-style 属性"></a>4. border-style 属性</h3><p>可以设置一个单一属性设置四个边框。<br>border-style属性可以有1-4个值：</p>
+<blockquote>
+<p>border-style:dotted solid double dashed;</p>
+</blockquote>
+<ul>
+<li>上边框是 dotted</li>
+<li>右边框是 solid</li>
+<li>底边框是 double</li>
+<li>左边框是 dashed</li>
+</ul>
+<blockquote>
+<p>border-style:dotted solid double;</p>
+</blockquote>
+<ul>
+<li>上边框是 dotted</li>
+<li>左、右边框是 solid</li>
+<li>底边框是 double</li>
+</ul>
+<blockquote>
+<p>border-style:dotted solid;</p>
+</blockquote>
+<ul>
+<li>上、底边框是 dotted</li>
+<li>右、左边框是 solid</li>
+</ul>
+<blockquote>
+<p>border-style:dotted;</p>
+</blockquote>
+<ul>
+<li>四面边框是 dotted</li>
+</ul>
+<p>上面的例子用了border-style。然而，它也可以和border-width 、 border-color一起使用。</p>
+<br/>
+
+<h3 id="5-边框-简写属性"><a href="#5-边框-简写属性" class="headerlink" title="5. 边框-简写属性"></a>5. 边框-简写属性</h3><p>上面的例子用了很多属性来设置边框，也可以在一个属性中设置边框。<br>你可以在 <strong>border</strong> 属性中设置：</p>
+<ul>
+<li>border-width</li>
+<li>border-style</li>
+<li>border-color</li>
+</ul>
+<p>对他们的先后顺序没有要求,如：</p>
+<blockquote>
+<p>border:5px solid red;</p>
+</blockquote>
+<br/>
+
+<h3 id="6-CSS-边框属性"><a href="#6-CSS-边框属性" class="headerlink" title="6. CSS 边框属性"></a>6. CSS 边框属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>border</td>
+<td>简写属性，用于把针对四个边的属性设置在一个声明</td>
+</tr>
+<tr>
+<td>border-style</td>
+<td>用于设置元素所有边框的样式，或者单独地为各边设置边框样式</td>
+</tr>
+<tr>
+<td>border-width</td>
+<td>简写属性，用于为元素的所有边框设置宽度，或者单独地为各边边框设置宽度</td>
+</tr>
+<tr>
+<td>border-color</td>
+<td>简写属性，设置元素的所有边框中可见部分的颜色，或为 4 个边分别设置颜色</td>
+</tr>
+<tr>
+<td>border-bottom</td>
+<td>简写属性，用于把下边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-bottom-color</td>
+<td>设置元素的下边框的颜色</td>
+</tr>
+<tr>
+<td>border-bottom-style</td>
+<td>设置元素的下边框的样式</td>
+</tr>
+<tr>
+<td>border-bottom-width</td>
+<td>设置元素的下边框的宽度</td>
+</tr>
+<tr>
+<td>border-left</td>
+<td>简写属性，用于把左边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-left-color</td>
+<td>设置元素的左边框的颜色</td>
+</tr>
+<tr>
+<td>border-left-style</td>
+<td>设置元素的左边框的样式</td>
+</tr>
+<tr>
+<td>border-left-width</td>
+<td>设置元素的左边框的宽度</td>
+</tr>
+<tr>
+<td>border-right</td>
+<td>简写属性，用于把右边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-right-color</td>
+<td>设置元素的右边框的颜色</td>
+</tr>
+<tr>
+<td>border-right-style</td>
+<td>设置元素的右边框的样式</td>
+</tr>
+<tr>
+<td>border-right-width</td>
+<td>设置元素的右边框的宽度</td>
+</tr>
+<tr>
+<td>border-top</td>
+<td>简写属性，用于把上边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-top-color</td>
+<td>设置元素的上边框的颜色</td>
+</tr>
+<tr>
+<td>border-top-style</td>
+<td>设置元素的上边框的样式</td>
+</tr>
+<tr>
+<td>border-top-width</td>
+<td>设置元素的上边框的宽度</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-轮廓（outline）"><a href="#CSS-轮廓（outline）" class="headerlink" title="CSS 轮廓（outline）"></a>CSS 轮廓（outline）</h2><ul>
+<li>轮廓（outline）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。</li>
+<li>轮廓（outline）属性指定元素轮廓的样式、颜色和宽度。</li>
+</ul>
+<p>轮廓（outline）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。<br>CSS outline 属性规定元素轮廓的样式、颜色和宽度。</p>
+<p><img src="https://www.runoob.com/images/box_outline.gif" alt="轮廓示意图"></p>
+<p>所有CSS 轮廓属性如下：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>outline</td>
+<td>在一个声明中设置所有的轮廓属性</td>
+<td>outline-color<br>outline-style<br>outline-width<br>inherit</td>
+</tr>
+<tr>
+<td>outline-color</td>
+<td>设置轮廓的颜色</td>
+<td>color-name<br>hex-number<br>rgb-number<br>invert<br>inherit</td>
+</tr>
+<tr>
+<td>outline-style</td>
+<td>设置轮廓的样式</td>
+<td>none<br>dotted<br>dashed<br>solid<br>double<br>groove<br>ridge<br>inset<br>outset<br>inherit</td>
+</tr>
+<tr>
+<td>outline-width</td>
+<td>设置轮廓的宽度</td>
+<td>thin<br>medium<br>thick<br>length<br>inherit</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
       
 
       
@@ -458,7 +675,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E5%88%97%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">CSS 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%97%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. 列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%97%E8%A1%A8%E9%A1%B9%E6%A0%87%E8%AE%B0"><span class="toc-number">1.2.</span> <span class="toc-text">2. 不同的列表项标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%9C%E4%B8%BA%E5%88%97%E8%A1%A8%E9%A1%B9%E6%A0%87%E8%AE%B0%E7%9A%84%E5%9B%BE%E5%83%8F"><span class="toc-number">1.3.</span> <span class="toc-text">3. 作为列表项标记的图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%88%97%E8%A1%A8-%E7%AE%80%E5%86%99%E5%B1%9E%E6%80%A7"><span class="toc-number">1.4.</span> <span class="toc-text">4. 列表 - 简写属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%A7%BB%E9%99%A4%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.</span> <span class="toc-text">5. 移除默认设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%89%80%E6%9C%89%E7%9A%84CSS%E5%88%97%E8%A1%A8%E5%B1%9E%E6%80%A7"><span class="toc-number">1.6.</span> <span class="toc-text">6. 所有的CSS列表属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%A1%A8%E6%A0%BC"><span class="toc-number">2.</span> <span class="toc-text">CSS 表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A1%A8%E6%A0%BC%E8%BE%B9%E6%A1%86"><span class="toc-number">2.1.</span> <span class="toc-text">1. 表格边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8A%98%E5%8F%A0%E8%BE%B9%E6%A1%86"><span class="toc-number">2.2.</span> <span class="toc-text">2. 折叠边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8%E6%A0%BC%E5%AE%BD%E5%BA%A6%E5%92%8C%E9%AB%98%E5%BA%A6"><span class="toc-number">2.3.</span> <span class="toc-text">3. 表格宽度和高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%A1%A8%E6%A0%BC%E6%96%87%E5%AD%97%E5%AF%B9%E9%BD%90"><span class="toc-number">2.4.</span> <span class="toc-text">4. 表格文字对齐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%A1%A8%E6%A0%BC%E5%A1%AB%E5%85%85"><span class="toc-number">2.5.</span> <span class="toc-text">5. 表格填充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%A1%A8%E6%A0%BC%E9%A2%9C%E8%89%B2"><span class="toc-number">2.6.</span> <span class="toc-text">6. 表格颜色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">CSS 盒子模型</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E5%88%97%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">CSS 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%97%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. 列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%97%E8%A1%A8%E9%A1%B9%E6%A0%87%E8%AE%B0"><span class="toc-number">1.2.</span> <span class="toc-text">2. 不同的列表项标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%9C%E4%B8%BA%E5%88%97%E8%A1%A8%E9%A1%B9%E6%A0%87%E8%AE%B0%E7%9A%84%E5%9B%BE%E5%83%8F"><span class="toc-number">1.3.</span> <span class="toc-text">3. 作为列表项标记的图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%88%97%E8%A1%A8-%E7%AE%80%E5%86%99%E5%B1%9E%E6%80%A7"><span class="toc-number">1.4.</span> <span class="toc-text">4. 列表 - 简写属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%A7%BB%E9%99%A4%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.</span> <span class="toc-text">5. 移除默认设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%89%80%E6%9C%89%E7%9A%84CSS%E5%88%97%E8%A1%A8%E5%B1%9E%E6%80%A7"><span class="toc-number">1.6.</span> <span class="toc-text">6. 所有的CSS列表属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%A1%A8%E6%A0%BC"><span class="toc-number">2.</span> <span class="toc-text">CSS 表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A1%A8%E6%A0%BC%E8%BE%B9%E6%A1%86"><span class="toc-number">2.1.</span> <span class="toc-text">1. 表格边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8A%98%E5%8F%A0%E8%BE%B9%E6%A1%86"><span class="toc-number">2.2.</span> <span class="toc-text">2. 折叠边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8%E6%A0%BC%E5%AE%BD%E5%BA%A6%E5%92%8C%E9%AB%98%E5%BA%A6"><span class="toc-number">2.3.</span> <span class="toc-text">3. 表格宽度和高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%A1%A8%E6%A0%BC%E6%96%87%E5%AD%97%E5%AF%B9%E9%BD%90"><span class="toc-number">2.4.</span> <span class="toc-text">4. 表格文字对齐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%A1%A8%E6%A0%BC%E5%A1%AB%E5%85%85"><span class="toc-number">2.5.</span> <span class="toc-text">5. 表格填充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%A1%A8%E6%A0%BC%E9%A2%9C%E8%89%B2"><span class="toc-number">2.6.</span> <span class="toc-text">6. 表格颜色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">CSS 盒子模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-Border-%E8%BE%B9%E6%A1%86"><span class="toc-number">4.</span> <span class="toc-text">CSS Border(边框)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BE%B9%E6%A1%86%E6%A0%B7%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">1. 边框样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BE%B9%E6%A1%86%E5%AE%BD%E5%BA%A6"><span class="toc-number">4.2.</span> <span class="toc-text">2. 边框宽度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BE%B9%E6%A1%86-%E5%8D%95%E7%8B%AC%E8%AE%BE%E7%BD%AE%E5%90%84%E8%BE%B9"><span class="toc-number">4.3.</span> <span class="toc-text">3. 边框-单独设置各边</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-border-style-%E5%B1%9E%E6%80%A7"><span class="toc-number">4.4.</span> <span class="toc-text">4. border-style 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%BE%B9%E6%A1%86-%E7%AE%80%E5%86%99%E5%B1%9E%E6%80%A7"><span class="toc-number">4.5.</span> <span class="toc-text">5. 边框-简写属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-CSS-%E8%BE%B9%E6%A1%86%E5%B1%9E%E6%80%A7"><span class="toc-number">4.6.</span> <span class="toc-text">6. CSS 边框属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%BD%AE%E5%BB%93%EF%BC%88outline%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">CSS 轮廓（outline）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text"></span></a></li></ol>
                     </div>
                 </span>
             </div>
