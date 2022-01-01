@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>CSS笔记（二） | Lamber&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充） CSS 分组和嵌套">
+  <meta name="description" content="CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSS笔记（二）">
 <meta property="og:url" content="http://example.com/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Lamber&#39;s Blog">
-<meta property="og:description" content="CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充） CSS 分组和嵌套">
+<meta property="og:description" content="CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充）">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-12-31T16:16:18.000Z">
-<meta property="article:modified_time" content="2021-12-31T16:30:44.559Z">
+<meta property="article:published_time" content="2021-12-31T16:00:01.000Z">
+<meta property="article:modified_time" content="2022-01-01T04:49:33.780Z">
 <meta property="article:author" content="Lamber">
 <meta name="twitter:card" content="summary">
   
@@ -171,7 +171,7 @@
 
         
         <a href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2021-12-31T16:16:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-01</time>
+  	<time datetime="2021-12-31T16:00:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-01</time>
 </a>
         
       </header>
@@ -186,7 +186,6 @@
 <li>CSS 轮廓（outline）属性</li>
 <li>CSS margin(外边距)</li>
 <li>CSS padding（填充）</li>
-<li>CSS 分组和嵌套</li>
 </ul>
 <span id="more"></span>
 <br/>
@@ -199,14 +198,114 @@
 </ul>
 <br/>
 
-<h3 id="1-列表"><a href="#1-列表" class="headerlink" title="1. * 列表"></a>1. * 列表</h3><p>在 HTML中，有两种类型的列表：</p>
+<h3 id="1-列表"><a href="#1-列表" class="headerlink" title="1. 列表"></a>1. 列表</h3><p>在 HTML中，有两种类型的列表：</p>
 <ul>
 <li>无序列表 ul - 列表项标记用特殊图形（如小黑点、小方框等）</li>
 <li>有序列表 ol - 列表项的标记有数字或字母<br>使用 CSS，可以列出进一步的样式，并可用图像作列表项标记。</li>
 </ul>
 <br/>
 
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+<h3 id="2-不同的列表项标记"><a href="#2-不同的列表项标记" class="headerlink" title="2. 不同的列表项标记"></a>2. 不同的列表项标记</h3><p>list-style-type属性是指定列表项标记的类型。</p>
+<blockquote>
+<p>ul.a {list-style-type: circle;}<br>ul.b {list-style-type: square;}<br><br/><br>ol.c {list-style-type: upper-roman;}<br>ol.d {list-style-type: lower-alpha;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-作为列表项标记的图像"><a href="#3-作为列表项标记的图像" class="headerlink" title="3. 作为列表项标记的图像"></a>3. 作为列表项标记的图像</h3><p>要指定列表项标记的图像，使用列表样式图像属性，如：</p>
+<blockquote>
+<p>ul<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;list-style-image: url(‘sqpurple.gif’);<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="4-列表-简写属性"><a href="#4-列表-简写属性" class="headerlink" title="4. 列表 - 简写属性"></a>4. 列表 - 简写属性</h3><p>在单个属性中可以指定所有的列表属性。这就是所谓的简写属性。<br>为列表使用简写属性，列表样式属性设置如下：</p>
+<blockquote>
+<p>ul<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;list-style: square url(“sqpurple.gif”);<br>}</p>
+</blockquote>
+<p>要按顺序设置如下属性：</p>
+<ul>
+<li>list-style-type</li>
+<li>list-style-position </li>
+<li>list-style-image</li>
+</ul>
+<p>如果上述值丢失一个，其余仍在指定的顺序，就没关系。</p>
+<br/>
+
+<h3 id="5-移除默认设置"><a href="#5-移除默认设置" class="headerlink" title="5. 移除默认设置"></a>5. 移除默认设置</h3><p>list-style-type:none 属性可以用于移除小标记。<br>默认情况下列表 &lt;ul&gt; 或 &lt;ol&gt; 还设置了内边距和外边距，可使用 margin:0 和 padding:0 来移除:</p>
+<blockquote>
+<p>ul {<br>&nbsp;&nbsp;&nbsp;&nbsp;list-style-type: none;<br>&nbsp;&nbsp;&nbsp;&nbsp;margin: 0;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 0;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="6-所有的CSS列表属性"><a href="#6-所有的CSS列表属性" class="headerlink" title="6. 所有的CSS列表属性"></a>6. 所有的CSS列表属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>list-style</td>
+<td>简写属性。用于把所有用于列表的属性设置于一个声明中</td>
+</tr>
+<tr>
+<td>list-style-image</td>
+<td>将图像设置为列表项标志</td>
+</tr>
+<tr>
+<td>list-style-position</td>
+<td>设置列表中列表项标志的位置</td>
+</tr>
+<tr>
+<td>list-style-type</td>
+<td>设置列表项标志的类型</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-表格"><a href="#CSS-表格" class="headerlink" title="CSS 表格"></a>CSS 表格</h2><p>使用 CSS 可以使 HTML 表格更美观。</p>
+<br/>
+
+<h3 id="1-表格边框"><a href="#1-表格边框" class="headerlink" title="1. 表格边框"></a>1. 表格边框</h3><p>指定CSS表格边框，使用border属性。<br>下面的例子指定了一个表格的Th和TD元素的黑色边框：</p>
+<blockquote>
+<p>table, th, td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border: 1px solid black;<br>}</p>
+</blockquote>
+<p>请注意，在上面的例子中的表格有双边框。这是因为表、 th 和 td元素都有独立的边界。<br>为了显示一个表的单个边框，使用 border-collapse属性。</p>
+<br/>
+
+<h3 id="2-折叠边框"><a href="#2-折叠边框" class="headerlink" title="2. 折叠边框"></a>2. 折叠边框</h3><p>border-collapse 属性设置表格的边框是否被折叠成一个单一的边框或隔开：</p>
+<blockquote>
+<p>table<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-collapse: collapse;<br>}<br>table, th, td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border: 1px solid black;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-表格宽度和高度"><a href="#3-表格宽度和高度" class="headerlink" title="3. 表格宽度和高度"></a>3. 表格宽度和高度</h3><p>Width和height属性定义表格的宽度和高度。<br>下面的例子是设置100％的宽度，50像素的th元素的高度的表格：</p>
+<blockquote>
+<p>table<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;width:100%;<br>}<br>th<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;height:50px;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="4-表格文字对齐"><a href="#4-表格文字对齐" class="headerlink" title="4. 表格文字对齐"></a>4. 表格文字对齐</h3><p>包括表格中的文本对齐和垂直对齐属性。</p>
+<p>text-align 属性设置水平对齐方式，向左，右，或中心：</p>
+<blockquote>
+<p>td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align:right;<br>}</p>
+</blockquote>
+<p>vertical-align 属性设置垂直对齐方式，比如顶部，底部或中间：</p>
+<blockquote>
+<p>td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;height:50px;<br>&nbsp;&nbsp;&nbsp;&nbsp;vertical-align:bottom;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="5-表格填充"><a href="#5-表格填充" class="headerlink" title="5. 表格填充"></a>5. 表格填充</h3><p>如需控制边框和表格内容之间的间距，应使用td和th元素的填充属性：</p>
+<blockquote>
+<p>td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;padding:15px;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="6-表格颜色"><a href="#6-表格颜色" class="headerlink" title="6. 表格颜色"></a>6. 表格颜色</h3><p>指定边框的颜色、th元素的文本和背景颜色：</p>
+<blockquote>
+<p>table, td, th<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border:1px solid green;<br>}<br>th<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;background-color:green;<br>&nbsp;&nbsp;&nbsp;&nbsp;color:white;<br>}</p>
+</blockquote>
+
       
 
       
@@ -333,7 +432,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E5%88%97%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">CSS 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%97%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. * 列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text"></span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E5%88%97%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">CSS 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%97%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. 列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%97%E8%A1%A8%E9%A1%B9%E6%A0%87%E8%AE%B0"><span class="toc-number">1.2.</span> <span class="toc-text">2. 不同的列表项标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%9C%E4%B8%BA%E5%88%97%E8%A1%A8%E9%A1%B9%E6%A0%87%E8%AE%B0%E7%9A%84%E5%9B%BE%E5%83%8F"><span class="toc-number">1.3.</span> <span class="toc-text">3. 作为列表项标记的图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%88%97%E8%A1%A8-%E7%AE%80%E5%86%99%E5%B1%9E%E6%80%A7"><span class="toc-number">1.4.</span> <span class="toc-text">4. 列表 - 简写属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%A7%BB%E9%99%A4%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.</span> <span class="toc-text">5. 移除默认设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%89%80%E6%9C%89%E7%9A%84CSS%E5%88%97%E8%A1%A8%E5%B1%9E%E6%80%A7"><span class="toc-number">1.6.</span> <span class="toc-text">6. 所有的CSS列表属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%E8%A1%A8%E6%A0%BC"><span class="toc-number">2.</span> <span class="toc-text">CSS 表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A1%A8%E6%A0%BC%E8%BE%B9%E6%A1%86"><span class="toc-number">2.1.</span> <span class="toc-text">1. 表格边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8A%98%E5%8F%A0%E8%BE%B9%E6%A1%86"><span class="toc-number">2.2.</span> <span class="toc-text">2. 折叠边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8%E6%A0%BC%E5%AE%BD%E5%BA%A6%E5%92%8C%E9%AB%98%E5%BA%A6"><span class="toc-number">2.3.</span> <span class="toc-text">3. 表格宽度和高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%A1%A8%E6%A0%BC%E6%96%87%E5%AD%97%E5%AF%B9%E9%BD%90"><span class="toc-number">2.4.</span> <span class="toc-text">4. 表格文字对齐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%A1%A8%E6%A0%BC%E5%A1%AB%E5%85%85"><span class="toc-number">2.5.</span> <span class="toc-text">5. 表格填充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%A1%A8%E6%A0%BC%E9%A2%9C%E8%89%B2"><span class="toc-number">2.6.</span> <span class="toc-text">6. 表格颜色</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
