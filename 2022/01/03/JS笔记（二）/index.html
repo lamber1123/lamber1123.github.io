@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022/1 | Lamber&#39;s Blog</title>
+  <title>JS笔记（二） | Lamber&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Lamber的描述">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lamber&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/2022/01/index.html">
+  <meta name="description" content="变量、作用域与内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS笔记（二）">
+<meta property="og:url" content="http://example.com/2022/01/03/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Lamber&#39;s Blog">
-<meta property="og:description" content="Lamber的描述">
+<meta property="og:description" content="变量、作用域与内存">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-03T14:40:56.000Z">
+<meta property="article:modified_time" content="2022-01-03T16:00:46.849Z">
 <meta property="article:author" content="Lamber">
 <meta name="twitter:card" content="summary">
   
@@ -156,157 +158,220 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-JS笔记（二）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      JS笔记（二）
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/01/03/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
+
+        
+        <a href="/2022/01/03/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
   	<time datetime="2022-01-03T14:40:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-03</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/01/03/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">JS笔记（二）</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>变量、作用域与内存</li>
+</ul>
+<span id="more"></span>
+<br/>
 
-        <div class="article-info info-on-right">
-          
-          
+<h2 id="第-4-章-变量、作用域与内存"><a href="#第-4-章-变量、作用域与内存" class="headerlink" title="第 4 章 变量、作用域与内存"></a>第 4 章 变量、作用域与内存</h2><ul>
+<li>通过变量使用原始值与引用值</li>
+<li>理解执行上下文</li>
+<li>理解垃圾回收</li>
+</ul>
+<br>
 
+<h3 id="4-1-原始值与引用值"><a href="#4-1-原始值与引用值" class="headerlink" title="4.1 原始值与引用值"></a>4.1 原始值与引用值</h3><p>原始值就是最简单的数据，引用值则是由多个值构成的对象。<br>保存原始值的变量是按值（by value）访问的，因为我们操作的就是存储在变量中的实际值。<br>引用值是保存在内存中的对象。</p>
+<br/>
+
+<h4 id="4-1-1-动态属性"><a href="#4-1-1-动态属性" class="headerlink" title="4.1.1 动态属性"></a>4.1.1 动态属性</h4><p>对于引用值而言，可以随时添加、修改和删除其属性和方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let name1 = &quot;Nicholas&quot;; </span><br><span class="line">let name2 = new String(&quot;Matt&quot;); </span><br><span class="line">name1.age = 27; </span><br><span class="line">name2.age = 26; </span><br><span class="line">console.log(name1.age); // undefined </span><br><span class="line">console.log(name2.age); // 26 </span><br><span class="line">console.log(typeof name1); // string </span><br><span class="line">console.log(typeof name2); // object </span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<h4 id="4-1-2-复制值"><a href="#4-1-2-复制值" class="headerlink" title="4.1.2 复制值"></a>4.1.2 复制值</h4><p>通过变量把一个原始值赋值到另一个变量时，原始值会被复制到新变量的位置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let num1 = 5; </span><br><span class="line">let num2 = num1;</span><br></pre></td></tr></table></figure>
+
+<p>在把引用值从一个变量赋给另一个变量时，这里复制的值实际上是一个指针，指向存储在堆内存中的对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let obj1 = new Object(); </span><br><span class="line">let obj2 = obj1; </span><br><span class="line">obj1.name = &quot;Nicholas&quot;; </span><br><span class="line">console.log(obj2.name); // &quot;Nicholas&quot; </span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<h4 id="4-1-3-传递参数"><a href="#4-1-3-传递参数" class="headerlink" title="4.1.3 传递参数"></a>4.1.3 传递参数</h4><p>变量有按值和按引用访问，而传参则只有按值传递。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function addTen(num) &#123; </span><br><span class="line"> num += 10; </span><br><span class="line"> return num; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">let count = 20; </span><br><span class="line">let result = addTen(count); </span><br><span class="line">console.log(count); // 20，没有变化</span><br><span class="line">console.log(result); // 30 </span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<h4 id="4-1-4-确定类型"><a href="#4-1-4-确定类型" class="headerlink" title="4.1.4 确定类型"></a>4.1.4 确定类型</h4><p>前一章提到的 typeof 操作符最适合用来判断一个变量是否为原始类型。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">let s = &quot;Nicholas&quot;; </span><br><span class="line">let b = true; </span><br><span class="line">let i = 22; </span><br><span class="line">let u; </span><br><span class="line">let n = null; </span><br><span class="line">let o = new Object(); </span><br><span class="line">console.log(typeof s); // string </span><br><span class="line">console.log(typeof i); // number </span><br><span class="line">console.log(typeof b); // boolean </span><br><span class="line">console.log(typeof u); // undefined </span><br><span class="line">console.log(typeof n); // object </span><br><span class="line">console.log(typeof o); // object</span><br></pre></td></tr></table></figure>
+
+<p>typeof 虽然对原始值很有用，但它对引用值的用处不大。想知道它是什么类型的对象，使用<strong>instanceof</strong> 操作符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console.log(person instanceof Object); // 变量 person 是 Object 吗？</span><br><span class="line">console.log(colors instanceof Array); // 变量 colors 是 Array 吗？</span><br><span class="line">console.log(pattern instanceof RegExp); // 变量 pattern 是 RegExp 吗？</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-执行上下文与作用域"><a href="#4-2-执行上下文与作用域" class="headerlink" title="4.2 执行上下文与作用域"></a>4.2 执行上下文与作用域</h3><p>执行上下文（以下简称“上下文”）的概念在 JavaScript 中是颇为重要的。变量或函数的上下文决定了它们可以访问哪些数据，以及它们的行为。</p>
+<br/>
+
+<h4 id="4-2-1-作用域链增强"><a href="#4-2-1-作用域链增强" class="headerlink" title="4.2.1 作用域链增强"></a>4.2.1 作用域链增强</h4><h4 id="4-2-2-变量声明"><a href="#4-2-2-变量声明" class="headerlink" title="4.2.2 变量声明"></a>4.2.2 变量声明</h4><br/>
+
+<h3 id="4-3-垃圾回收"><a href="#4-3-垃圾回收" class="headerlink" title="4.3 垃圾回收"></a>4.3 垃圾回收</h3><h4 id="4-3-1-标记清理"><a href="#4-3-1-标记清理" class="headerlink" title="4.3.1 标记清理"></a>4.3.1 标记清理</h4><h4 id="4-3-2-引用计数"><a href="#4-3-2-引用计数" class="headerlink" title="4.3.2 引用计数"></a>4.3.2 引用计数</h4><h4 id="4-3-3-性能"><a href="#4-3-3-性能" class="headerlink" title="4.3.3 性能"></a>4.3.3 性能</h4><h4 id="4-3-3-性能-1"><a href="#4-3-3-性能-1" class="headerlink" title="4.3.3 性能"></a>4.3.3 性能</h4><br/>
+
+<h2 id="第-5-章-基本引用类型"><a href="#第-5-章-基本引用类型" class="headerlink" title="第 5 章 基本引用类型"></a>第 5 章 基本引用类型</h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>这多不好意思呀<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s2.loli.net/2021/12/30/JruCcVRf8lq6wE5.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/01/03/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/01/02/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2022-01-02T02:05:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-02</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2022/01/02/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JS笔记（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/01/02/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">JS笔记（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC-4-%E7%AB%A0-%E5%8F%98%E9%87%8F%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">第 4 章 变量、作用域与内存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%8E%9F%E5%A7%8B%E5%80%BC%E4%B8%8E%E5%BC%95%E7%94%A8%E5%80%BC"><span class="toc-number">1.1.</span> <span class="toc-text">4.1 原始值与引用值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E5%8A%A8%E6%80%81%E5%B1%9E%E6%80%A7"><span class="toc-number">1.1.1.</span> <span class="toc-text">4.1.1 动态属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-%E5%A4%8D%E5%88%B6%E5%80%BC"><span class="toc-number">1.1.2.</span> <span class="toc-text">4.1.2 复制值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-3-%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">4.1.3 传递参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-4-%E7%A1%AE%E5%AE%9A%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.1.4 确定类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">1.2.</span> <span class="toc-text">4.2 执行上下文与作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE%E5%A2%9E%E5%BC%BA"><span class="toc-number">1.2.1.</span> <span class="toc-text">4.2.1 作用域链增强</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-number">1.2.2.</span> <span class="toc-text">4.2.2 变量声明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">1.3.</span> <span class="toc-text">4.3 垃圾回收</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-1-%E6%A0%87%E8%AE%B0%E6%B8%85%E7%90%86"><span class="toc-number">1.3.1.</span> <span class="toc-text">4.3.1 标记清理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-2-%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0"><span class="toc-number">1.3.2.</span> <span class="toc-text">4.3.2 引用计数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-3-%E6%80%A7%E8%83%BD"><span class="toc-number">1.3.3.</span> <span class="toc-text">4.3.3 性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-3-%E6%80%A7%E8%83%BD-1"><span class="toc-number">1.3.4.</span> <span class="toc-text">4.3.3 性能</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC-5-%E7%AB%A0-%E5%9F%BA%E6%9C%AC%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">第 5 章 基本引用类型</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2022-01-01T14:10:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-01</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/">CSS笔记（四）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2022-01-01T06:14:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">CSS笔记（三）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2021-12-31T16:00:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">CSS笔记（二）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -329,8 +394,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
