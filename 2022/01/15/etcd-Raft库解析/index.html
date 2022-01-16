@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>etcd Raft库解析 - Lamber&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon_b.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:type" content="blog"><meta property="og:title" content="etcd Raft库解析"><meta property="og:url" content="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2022-01-15T15:06:42.000Z"><meta property="article:modified_time" content="2022-01-16T03:07:51.930Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="Raft"><meta property="article:tag" content="etcd"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"},"headline":"etcd Raft库解析","image":["http://example.com/img/og_image.png"],"datePublished":"2022-01-15T15:06:42.000Z","dateModified":"2022-01-16T03:07:51.930Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.png"}},"description":"简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"}</script><link rel="canonical" href="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><link rel="icon" href="/img/favicon_b.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>etcd Raft库解析 - Lamber&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon_b.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:type" content="blog"><meta property="og:title" content="etcd Raft库解析"><meta property="og:url" content="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2022-01-15T15:06:42.000Z"><meta property="article:modified_time" content="2022-01-16T08:08:31.937Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="Raft"><meta property="article:tag" content="etcd"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"},"headline":"etcd Raft库解析","image":["http://example.com/img/og_image.png"],"datePublished":"2022-01-15T15:06:42.000Z","dateModified":"2022-01-16T08:08:31.937Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.png"}},"description":"简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"}</script><link rel="canonical" href="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><link rel="icon" href="/img/favicon_b.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
             hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
-        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/photos">相册</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-01-15T15:06:42.000Z" title="2022/1/15 下午11:06:42">2022-01-15</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-16T03:07:51.930Z" title="2022/1/16 上午11:07:51">2022-01-16</time></span><span class="level-item"><a class="link-muted" href="/categories/Raft%E7%AC%94%E8%AE%B0/">Raft笔记</a></span><span class="level-item">6 minutes read (About 891 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">etcd Raft库解析</h1><div class="content"><ul>
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/photos">相册</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-01-15T15:06:42.000Z" title="2022/1/15 下午11:06:42">2022-01-15</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-16T08:08:31.937Z" title="2022/1/16 下午4:08:31">2022-01-16</time></span><span class="level-item"><a class="link-muted" href="/categories/Raft%E7%AC%94%E8%AE%B0/">Raft笔记</a></span><span class="level-item">10 minutes read (About 1572 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">etcd Raft库解析</h1><div class="content"><ul>
 <li><a href="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/#p1"><font color="black">简介</font></a></li>
 <li><a href="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/#p2"><font color="black">输入及输出</font></a></li>
 <li><a href="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/#p3"><font color="black">raft库代码结构及核心数据结构</font></a></li>
@@ -120,6 +120,55 @@
 <td>在entries被写入持久化存储中以后，需要发送出去的数据</td>
 </tr>
 </tbody></table>
+<p>根据上面的分析，应用层在写入一段数据之后，Raft库将返回这样一个Ready结构体，其中可能某些字段是空的，毕竟不是每次改动都会导致Ready结构体中的成员都发生变化，此时使用者就需要根据情况，取出其中不为空的成员进行操作。</p>
+<p>在etcd项目中，也提供了使用Raft库的demo例子，在 contrib/raftexample 目录中，这里简单的演示了一下如何根据这个raft库实现一个简单的KV存储服务器，下面将根据代码结合着上面的Ready结构体，来分析etcd Raft库的使用。</p>
+<p>Raft库对外提供一个Node的interface，其实现有 raft/node.go 中的node结构体实现，这也是应用层唯一需要与Raft库直接打交道的结构体，简单的来看看Node接口需要实现的函数：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tick</td>
+<td>应用层每次tick时需要调用该函数，将会由这里驱动raft的一些操作比如选举等。至于tick的单位是多少由应用层自己决定，只要保证是恒定时间都会来调用一次就好了</td>
+</tr>
+<tr>
+<td>Campaign</td>
+<td>调用该函数将驱动节点进入候选人状态，进而将竞争leader</td>
+</tr>
+<tr>
+<td>Propose</td>
+<td>提议写入数据到日志中，可能会返回错误</td>
+</tr>
+<tr>
+<td>ProposeConfChange</td>
+<td>提交配置变更</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>将消息msg灌入状态机中</td>
+</tr>
+<tr>
+<td>Ready</td>
+<td>这里是核心函数，将返回Ready的channel，应用层需要关注这个channel，当发生变更时将其中的数据进行操作</td>
+</tr>
+<tr>
+<td>Advance</td>
+<td>Advance函数是当使用者已经将上一次Ready数据处理之后，调用该函数告诉raft库可以进行下一步的操作</td>
+</tr>
+</tbody></table>
+<p>我们暂且只看如何对接Ready结构体，在raftexample中，首先在main.go中创建了两个channel：</p>
+<ul>
+<li>proposeC：用于提交写入的数据</li>
+<li>confChangeC：用于提交配置改动数据</li>
+</ul>
+<p>然后分别启动如下核心的协程：</p>
+<ul>
+<li>启动HTTP服务器，用于接收用户的请求数据，最终会将用户请求的数据写入前面的proposeC/confChangeC channel中。</li>
+<li>启动raftNode结构体，该结构体中有上面提到的raft/node.go中的node结构体，也就是通过该结构体实现的Node接口与raft库进行交互。同时，raftNode还会启动协程监听前面的两个channel，收到数据之后通过Node接口的函数调用raft库对应的接口。</li>
+</ul>
 <hr>
 <h2 id="3-raft库代码结构及核心数据结构"><a href="#3-raft库代码结构及核心数据结构" class="headerlink" title="3. raft库代码结构及核心数据结构"></a><p id="p3">3. raft库代码结构及核心数据结构</p></h2><hr>
 <h2 id="4-节点状态"><a href="#4-节点状态" class="headerlink" title="4. 节点状态"></a><p id="p4">4. 节点状态</p></h2><hr>
