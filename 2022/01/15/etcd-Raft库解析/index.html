@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>etcd Raft库解析 - Lamber&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon_b.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:type" content="blog"><meta property="og:title" content="etcd Raft库解析"><meta property="og:url" content="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2022-01-15T15:06:42.000Z"><meta property="article:modified_time" content="2022-01-16T08:08:31.937Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="Raft"><meta property="article:tag" content="etcd"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"},"headline":"etcd Raft库解析","image":["http://example.com/img/og_image.png"],"datePublished":"2022-01-15T15:06:42.000Z","dateModified":"2022-01-16T08:08:31.937Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.png"}},"description":"简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"}</script><link rel="canonical" href="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><link rel="icon" href="/img/favicon_b.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>etcd Raft库解析 - Lamber&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon_b.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:type" content="blog"><meta property="og:title" content="etcd Raft库解析"><meta property="og:url" content="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/unstable.png"><meta property="og:image" content="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/raftlog.png"><meta property="article:published_time" content="2022-01-15T15:06:42.000Z"><meta property="article:modified_time" content="2022-01-16T09:41:22.553Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="Raft"><meta property="article:tag" content="etcd"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/unstable.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"},"headline":"etcd Raft库解析","image":["http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/unstable.png","http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/raftlog.png"],"datePublished":"2022-01-15T15:06:42.000Z","dateModified":"2022-01-16T09:41:22.553Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.png"}},"description":"简介 输入及输出 raft库代码结构及核心数据结构 节点状态 选举流程 集群成员变化流程 如何做到线性一致性 其他"}</script><link rel="canonical" href="http://example.com/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><link rel="icon" href="/img/favicon_b.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
             hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
-        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/photos">相册</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-01-15T15:06:42.000Z" title="2022/1/15 下午11:06:42">2022-01-15</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-16T08:08:31.937Z" title="2022/1/16 下午4:08:31">2022-01-16</time></span><span class="level-item"><a class="link-muted" href="/categories/Raft%E7%AC%94%E8%AE%B0/">Raft笔记</a></span><span class="level-item">10 minutes read (About 1572 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">etcd Raft库解析</h1><div class="content"><ul>
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/photos">相册</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-01-15T15:06:42.000Z" title="2022/1/15 下午11:06:42">2022-01-15</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-16T09:41:22.553Z" title="2022/1/16 下午5:41:22">2022-01-16</time></span><span class="level-item"><a class="link-muted" href="/categories/Raft%E7%AC%94%E8%AE%B0/">Raft笔记</a></span><span class="level-item">37 minutes read (About 5624 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">etcd Raft库解析</h1><div class="content"><ul>
 <li><a href="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/#p1"><font color="black">简介</font></a></li>
 <li><a href="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/#p2"><font color="black">输入及输出</font></a></li>
 <li><a href="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/#p3"><font color="black">raft库代码结构及核心数据结构</font></a></li>
@@ -166,11 +166,305 @@
 </ul>
 <p>然后分别启动如下核心的协程：</p>
 <ul>
-<li>启动HTTP服务器，用于接收用户的请求数据，最终会将用户请求的数据写入前面的proposeC/confChangeC channel中。</li>
-<li>启动raftNode结构体，该结构体中有上面提到的raft/node.go中的node结构体，也就是通过该结构体实现的Node接口与raft库进行交互。同时，raftNode还会启动协程监听前面的两个channel，收到数据之后通过Node接口的函数调用raft库对应的接口。</li>
+<li>启动HTTP服务器，用于接收用户的请求数据，最终会将用户请求的数据写入前面的 proposeC/confChangeC channel 中。</li>
+<li>启动raftNode结构体，该结构体中有上面提到的 raft/node.go 中的node结构体，也就是通过该结构体实现的Node接口与raft库进行交互。同时，raftNode还会启动协程监听前面的两个channel，收到数据之后通过Node接口的函数调用raft库对应的接口。</li>
+</ul>
+<p>总结一下上面的交互流程：HTTP服务器负责接收用户数据，再写入到两个核心channel中，而raftNode负责监听这两个channel。</p>
+<ul>
+<li>如果收到 proposeC channel 的消息，说明有数据提交，则调用Node.Propose函数进行数据的提交。</li>
+<li>如果收到 confChangeC channel 的消息，说明有配置变更，则调用 Node.ProposeConfChange 函数进行配置变更。</li>
+<li>设置一个定时器 tick，每次定时器到时时，调用 Node.Tick 函数。</li>
+<li>监听 Node.Ready 函数返回的Ready结构体channel，有数据变更时根据Ready结构体的不同数据类型进行相应的操作，完成了之后需要调用Node.Advance函数进行收尾。</li>
+</ul>
+<p>将以上流程用伪代码实现如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// HTTP server</span><br><span class="line">HttpServer主循环:</span><br><span class="line">  接收用户提交的数据：</span><br><span class="line">    如果是PUT请求：</span><br><span class="line">      将数据写入到proposeC中</span><br><span class="line">    如果是POST请求：</span><br><span class="line">      将配置变更数据写入到confChangeC中</span><br><span class="line">// raft Node</span><br><span class="line">raftNode结构体主循环：</span><br><span class="line">  如果proposeC中有数据写入：</span><br><span class="line">    调用 node.Propose 向raft库提交数据</span><br><span class="line">  如果confChangeC中有数据写入：</span><br><span class="line">    调用 node.Node.ProposeConfChange 向raft库提交配置变更数据</span><br><span class="line">  如果tick定时器到期：</span><br><span class="line">    调用 node.Tick 函数进行raft库的定时操作</span><br><span class="line">  如果 node.Ready() 函数返回的Ready结构体channel有数据变更：</span><br><span class="line">    依次处理Ready结构体中各成员数据</span><br><span class="line">    处理完毕之后调用node.Advance函数进行收尾处理</span><br></pre></td></tr></table></figure>
+
+<p>看到这里，对raft的使用应该有了一个基本的概念，即通过node结构体实现的Node接口与raft库进行交互，涉及数据变更的核心数据结构就是Ready结构体，接下来可以进一步来分析该库的实现了。</p>
+<hr>
+<h2 id="3-raft库代码结构及核心数据结构"><a href="#3-raft库代码结构及核心数据结构" class="headerlink" title="3. raft库代码结构及核心数据结构"></a><p id="p3">3. raft库代码结构及核心数据结构</p></h2><p>在这一部分，来看下raft库的代码组织。</p>
+<p>前面输入输出部分已经看到 raft/node.go 文件中，提供出去的是Node接口及其实现node结构体，这是外界与raft库交互的唯一接口，除此之外该路径下的其他文件并不直接与外界交互。</p>
+<p>接着是raft算法的实现文件，raft/raft.go 文件，其中包含两个核心数据结构：</p>
+<ul>
+<li>Config：与raft算法相关的配置参数都包装在该结构体中。从这个结构体的命名是大写字母开头，就可以知道是提供给外部调用的。</li>
+<li>raft：具体实现raft算法的结构体。</li>
+</ul>
+<p>除去上面两个文件，raft目录下的其他文件，都是间接给raft结构体服务的，下面的表格做一个总结和罗列：</p>
+<table>
+<thead>
+<tr>
+<th>结构体/接口</th>
+<th>所在文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node接口</td>
+<td>node.go</td>
+<td>提供raft库与外界交互的接口</td>
+</tr>
+<tr>
+<td>node</td>
+<td>node.go</td>
+<td>实现Node接口</td>
+</tr>
+<tr>
+<td>Config</td>
+<td>raft.go</td>
+<td>封装raft算法相关配置参数</td>
+</tr>
+<tr>
+<td>raft</td>
+<td>raft.go</td>
+<td>raft算法的实现</td>
+</tr>
+<tr>
+<td>ReadState</td>
+<td>read_only.go</td>
+<td>线性一致性读相关</td>
+</tr>
+<tr>
+<td>readOnly</td>
+<td>read_only.go</td>
+<td>线性一致性读相关</td>
+</tr>
+<tr>
+<td>raftLog</td>
+<td>log.go</td>
+<td>实现raft日志操作</td>
+</tr>
+<tr>
+<td>Progress</td>
+<td>progress.go</td>
+<td>该数据结构用于在leader中保存每个follower的状态信息，leader将根据这些信息决定发送给节点的日志</td>
+</tr>
+<tr>
+<td>Storage接口</td>
+<td>storage.go</td>
+<td>提供存储接口，应用层可以按照自己的需求实现该接口</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="3-1-日志存储：unstable"><a href="#3-1-日志存储：unstable" class="headerlink" title="3.1 日志存储：unstable"></a>3.1 日志存储：unstable</h3><p>顾名思义，unstable数据结构用于还没有被用户层持久化的数据，而其中又包括两部分，如下图所示：</p>
+<p><img src="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/unstable.png" alt="unstable"></p>
+<p>如图，前半部分是快照数据，而后半部分是日志条目组成的数组entries，另外 unstable.offset 成员保存的是entries数组中的第一条数据在raft日志中的索引，即第i条entries数组数据在raft日志中的索引为i + unstable.offset。</p>
+<p>这两个部分，并不同时存在，同一时间只有一个部分存在。其中，快照数据只有当前节点在接收从leader发送过来的快照数据时存在，在接收快照数据的时候，entries数组中是没有数据的；除了这种情况之外，就只会存在entries数组的数据了。因此，当接收完毕快照数据进入正常的接收日志流程时，快照数据将被置空。</p>
+<p>理解了以上unstable中数据的分布情况，就不难理解unstable各个函数成员的作用了：</p>
+<ul>
+<li>maybeFirstIndex：返回unstable数据的第一条数据索引。因为只有快照数据在最前面，因此这个函数只有当快照数据存在的时候才能拿到第一条数据索引，其他的情况下已经拿不到了。</li>
+<li>maybeLastIndex：返回最后一条数据的索引。因为是entries数据在后，而快照数据在前，所以取最后一条数据索引是从entries开始查，查不到的情况下才查快照数据。</li>
+<li>maybeTerm：这个函数根据传入的日志数据索引，得到这个日志对应的任期号。前面已经提过，unstable.offset是快照数据和entries数组的分界线，因为在这个函数中，会区分传入的参数与offset的大小关系，小于offset的情况下在快照数据中查询，否则就在entries数组中查询了。</li>
+<li>stableTo：该函数传入一个索引号i和任期号t，表示应用层已经将这个索引之前的数据进行持久化了，此时unstable要做的事情就是在自己的数据中查询，只有在满足任期号相同以及i大于等于offset的情况下，可以将entries中的数据进行缩容，将i之前的数据删除。</li>
+<li>stableSnapTo：该函数传入一个索引i，用于告诉unstable，索引i对应的快照数据已经被应用层持久化了，如果这个索引与当前快照数据对应的上，那么快照数据就可以被置空了。</li>
+<li>restore：从快照数据中恢复，此时unstable将保存快照数据，同时将offset成员设置成这个快照数据索引的下一位。</li>
+<li>truncateAndAppend：传入日志条目数组，这段数据将添加到entries数组中。但是需要注意的是，传入的数据跟现有的entries数据可能有重合的部分，所以需要根据unstable.offset与传入数据的索引大小关系进行处理，有些数据可能会被截断。</li>
+<li>slice：返回索引范围在[lo-u.offset : hi-u.offset]之间的数据。</li>
+<li>mustCheckOutOfBounds：检查传入的数据索引范围是否合理。</li>
 </ul>
 <hr>
-<h2 id="3-raft库代码结构及核心数据结构"><a href="#3-raft库代码结构及核心数据结构" class="headerlink" title="3. raft库代码结构及核心数据结构"></a><p id="p3">3. raft库代码结构及核心数据结构</p></h2><hr>
+<h3 id="3-2-日志存储：Storage接口"><a href="#3-2-日志存储：Storage接口" class="headerlink" title="3.2 日志存储：Storage接口"></a>3.2 日志存储：Storage接口</h3><p>Storage接口，提供了存储持久化日志相关的接口操作.</p>
+<ul>
+<li>InitialState() (pb.HardState, pb.ConfState, error)：返回当前的初始状态，其中包括硬状态（HardState）以及配置（里面存储了集群中有哪些节点）。</li>
+<li>Entries(lo, hi, maxSize uint64) ([]pb.Entry, error)：传入起始和结束索引值，以及最大的尺寸，返回索引范围在这个传入范围以内并且不超过大小的日志条目数组。</li>
+<li>Term(i uint64) (uint64, error)：传入日志索引i，返回这条日志对应的任期号。找不到的情况下error返回值不为空，其中当返回ErrCompacted表示传入的索引数据已经找不到，说明已经被压缩成快照数据了；返回ErrUnavailable：表示传入的索引值大于当前的最大索引。</li>
+<li>LastIndex() (uint64, error)：返回最后一条数据的索引。</li>
+<li>FirstIndex() (uint64, error)：返回第一条数据的索引。</li>
+<li>Snapshot() (pb.Snapshot, error)：返回最近的快照数据。</li>
+</ul>
+<p>codedump对这个接口提供的接口函数存有疑问，因为在所有etcd代码中，该接口只有MemoryStorage一个实现，而实际上MemoryStorage这个结构体还有其他的函数，比如添加日志数据的操作，但是这个操作并没有在Storage接口中声明。而Storage接口的 MemoryStorage 结构体的实现，其成员主要包括以下几个部分：</p>
+<ul>
+<li>hardState pb.HardState：存储硬状态。</li>
+<li>snapshot pb.Snapshot：存储快照数据。</li>
+<li>ents []pb.Entry：存储紧跟着快照数据的日志条目数组，即ents[i]保存的日志数据索引位置为i + snapshot.Metadata.Index。</li>
+</ul>
+<hr>
+<h3 id="3-3-日志存储：raftLog的实现"><a href="#3-3-日志存储：raftLog的实现" class="headerlink" title="3.3 日志存储：raftLog的实现"></a>3.3 日志存储：raftLog的实现</h3><p>在unstable、Storage的基础上，我们来看一下raftLog的实现，这个结构体承担了raft日志相关的操作，它由一下成员组成：</p>
+<ul>
+<li>storage Storage：前面提到的存放已经持久化数据的Storage接口。</li>
+<li>unstable unstable：前面分析过的unstable结构体，用于保存应用层还没有持久化的数据。</li>
+<li>committed uint64：保存当前提交的日志数据索引。</li>
+<li>applied uint64：保存当前传入状态机的数据最高索引。</li>
+</ul>
+<p>在Raft算法原理中也提到过，一条日志数据，首先需要先被提交（committed）成功，才能被应用（applied）到状态机中。因此，以下不等式一直成立：applied &lt;= committed。</p>
+<p>raftLog结构体中，几部分数据的排列如下图所示：</p>
+<p><img src="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/raftlog.png" alt="raftlog"></p>
+<p>这个数据排布的情况，可以从raftLog的初始化函数中看出来：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newLog</span><span class="params">(storage Storage, logger Logger)</span> *<span class="title">raftLog</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> storage == <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Panic(<span class="string">&quot;storage must not be nil&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	log := &amp;raftLog&#123;</span><br><span class="line">		storage: storage,</span><br><span class="line">		logger:  logger,</span><br><span class="line">	&#125;</span><br><span class="line">	firstIndex, err := storage.FirstIndex()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err) <span class="comment">// TODO(bdarnell)</span></span><br><span class="line">	&#125;</span><br><span class="line">	lastIndex, err := storage.LastIndex()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err) <span class="comment">// TODO(bdarnell)</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// offset从持久化之后的最后一个index的下一个开始</span></span><br><span class="line">	log.unstable.offset = lastIndex + <span class="number">1</span></span><br><span class="line">	log.unstable.logger = logger</span><br><span class="line">	<span class="comment">// Initialize our committed and applied pointers to the time of the last compaction.</span></span><br><span class="line">	<span class="comment">// committed和applied从持久化的第一个index的前一个开始</span></span><br><span class="line">	log.committed = firstIndex - <span class="number">1</span></span><br><span class="line">	log.applied = firstIndex - <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> log</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里：</p>
+<ul>
+<li>firstIndex：该值取自storage.FirstIndex()，可以从MemoryStorage的实现看到，该值是MemoryStorage.ents数组的第一个数据索引，也就是MemoryStorage结构体中快照数据与日志条目数据的分界线。</li>
+<li>lastIndex：该值取自storage.LastIndex()，可以从MemoryStorage的实现看到，该值是MemoryStorage.ents数组的最后一个数据索引。</li>
+<li>unstable.offset：该值为lastIndex索引的下一个位置。</li>
+<li>committed、applied：在初始的情况下，这两个值是firstIndex的上一个索引位置，这是因为在firstIndex之前的数据既然已经是持久化数据了，说明都是已经被提交成功的数据了。</li>
+</ul>
+<p>因此，从这里的代码分析可以看出，raftLog的两部分，持久化存储和非持久化存储，它们之间的分界线就是lastIndex，在此之前都是Storage管理的已经持久化的数据，而在此之后都是unstable管理的还没有持久化的数据。</p>
+<p>以上分析中还有一个疑问，为什么并没有初始化unstable.snapshot成员，即unstable结构体的快照数据？这是因为，上面这个是初始化函数，也就是节点刚启动的时候调用来初始化存储状态的函数，而 unstable.snapshot 数据，是在启动之后同步数据的过程中，如果需要同步快照数据时才会去进行赋值修改的数据，因此在这里并不需要对其操作。</p>
+<hr>
+<h3 id="3-4-Raft-消息结构体"><a href="#3-4-Raft-消息结构体" class="headerlink" title="3.4 Raft 消息结构体"></a>3.4 Raft 消息结构体</h3><p>大体而言，raft算法本质上是一个大的状态机，任何的操作例如选举、提交数据等，最后的操作一定是封装成一个消息结构体，输入到raft算法库的状态机中。</p>
+<p>在raft/raftpb/raft.proto文件中，定义了raft算法中传输消息的结构体。熟悉raft论文的都知道，raft算法其实由好几个协议组成，但是在这里，统一定义在了Message这个结构体之中，以下总结了该结构体的成员用途。</p>
+<table>
+<thead>
+<tr>
+<th>成员</th>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>MessageType</td>
+<td>消息类型</td>
+</tr>
+<tr>
+<td>to</td>
+<td>uint64</td>
+<td>消息接收者的节点ID</td>
+</tr>
+<tr>
+<td>from</td>
+<td>uint64</td>
+<td>消息发送者的节点ID</td>
+</tr>
+<tr>
+<td>term</td>
+<td>uint64</td>
+<td>任期ID</td>
+</tr>
+<tr>
+<td>logTerm</td>
+<td>uint64</td>
+<td>日志所处的任期ID</td>
+</tr>
+<tr>
+<td>index</td>
+<td>uint64</td>
+<td>日志索引ID，用于节点向leader汇报自己已经commit的日志数据ID</td>
+</tr>
+<tr>
+<td>entries</td>
+<td>Entry</td>
+<td>日志条目数组</td>
+</tr>
+<tr>
+<td>commit</td>
+<td>uint64</td>
+<td>提交日志索引</td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>Snapshot</td>
+<td>快照数据</td>
+</tr>
+<tr>
+<td>reject</td>
+<td>bool    是否拒绝</td>
+<td></td>
+</tr>
+<tr>
+<td>rejectHint</td>
+<td>uint64</td>
+<td>拒绝同步日志请求时返回的当前节点日志ID，用于被拒绝方快速定位到下一次合适的同步日志位置</td>
+</tr>
+<tr>
+<td>context</td>
+<td>bytes</td>
+<td>上下文数据</td>
+</tr>
+</tbody></table>
+<p>由于这个Message结构体，全部将raft协议相关的数据都定义在了一起，有些协议不是用到其中的全部数据，所以这里的字段都是可选的，codedump认为这样不好，这会看起来杂乱无章，所以有必要将每个协议（即不同的消息类型）中使用的用途分别记录。</p>
+<hr>
+<h3 id="3-5-MsgHup消息"><a href="#3-5-MsgHup消息" class="headerlink" title="3.5 MsgHup消息"></a>3.5 MsgHup消息</h3><table>
+<thead>
+<tr>
+<th>成员</th>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>MsgHup</td>
+<td>不用于节点间通信，仅用于发送给节点让节点进行选举</td>
+</tr>
+<tr>
+<td>to</td>
+<td>uint64</td>
+<td>消息接收者的节点ID</td>
+</tr>
+<tr>
+<td>from</td>
+<td>uint64</td>
+<td>本节点ID</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="3-6-MsgBeat消息"><a href="#3-6-MsgBeat消息" class="headerlink" title="3.6 MsgBeat消息"></a>3.6 MsgBeat消息</h3><table>
+<thead>
+<tr>
+<th>成员</th>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>MsgBeat</td>
+<td>仅用于leader节点在heartbeat定时器到期时向集群中其他节点发送心跳消息</td>
+</tr>
+<tr>
+<td>to</td>
+<td>uint64</td>
+<td>消息接收者的节点ID</td>
+</tr>
+<tr>
+<td>from</td>
+<td>uint64</td>
+<td>本节点ID</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="3-7-MsgProp消息"><a href="#3-7-MsgProp消息" class="headerlink" title="3.7 MsgProp消息"></a>3.7 MsgProp消息</h3><table>
+<thead>
+<tr>
+<th>成员</th>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>MsgProp</td>
+<td>raft库使用者提议（propose）数据</td>
+</tr>
+<tr>
+<td>to</td>
+<td>uint64</td>
+<td>消息接收者的节点ID</td>
+</tr>
+<tr>
+<td>from</td>
+<td>uint64</td>
+<td>本节点ID</td>
+</tr>
+<tr>
+<td>entries</td>
+<td>Entry</td>
+<td>日志条目数组</td>
+</tr>
+</tbody></table>
+<p>raft库的使用者向raft库propose数据时，最后会封装成这个类型的消息来进行提交，不同类型的节点处理不同:</p>
+<h4 id="candidate"><a href="#candidate" class="headerlink" title="candidate"></a>candidate</h4><p>由于candidate节点没有处理propose数据的责任，直接忽略这类消息。</p>
+<h4 id="follower"><a href="#follower" class="headerlink" title="follower"></a>follower</h4><p>首先检查集群内是否有leader存在，如果当前没有leader存在，说明还在选举过程中，直接忽略这类消息；否则转发给leader处理。</p>
+<h4 id="leader"><a href="#leader" class="headerlink" title="leader"></a>leader</h4><p>leader对MsgProp消息的处理如下：</p>
+<ol>
+<li>检查entries数组是否没有数据，这是一个保护性检查。</li>
+<li>检查本节点是否还在集群之中，如果已经不在了则直接返回不进行下一步处理。什么情况下会出现一个leader节点发现自己不存在集群之中了？这在Raft算法原理中提到过，这种情况出现在本节点已经通过配置变化被移除出了集群的场景。</li>
+<li>检查 raft.leadTransferee 字段，当这个字段不为0时说明正在进行leader迁移操作，这种情况下不允许提交数据变更操作，因此此时也是直接返回的。</li>
+<li>检查消息的entries数组，看其中是否带有配置变更的数据。如果其中带有数据变更而 raft.pendingConf为true，说明当前有未提交的配置更操作数据，根据raft论文，每次不同同时进行一次以上的配置变更，因此这里会将entries数组中的配置变更数据置为空数据。</li>
+<li>到了这里可以进行真正的数据propose操作了，将调用raft算法库的日志模块写入数据，根据返回的情况向其他节点广播消息。</li>
+</ol>
+<hr>
+<h3 id="3-8-MsgApp和MsgSnap消息"><a href="#3-8-MsgApp和MsgSnap消息" class="headerlink" title="3.8 MsgApp和MsgSnap消息"></a>3.8 MsgApp和MsgSnap消息</h3><hr>
 <h2 id="4-节点状态"><a href="#4-节点状态" class="headerlink" title="4. 节点状态"></a><p id="p4">4. 节点状态</p></h2><hr>
 <h2 id="5-选举流程"><a href="#5-选举流程" class="headerlink" title="5. 选举流程"></a><p id="p5">5. 选举流程</p></h2><hr>
 <h2 id="6-集群成员变化流程"><a href="#6-集群成员变化流程" class="headerlink" title="6. 集群成员变化流程"></a><p id="p6">6. 集群成员变化流程</p></h2><hr>
