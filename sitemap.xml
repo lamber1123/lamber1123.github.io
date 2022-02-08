@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2022/02/07/%E5%AE%89%E8%A3%85-openGauss/</loc>
+    <loc>http://example.com/2022/02/05/%E5%AE%89%E8%A3%85%20CentOS-7/</loc>
     
     <lastmod>2022-02-08</lastmod>
     
@@ -11,9 +11,18 @@
   </url>
   
   <url>
-    <loc>http://example.com/2022/02/05/%E5%AE%89%E8%A3%85%20CentOS-7/</loc>
+    <loc>http://example.com/2022/02/08/%E7%BC%96%E8%AF%91-openGauss/</loc>
     
-    <lastmod>2022-02-07</lastmod>
+    <lastmod>2022-02-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/2022/02/07/%E5%AE%89%E8%A3%85-openGauss/</loc>
+    
+    <lastmod>2022-02-08</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -497,14 +506,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/centos/</loc>
+    <loc>http://example.com/tags/openGauss/</loc>
     <lastmod>2022-02-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/openGauss/</loc>
+    <loc>http://example.com/tags/CentOS/</loc>
     <lastmod>2022-02-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -562,14 +571,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/centos/</loc>
+    <loc>http://example.com/categories/openGauss/</loc>
     <lastmod>2022-02-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/openGauss/</loc>
+    <loc>http://example.com/categories/CentOS/</loc>
     <lastmod>2022-02-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
