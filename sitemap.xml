@@ -2,7 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2022/02/10/openGauss%20%E4%B8%AD%E7%9A%84%20DCF/</loc>
+    <loc>http://example.com/2022/04/02/openGauss-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2022-04-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/2022/03/22/openGauss-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</loc>
     
     <lastmod>2022-04-02</lastmod>
     
@@ -13,16 +22,16 @@
   <url>
     <loc>http://example.com/photos/index.html</loc>
     
-    <lastmod>2022-04-01</lastmod>
+    <lastmod>2022-04-02</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/2022/03/22/openGauss-%E5%AD%98%E5%82%A8%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</loc>
+    <loc>http://example.com/2022/02/10/openGauss%20%E4%B8%AD%E7%9A%84%20DCF/</loc>
     
-    <lastmod>2022-03-22</lastmod>
+    <lastmod>2022-04-02</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
