@@ -1,0 +1,336 @@
+body, ul, p, h2, h3, h4{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	font-family: "微软雅黑";
+}
+
+ul,li{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+a:link{color: black;}
+a:visited{color: black;}
+a:hover{color: green;}
+
+.song_reco, .new_song, .brilliant, .album_first, .rank, .foot{
+	padding-bottom: 50px;
+	padding: 50px 0 50px 0;
+}
+
+.reco_con, .song_con, .bri_con, .album_con, .rank_con, .foot_con{
+	width: 1200px;
+	margin:0 auto;
+}
+
+.tit{
+	font-size: 30px;
+	color: #333;
+	letter-spacing: 14px;
+	text-align: center;
+	line-height: 30px;
+	margin-bottom: 35px;
+}
+
+.reco_list{
+	overflow: hidden;
+}
+
+.reco_list li {
+	width: 224px;
+	float: left;
+	margin-right: 20px;
+}
+
+.reco_list .nomargin {
+	margin-right: 0px;
+}
+
+.list_pic img{
+	width: 224px;
+	vertical-align: top;
+}
+
+.list_tit{
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 28px;
+	margin-top: 5px;
+}
+
+
+/*新歌首发*/
+.tab{
+	overflow: hidden;
+	padding-left: 360px;
+	margin-bottom: 40px;
+}
+
+.tab a{
+	font-size: 14px;
+	line-height: 22px;
+	float: left;
+	margin-right: 52px;
+}
+
+.song_list{
+	overflow: hidden;
+}
+
+.song_list .nomargin{
+	margin-right: 0px;
+}
+
+.song_list li{
+	padding: 12px 0;
+	overflow: hidden;
+	border-bottom: 1px solid #f2f2f2;
+	width: 380px;
+	float: left;
+	margin-right: 30px;
+}
+
+.pic, .txt, .time{
+	float: left;
+}
+
+.pic{
+	width: 86px;
+	height: 86px;
+}
+
+.pic img{
+	width: 86px;
+}
+
+.txt{
+	padding: 19px 0px 17px 0px;
+	width: 200px;
+	margin: 0px 38px 0px 14px;
+}
+
+.txt h3{
+	font-size: 14px;
+	line-height: 25px;
+	font-weight: normal;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.txt p{
+	font-size: 14px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.txt p a{
+	color: #999;
+}
+
+.time{
+	font-size: 14px;
+	color: #999;
+	line-height: 86px;
+}
+
+/* 精彩推荐 */
+.bri_list{
+	overflow: hidden;
+}
+
+.bri_list li{
+	width: 590px;
+	height: 235px;
+	float: left;
+}
+
+.bri_list .flo_rig{
+	float: right;
+}
+
+.bri_list li img{
+	width:590px;
+	hight: 
+}
+
+/* 新碟首发 */
+.album_song{
+	font-size: 14px;
+	font-weight: normal;
+	margin-top: 10px;
+	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.album_author{
+	font-size: 14px;
+	font-weight: normal;
+	margin-bottom: 25px;
+	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.album_author a:visited{
+	font-weight: normal;
+	color: gray;
+}
+
+.album_author a:hover{
+	color: green;
+}
+
+/* 排行榜 */
+
+.disc_list p{
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.disc_list p a{
+	color: #999;
+}
+
+.disc_list p a:hover{
+	color: #31c27c;
+}
+
+.rank_list{
+	overflow:hidden;
+}
+
+.rank_list .nomargin{
+	margin-right: 0;
+}
+
+.list_item{
+	width: 164px;
+	height: 430px;
+	margin-right: 20px;
+	float: left;
+	background: url(../image/bg_index_top.jpg) no-repeat;
+	padding: 70px 30px 0px;
+}
+
+.list2{
+	background-position: -244px 0;
+}
+
+.list3{
+	background-position: -488px 0;
+}
+
+.list4{
+	background-position: -732px 0;
+}
+
+.list5{
+	background-position: -980px 0;
+}
+
+.list_item h3{
+	font-size: 26px;
+	line-height: 58px;
+	color: #fff;
+	font-weight: 400;
+	text-align: center;
+}
+
+.list_item i{
+	display:block;
+	width: 36px;
+	height: 2px;
+	background: #fff;
+	margin: 32px auto;
+}
+
+.item_del li{
+	font-size: 14px;
+	color: #fff;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+.item_del .num{
+	line-height: 29px;
+	float: left;
+	width:20px;
+}
+
+.item_del .del_txt{
+	float: left;
+	width: 144px;
+}
+
+.del_txt p{
+	line-height: 29px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.del_txt p a{
+	color: #fff;
+}
+
+.del_txt p a:hovor{
+	color: white;
+}
+
+.pich{
+	width: 1200px;
+}
+
+/* 底部 */
+.foot{
+	background: #333;
+}
+
+.foot a{
+	color: #999;
+	display: block;
+}
+
+.bt{
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 77px;
+}
+
+.down_list{
+	overflow: hidden;
+}
+
+.down_item i{
+	display: block;
+	background: url(../image/footer.png) no-repeat;
+	margin: 0px, 29px;
+}
+
+.item01{
+	margin-left: 0px;
+}
+
+.item01 i{
+	width: 37px;
+	height: 47px;
+	background-position: -3px -3px;
+}
+
+.down_item span{
+	display: block;
+	font-size: 14px;
+	line-height: 40px;
+	text-align: center;
+}
