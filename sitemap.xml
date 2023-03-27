@@ -589,13 +589,6 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://lameber1123.github.io/tags/Android/</loc>
-    <lastmod>2023-03-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
@@ -656,13 +649,6 @@
   
   <url>
     <loc>https://lameber1123.github.io/categories/hexo/</loc>
-    <lastmod>2023-03-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lameber1123.github.io/categories/%E6%91%B8%E9%B1%BC/</loc>
     <lastmod>2023-03-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
