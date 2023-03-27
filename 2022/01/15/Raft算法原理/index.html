@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="msvalidate.01" content="D5358D241F26545F49E55D403F921D5D"><meta name="google-site-verification" content="7h0jWlXl61CeDREpTs47QhQ9Qz7CJptnpSUcrIxB_II"><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>Raft算法原理 - Lamber&#039;s Blog: Lamber的个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简介 Raft 算法流程 集群成员变更 日志压缩 高效处理只读请求"><meta property="og:type" content="blog"><meta property="og:title" content="Raft算法原理"><meta property="og:url" content="https://lameber1123.github.io/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="简介 Raft 算法流程 集群成员变更 日志压缩 高效处理只读请求"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/raft-states.jpg"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/raftlog.jpg"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication.png"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication2.png"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication3.png"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/inconsistentlog.jpg"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/preterm-log.jpeg"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/disjoint-majorities.jpg"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/add-new-server.jpg"><meta property="og:image" content="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/snapshot.png"><meta property="article:published_time" content="2022-01-15T07:20:52.000Z"><meta property="article:modified_time" content="2022-01-19T04:48:15.393Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="Raft"><meta property="article:tag" content="分布式"><meta property="article:tag" content="RPC"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/raft-states.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://lameber1123.github.io"},"headline":"Raft算法原理","image":["https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/raft-states.jpg","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/raftlog.jpg","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication.png","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication2.png","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication3.png","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/inconsistentlog.jpg","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/disjoint-majorities.jpg","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/add-new-server.jpg","https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/snapshot.png"],"datePublished":"2022-01-15T07:20:52.000Z","dateModified":"2022-01-19T04:48:15.393Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"https://lameber1123.github.io/img/logo.png"}},"description":"简介 Raft 算法流程 集群成员变更 日志压缩 高效处理只读请求"}</script><link rel="canonical" href="https://lameber1123.github.io/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-01-15T07:20:52.000Z" title="2022/1/15 下午3:20:52">2022-01-15</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-19T04:48:15.393Z" title="2022/1/19 下午12:48:15">2022-01-19</time></span><span class="level-item"><a class="link-muted" href="/categories/Raft%E7%AC%94%E8%AE%B0/">Raft笔记</a></span><span class="level-item">an hour read (About 8565 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">Raft算法原理</h1><div class="content"><ul>
+<li>简介</li>
+<li>Raft 算法流程</li>
+<li>集群成员变更</li>
+<li>日志压缩</li>
+<li>高效处理只读请求</li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p1">1. 简介</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2">2. Raft 算法流程</a><ul>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2_1">2.1 算法概述</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2_2">2.2 Raft 算法基础</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2_3">2.3 leader 选举</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2_4">2.4 日志复制</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2_5">2.5 新 leader 与 follower 同步数据</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2_6">2.6 安全性-选举限制</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p2_7">2.7 安全性-提交前面任期的日志条目</a></li>
+</ul>
+</li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p3">3. 集群成员变更</a><ul>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p3_1">3.1 安全性</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p3_2">3.2 可用性-添加新节点到集群中</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p3_3">3.3 可用性-删除当前集群的leader节点</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p3_4">3.4 可用性-处理移除集群的节点</a></li>
+</ul>
+</li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p4">4. 日志压缩</a></li>
+<li><a href="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/#p5">5. 高效处理只读请求</a></li>
+</ul>
+<hr>
+<h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a><p id="p1">1. 简介</p></h2><p>我写这篇笔记的目的是系统的来解析 etcd raft 库，这篇笔记是在codedump的网络日志基础之上记录的。之所以如此详细的学习Raft算法，是因为我的本科毕业设计的题目是参照Raft算法实现数据库的分布式存储。后面我还会对Raft源码解析和我对Raft的应用再做记录。</p>
+<p>关于Raft算法，最初有两篇论文做理论支撑。一篇是<a target="_blank" rel="noopener" href="https://web.stanford.edu/~ouster/cgi-bin/papers/raft-atc14">《In search of an Understandable Consensus Algorithm》</a>，这篇论文只有16页，仅对Raft做了简单的介绍，有很多的细节没有涉及到。第二篇论文是<a target="_blank" rel="noopener" href="https://web.stanford.edu/~ouster/cgi-bin/papers/OngaroPhD.pdf">《Consensus: Bridging Theory and Practice》</a>，在第一篇的基础上加了大量的细节描述，足足有258页之多。据codedump所说，etcd raft库的代码基本就是参照第二篇论文的所编写的。</p>
+<hr>
+<h2 id="2-Raft-算法流程"><a href="#2-Raft-算法流程" class="headerlink" title="2. Raft 算法流程"></a><p id="p2">2. Raft 算法流程</p></h2><h3 id="2-1-算法概述"><a href="#2-1-算法概述" class="headerlink" title="2.1 算法概述"></a><p id="p2_1">2.1 算法概述</p></h3><p>Raft 算法由leader节点来处理一致性问题。leader节点接收来自客户端的请求日志数据，然后同步到集群中其它节点进行复制，当日志已经同步到超过半数以上节点的时候，leader节点再通知集群中其它节点哪些日志已经被复制成功，可以提交到Raft状态机中执行。</p>
+<p>通过以上方式，Raft算法将要解决的一致性问题分为了以下几个子问题：</p>
+<ul>
+<li><strong>leader选举</strong>：集群中必须存在一个leader节点。</li>
+<li><strong>日志复制</strong>：leader节点接收来自客户端的请求然后将这些请求序列化成日志数据再同步到集群中其它节点。</li>
+<li><strong>安全性</strong>：如果某个节点已经将一条提交过的数据输入Raft状态机执行了，那么其它节点不可能再将相同索引的另一条日志数据输入到Raft状态机中执行。</li>
+</ul>
+<p>而 Raft 算法需要一直保持的几个属性：</p>
+<ul>
+<li><strong>选举安全性</strong>（Election Safety）：在一个任期内只能存在最多一个leader节点。</li>
+<li><strong>Leader节点上的日志为只添加</strong>（Leader Append-Only）：leader节点永远不会删除或者覆盖本节点上面的日志数据，leader节点上写日志的操作只可能是添加操作。</li>
+<li><strong>日志匹配性</strong>（Log Matching）：如果两个节点上的日志，在日志的某个索引上的日志数据其对应的任期号相同，那么在两个节点在这条日志之前的日志数据完全匹配。</li>
+<li><strong>leader完备性</strong>（Leader Completeness）：如果一条日志在某个任期被提交，那么这条日志数据在leader节点上更高任期号的日志数据中都存在。</li>
+<li><strong>状态机安全性</strong>（State Machine Safety）：如果某个节点已经将一条提交过的数据输入raft状态机执行了，那么其它节点不可能再将相同索引的另一条日志数据输入到raft状态机中执行。</li>
+</ul>
+<hr>
+<h3 id="2-2-Raft-算法基础"><a href="#2-2-Raft-算法基础" class="headerlink" title="2.2 Raft 算法基础"></a><p id="p2_2">2.2 Raft 算法基础</p></h3><p>在Raft算法中，一个集群里面的所有节点有以下三种状态：</p>
+<ul>
+<li><strong>Leader</strong>：领导者，一个集群里只能存在一个Leader。</li>
+<li><strong>Follower</strong>：跟随者，follower是被动的，一个客户端的修改数据请求如果发送到Follower上面时，会首先由Follower重定向到Leader上，</li>
+<li><strong>Candidate</strong>：参与者，一个节点切换到这个状态时，将开始进行一次新的选举。</li>
+</ul>
+<p>每开始一次新的选举时，称为一个任期。每个任期都有一个对应的任期号Term，这是一个严格递增的整数值。</p>
+<p>节点的状态切换状态机如下图所示：<br><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/raft-states.jpg" alt="raft-states"></p>
+<p>上图中的六种状态，下文会详细展开讨论:</p>
+<ul>
+<li><strong>start up</strong>：起始状态，节点刚启动的时候自动进入的是follower状态。</li>
+<li><strong>times out, starts election</strong>：follower在启动之后，将开启一个选举超时的定时器，当这个定时器到期时，将切换到candidate状态发起选举。</li>
+<li><strong>times out, new election</strong>：进入candidate 状态之后就开始进行选举，但是如果在下一次选举超时到来之前，都还没有选出一个新的leade，那么还会保持在candidate状态重新开始一次新的选举。</li>
+<li><strong>receives votes from majority of servers</strong>：当candidate状态的节点，收到了超过半数的节点选票，那么将切换状态成为新的leader。</li>
+<li><strong>discovers current leader or new term</strong>：candidate状态的节点，如果收到了来自leader的消息，或者更高任期号的消息，都表示已经有leader了，将切换回到follower状态。</li>
+<li><strong>discovers server with higher term</strong>：leader状态下如果收到来自更高任期号的消息，将切换到follower状态。这种情况大多数发生在有网络分区的状态下。</li>
+</ul>
+<p>如果一个candidate在一次选举中赢得大多数选票，那么这个节点将在该任期中成为leader。但并不是每个任期号都有leader，比如在情况3中，可能在选举超时到来之前都没有产生一个新的leader，那么此时任期号自增并开始一次新的选举。</p>
+<p>可见，任期号Term在Raft中更像一个逻辑时钟。根据任期号，集群可以发现哪些节点状态已过期。每个节点都会保存任期号，并在通信时带上记录的任期号。如果一个节点的任期号小于其他节点的任期号，则说明当前状态已过期，需要同步到最新任期号。如果当处于candidate或leader状态的节点发现自己的任期号小于其他节点，则主动切换至follower状态。相反，如果一个节点收到状态过期节点的消息，则拒绝这一消息。</p>
+<p>raft节点之间通过<font color="red">RPC请求</font>来互相通信，主要有以下两类RPC请求：</p>
+<ul>
+<li><strong>RequestVote RPC</strong>：用于candidate状态的节点进行选举。</li>
+<li><strong>AppendEntries RPC</strong>：用于leader节点向其他节点复制日志数据和同步心跳。</li>
+</ul>
+<hr>
+<h3 id="2-3-leader-选举"><a href="#2-3-leader-选举" class="headerlink" title="2.3 leader 选举"></a><p id="p2_3">2.3 leader 选举</p></h3><p>raft算法是使用<font color="red">心跳机制</font>来触发leader选举的。</p>
+<p>leader节点通过周期性的发送带有空数据的 AppendEntries RPC 来发送心跳请求，目的是来维持着leader节点状态。而每个follower都有一个选举超时（election timeout）定时器，如果在定时器超时前都没有收到来自leader的心跳请求，则判定集群中已经没有leader了，它将发起新一轮选举。</p>
+<p>发起选举时，follower将递增它的任期号然后切换到candidate状态。然后通过向集群中其它节点发送 RequestVote RPC 请求来发起一次新的选举。一个节点将保持在该任期内的candidate状态下，直到以下一种情况发生：</p>
+<ul>
+<li>该candidate节点收到超过半数以上集群中其它节点的选票，赢得选举并成为leader。</li>
+<li>另一个节点成为了leader。</li>
+<li>选举超时到来时没有任何一个节点成为leader。</li>
+</ul>
+<p>对于第一种情况，如果节点收到了集群中半数以上节点的投票，那么此时candidate节点将成为新的leader。每个节点在一个任期中只有一票且优先投给自己，并遵守先到先得的原则。这就保证了，每个任期内最多只有一个节点会成为leader。当一个candidate节点赢得选举成为leader后，它将立即发送心跳消息通知其他节点以阻止发起新的选举。</p>
+<p>对于第二种情况，当candidate节点收到了来自其它节点的 AppendEntries RPC 请求，同时请求的任期号大约等于candidate节点，说明集群中已经存在新leader了，此时candidate节点主动切换至follower状态。但是，如果该RPC请求的任期号小于candidate节点，则直接拒绝并保持candidate状态。</p>
+<p>对于第三种情况，选举超时都没有节点赢得选举。这种情况发生在集群节点数量为偶数，同时有两个candidate节点获得的选票数量都是一样时。此时candidate节点将递增任期号并再次发起一次新的选举。这种情况有可能一直无限发生下去，所以应尽量保证节点数为奇数，并设置随机选举超时时间，其范围在150ms~300ms间。</p>
+<p>leader选举过程伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">节点启动，进入follower状态，创建一个介于150ms~300ms之间的选举超时定时器。</span><br><span class="line"></span><br><span class="line">follower状态节点主循环：</span><br><span class="line">  如果收到leader节点心跳：</span><br><span class="line">    心跳标志位 置1</span><br><span class="line"></span><br><span class="line">  如果选举超时到期：</span><br><span class="line">    没有收到leader节点心跳：</span><br><span class="line">      任期号term+1，换到candidate状态。</span><br><span class="line">    如果收到leader节点心跳：</span><br><span class="line">      心跳标志位 置0</span><br><span class="line"></span><br><span class="line">  如果收到选举消息：</span><br><span class="line">    如果当前没有给任何节点投票过或者消息的任期号大于当前任期号：</span><br><span class="line">      投票给该节点</span><br><span class="line">    否则：</span><br><span class="line">      拒绝投票给该节点</span><br><span class="line"></span><br><span class="line">candidate状态节点主循环：</span><br><span class="line">  向集群中其他节点发送RequestVote请求，请求中带有当前任期号term</span><br><span class="line">  收到AppendEntries消息：</span><br><span class="line">    如果该消息的任期号大于等于本节点任期号：</span><br><span class="line">      切换到follower状态</span><br><span class="line">    否则：</span><br><span class="line">      拒绝该消息</span><br><span class="line">  </span><br><span class="line">  收到其他节点应答RequestVote消息：</span><br><span class="line">    如果数量超过集群半数以上，切换到leader状态</span><br><span class="line">    </span><br><span class="line">  如果选举超时到期：</span><br><span class="line">    term+1，进行下一次的选举</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-4-日志复制"><a href="#2-4-日志复制" class="headerlink" title="2.4 日志复制"></a><p id="p2_4">2.4 日志复制</p></h3><p>日志复制的流程大体如下：</p>
+<ol>
+<li>每个客户端的请求都会被重定向发送给leader，这些请求最后都会被输入到Raft状态机中去执行。</li>
+<li>leader在收到这些请求之后，会首先在自己的日志中添加一条新的日志条目。</li>
+<li>在本地添加完日志之后，leader将向集群中其他节点发送AppendEntries RPC请求同步这个日志条目，当这个日志条目被成功复制之后，leader节点将会将这条日志输入到Raft状态机中，然后应答客户端。</li>
+</ol>
+<p>Raft日志的组织形式如下:<br><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/raftlog.jpg" alt="raftlog"></p>
+<p>每个日志条目包含以下属性：</p>
+<ul>
+<li><strong>index</strong>：日志索引号，即图中最上方的数字，是严格递增的。</li>
+<li><strong>term</strong>：日志任期号，就是在每个日志条目中上方的数字，表示这条日志在哪个任期生成的。</li>
+<li><strong>command</strong>：日志条目中对数据进行修改的操作。</li>
+</ul>
+<p>一条日志如果被leader同步到超过半数的节点，那么被称为“成功复制”，leader节点在收到半数以上节点的应答之后，就会提交该日志，此时日志这个日志条目就是“已被提交”（committed）。如果一条日志已被提交，那么在这条日志之前的所有日志条目也是已被提交的，包括之前其他任期内的leader提交的日志。如上图中索引为7的日志条目之前的所有日志都是已被提交的日志。</p>
+<p>下图说明了日志复制的流程：</p>
+<p><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication.png" alt="log replication"></p>
+<ol>
+<li>客户端发送 SET a=1 的命令到leader节点上。</li>
+<li>leader节点在本地添加一条日志，其对应的命令为 SET a=1。这里涉及到两个索引值，committedIndex存储的最后一条提交（commit）日志的索引，appliedIndex存储的是最后一条应用到状态机中的日志索引值，一条日志只有被提交了才能应用到状态机中，因此总有 committedIndex &gt;= appliedIndex不等式成立。在这里只是添加一条日志还并没有提交，两个索引值还指向上一条日志。</li>
+<li>leader节点向集群中其他节点广播AppendEntries消息，带上SET a=1命令。</li>
+</ol>
+<p>接下来经历以下步骤：</p>
+<p><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication2.png" alt="log replication"></p>
+<ol start="4">
+<li>收到 AppendEntries 请求的follower节点，同样在本地添加了一条新的日志，也还并没有提交。</li>
+<li>follower节点向leader节点应答 AppendEntries 消息。</li>
+<li>当leader节点收到集群半数以上节点的 AppendEntries 请求的应答消息时，认为 SET a=1 命令成功复制，可以进行提交，于是修改了本地committed日志的索引指向最新的存储SET a=1的日志，而appliedIndex还是保持着上一次的值，因为还没有应用该命令到状态机中。</li>
+</ol>
+<p>当这个命令提交完成了之后，就可以提交给应用层了。</p>
+<p><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/logReplication3.png" alt="log replication"></p>
+<ol start="7">
+<li>提交命令完成，给应用层说明这条命令已经提交。此时修改 appliedIndex 与 committedIndex 一致。</li>
+<li>leader节点在下一次给follower的 AppendEntries 请求中，会带上当前最新的 committedIndex 索引值，follower收到之后同样会修改本地日志的 committedIndex 索引。</li>
+</ol>
+<p>其中，7和8这两个操作并没有严格的先后顺序，谁在前在后都没关系。</p>
+<p>leader上保存着已被提交的最大日志索引信息，这个索引值被称为“nextIndex”，在每次向follower节点发送的 AppendEntries RPC 请求中都会带上这个索引信息，这样follower节点就知道哪个日志已经被提交了，被提交的日志将会输入Raft状态机中执行。</p>
+<p>Raft算法保持着以下两个属性，这两个属性共同作用满足前面提到的日志匹配（LogMatch）属性：</p>
+<ul>
+<li>如果两个日志条目有相同的索引号和任期号，那么这两条日志存储的是同一个指令。</li>
+<li>如果在两个不同的日志数据中，包含有相同索引和任期号的日志条目，那么在这两个不同的日志中，位于这条日志之前的日志数据是相同的。</li>
+</ul>
+<hr>
+<h3 id="2-5-新-leader-与-follower-同步数据"><a href="#2-5-新-leader-与-follower-同步数据" class="headerlink" title="2.5 新 leader 与 follower 同步数据"></a><p id="p2_5">2.5 新 leader 与 follower 同步数据</p></h3><p>在正常的情况下，follower节点和leader节点的日志一直保持一致，此时 AppendEntries RPC 请求将不会失败。但是，当leader节点宕机时日志就可能出现不一致的情况，比如在这个leader节点宕机之前同步的数据并没有得到超过半数以上节点的应答。如下图所示就是一种出现前后日志不一致的情况。<br><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/inconsistentlog.jpg" alt="inconsistent log"></p>
+<p>在上图中，最上面的一排数字是日志的索引，盒子中的数据是该日志对应的任期号，左边的字母表示的是a-f这几个不同的节点。图中演示了好几种节点日志与leader节点日志不一致的情况，下面说明中以二元组&lt;任期号，索引号&gt;来说明各个节点的日志数据情况：</p>
+<ul>
+<li>leader节点：&lt;6, 10&gt;。</li>
+<li>a节点：&lt;6,9&gt;，缺少日志。</li>
+<li>b节点：&lt;4,4&gt;，任期号比leader小，因此缺少日志。</li>
+<li>c节点：&lt;6,11&gt;，任期号与leader相同，但是有比leader日志索引更大的日志，这部分日志是未提交的日志。</li>
+<li>d节点：&lt;7,12&gt;，任期号比leader大，这部分日志是未提交的日志。</li>
+<li>e节点：&lt;4,7&gt;，任期号与索引都比leader小，因此既缺少日志，也有未提交的日志。</li>
+<li>f节点：&lt;3,11&gt;，任期号比leader小，所以缺少日志，而索引比leader大，这部分日志又是未提交的日志。</li>
+</ul>
+<p>在Raft算法中，解决日志数据不一致的方式是Leader节点同步日志数据到follower上，覆盖follower上与leader不一致的数据。为了解决与follower节点同步日志的问题，leader节点中有两个与follower节点日志相关的记录。</p>
+<ul>
+<li>nextIndex：存储的是下一次给该节点同步日志时的日志索引。</li>
+<li>matchIndex：存储的是该节点的最大日志索引。</li>
+</ul>
+<p>从以上两个索引的定义可知，在follower与leader节点之间日志复制正常的情况下，nextIndex = matchIndex + 1。但是如果出现不一致的情况，则这个等式可能不成立。所以每个leader节点被选举出来时，将做如下初始化操作：</p>
+<ul>
+<li>nextIndex置为leader节点最后一条日志。</li>
+<li>matchIndex置为0。</li>
+</ul>
+<p>这么做的原因在于：leader节点将从后往前探索follower节点当前存储的日志位置，而在不知道follower节点日志位置的情况下只能置空matchIndex了。</p>
+<p>leader节点通过 AppendEntries 消息来与follower之间进行日志同步的，每次给follower带过去的日志就是以 nextIndex 来决定，其可能有两种结果：</p>
+<p>如果follower节点的日志与这个值匹配，将返回成功；<br>否则将返回失败，同时带上本节点当前的最大日志ID（假设这个索引为hintIndex），方便leader节点快速定位到follower的日志位置以下一次同步正确的日志数据。</p>
+<p>而leader节点在收到返回失败的情况下，将置 nextIndex = min(hintIndex+1, 上一次append消息的索引)，再次发出添加日志请求。</p>
+<p>以上图的几个节点为例来说明情况。</p>
+<p>初始状态下，leader节点将存储每个folower节点的nextIndex为10，matchIndex为0。因此在成为leader节点之后首次向follower节点同步日志数据时，将复制索引位置在10以后的日志数据，同时带上日志二元组&lt;6,10&gt;告知follower节点当前leader保存的follower日志状态。</p>
+<ul>
+<li><p>a节点：由于节点的最大日志数据二元组是&lt;6,9&gt;，正好与leader发过来的日志&lt;6,10&gt;紧挨着，因此返回复制成功。</p>
+</li>
+<li><p>b节点：由于节点的最大日志数据二元组是&lt;4,4&gt;，与leader发送过来的日志数据&lt;6,10&gt;不匹配，将返回失败同时带上自己最后的日志索引4（即 hintIndex=4），leader节点在收到该拒绝消息之后，将修改保存该节点的nextIndex为min(4+1, 10)=5，所以下一次leader节点将同步从索引5到10的数据给b节点。</p>
+</li>
+<li><p>c节点：由于节点的最大日志数据二元组是&lt;6,11&gt;，与leader发送过来的日志数据&lt;6,10&gt;不匹配，由于两者任期号相同，节点C知道自己的索引11的数据需要删除，因为这个数据没有提交成功。</p>
+</li>
+<li><p>d节点：由于节点的最大日志数据二元组是&lt;7,12&gt;，与leader发送过来的日志数据&lt;6,10&gt;不匹配，索引11、12的数据将被删除。</p>
+</li>
+<li><p>e节点：由于节点的最大日志数据二元组是&lt;4,7&gt;，与leader发送过来的日志数据&lt;6,10&gt;不匹配，将返回最后一个与节点数据一致的索引5给leader，于是leader从min(5+1,10)=6开始同步数据给节点e，最终e节点上索引6之后的数据被覆盖。</p>
+</li>
+<li><p>f节点：由于节点的最大日志数据二元组是&lt;3,11&gt;，与leader发送过来的日志数据&lt;6,10&gt;不匹配，将返回最后一个与节点数据一致的索引3给leader，于是leader从min(3+1,10)=4开始同步数据给节点f，最终f节点上索引4之后的数据被覆盖。</p>
+</li>
+</ul>
+<hr>
+<h3 id="2-6-安全性-选举限制"><a href="#2-6-安全性-选举限制" class="headerlink" title="2.6 安全性-选举限制"></a><p id="p2_6">2.6 安全性-选举限制</p></h3><p>Raft 算法中，并不是所有节点都能成为leader。一个节点要成为leader，需要得到集群中半数以上节点的投票，而一个节点会投票给一个节点，其中一个充分条件是：进行选举的节点的日志，比本节点的日志更新。之所以要求这个条件，是为了保证每个当选的节点都有当前最新的数据。为了达到这个检查日志的目的，RequestVote RPC 请求中需要带上参加选举节点的日志信息，如果节点发现选举节点的日志信息并不比自己更新，将拒绝给这个节点投票。</p>
+<p>如果判断日志的新旧？这通过对比日志的最后一个日志条目数据来决定，首先将对比条目的任期号，任期号更大的日志数据更新；如果任期号相同，那么索引号更大的数据更新。</p>
+<p>以上处理RequestVote请求的流程伪代码表示如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">follower节点收到RequestVote请求：</span><br><span class="line">  对比RequestVote请求中带上的最后一条日志数据：</span><br><span class="line">    如果任期号比节点的最后一条数据任期号小：</span><br><span class="line">      拒绝投票给该节点</span><br><span class="line">    如果索引号比节点的最后一条数据索引小：</span><br><span class="line">      拒绝投票给该节点</span><br><span class="line">    其他情况：</span><br><span class="line">      说明选举节点的日志信息比本节点更新，投票给该节点。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-7-安全性-提交前面任期的日志条目"><a href="#2-7-安全性-提交前面任期的日志条目" class="headerlink" title="2.7 安全性-提交前面任期的日志条目"></a><p id="p2_7">2.7 安全性-提交前面任期的日志条目</p></h3><p>如果leader在写入但是还没有提交一条日志之前崩溃，那么这条没有提交的日志是否能提交？有几种情况需要考虑，如下图所示：<br><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/preterm-log.jpeg" alt="preterm log"></p>
+<p>在上图中，有以下的场景变更。</p>
+<ul>
+<li>情况a：s1是leader，index 2位置写入了数据2，该值只写在了s1，s2上，但是还没有被提交。</li>
+<li>情况b：s1崩溃，s5成为新的leader，该节点在index 2上面提交了另外一个值3，但是这个值只写在了s5上面，并没有被提交。</li>
+<li>情况c：s5崩溃，s1重新成为leader，这一次，index 2的值2写到了集群的大多数节点上。</li>
+</ul>
+<p>此时可能存在以下两种情况：</p>
+<ul>
+<li>情况d1：s1崩溃，s5重新成为leader（投票给s5的是s4，s2和s5自身），那么index 2上的值3这一次成功的写入到集群的半数以上节点之上，并成功提交。</li>
+<li>情况d2：s1不崩溃，而是将index 2为2的值成功提交。</li>
+</ul>
+<p>从情况d的两种场景可以看出，在index 2值为2，且已经被写入到半数以上节点的情况下，同样存在被新的leader覆盖的可能性。</p>
+<p>由于以上的原因，对于当前任期之前任期提交的日志，并不通过判断是否已经在半数以上集群节点写入成功来作为能否提交的依据。只有当前leader任期内的日志是通过比较写入数量是否超过半数来决定是否可以提交的。</p>
+<p>对于任期之前的日志，Raft 采用的方式，是只要提交成功了当前任期的日志，那么在日志之前的日志就认为提交成功了。这也是为什么 etcd Raft 代码中，在成为leader之后，需要再提交一条dummy的日志的原因–只要该日志提交成功，leader上该日志之前的日志就可以提交成功。</p>
+<hr>
+<h2 id="3-集群成员变更"><a href="#3-集群成员变更" class="headerlink" title="3. 集群成员变更"></a><p id="p3">3. 集群成员变更</p></h2><p>在上面描述 Raft 基本算法流程中，都假设集群中的节点是稳定不变的。但是在某些情况下，需要手动改变集群的配置。</p>
+<h3 id="3-1-安全性"><a href="#3-1-安全性" class="headerlink" title="3.1 安全性"></a><p id="p3_1">3.1 安全性</p></h3><p>安全性是变更集群成员时首先需要考虑到的问题，任何时候都不能出现集群中存在多于一个leader的情况。为了避免出现这种情况，每次变更成员时不能一次添加或者修改超过一个节点，集群不能直接切换到新的状态，如下图所示。<br><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/disjoint-majorities.jpg" alt="disjoint majorities"><br>在上图中，server 1、2、3组成的是旧集群，server 4、5是准备新加入集群的节点。注意到如果直接尝试切换到新的状态，在某些时间点里，如图中所示，由于server 1、2上的配置还是旧的集群配置，那么可能这两个节点已经选定了一个leader；而server 3、4、5又是新的配置，它们也可能选定了一个leader，而这两个leader不是同一个，这就出现了集群中存在一个以上leader的情况了。相反，每次添加一个节点则不会出现同时有两个超过半数以上自己群的存在，即不可能选出多于一个leader。</p>
+<p>raft采用将修改集群配置的命令放在日志条目中来处理，这样做的好处是：</p>
+<ul>
+<li>可以继续沿用原来的AppendEntries命令来同步日志数据，只要把修改集群的命令做为一种特殊的命令就可以了。</li>
+<li>在这个过程中，可以继续处理客户端请求。</li>
+</ul>
+<hr>
+<h3 id="3-2-可用性-添加新节点到集群中"><a href="#3-2-可用性-添加新节点到集群中" class="headerlink" title="3.2 可用性-添加新节点到集群中"></a><p id="p3_2">3.2 可用性-添加新节点到集群中</p></h3><p>添加一个新的节点到集群时，需要考虑一种情况，即新节点可能落后当前集群日志很多的情况，在这种情况下集群出现故障的概率会大大提高，如下图所示：<br><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/add-new-server.jpg" alt="add-new server"><br>上图中的情况a中，s1、s2、s3是原有的集群节点，这时把节点s4添加进来，而s4中没有数据。如果此时s3发生故障，在集群中原来有三个节点的情况下，本来可以容忍一个节点的失败的；但是当变成四个节点的集群时，s3和s4同时不可用整个集群就不可用了。</p>
+<p>因此Raft算法针对这种新添加进来的节点，是如下处理的。</p>
+<ul>
+<li>添加进来的新节点首先将不加入到集群中，而是等待数据追上集群的进度。</li>
+<li>leader同步数据给新节点的流程是划分为多个轮次，每一轮同步一部分数据，而在同步的时候，leader仍然可以写入新的数据，而新的数据在新的轮次继续同步。这个同步的轮次并不能一直持续下去，一般会有一个限制的轮次数量，比如最多同步10轮。</li>
+</ul>
+<hr>
+<h3 id="3-3-可用性-删除当前集群的leader节点"><a href="#3-3-可用性-删除当前集群的leader节点" class="headerlink" title="3.3 可用性-删除当前集群的leader节点"></a><p id="p3_3">3.3 可用性-删除当前集群的leader节点</p></h3><p>当需要下线当前集群的leader节点时，leader节点将发出一个变更节点配置的命令，只有在该命令被提交之后，原先的leader节点才下线，然后集群会自然有一个节点选举超时而进行新的一轮选举。</p>
+<hr>
+<h3 id="3-4-可用性-处理移除集群的节点"><a href="#3-4-可用性-处理移除集群的节点" class="headerlink" title="3.4 可用性-处理移除集群的节点"></a><p id="p3_4">3.4 可用性-处理移除集群的节点</p></h3><p>如果某个节点在一次配置更新之后，被移出了新的集群，但是这个节点又不知道这个情况，那么按照前面描述的 Raft 算法流程来说，它应该在选举超时之后，将任期号递增1，发起一次新的选举。虽然最终这个节点不会赢得选举，但是毕竟对集群运行的状态造成了干扰。而且如果这个节点一直不下线，那么上面这个发起新选举的流程就会一直持续下去。</p>
+<p>为了解决这个问题，Raft 引入了一个成为“PreVote”的流程，在这个流程中，如果一个节点要发起一次新的选举，那么首先会广播给集群中的其它所有节点，询问下当前该节点上的日志是否足以赢下选举。只有在这个PreVote阶段赢得超过半数节点肯定的情况下，才真正发起一次新的选举。</p>
+<p>然而，PreVote并不能解决所有的问题，因为很有可能该被移除节点上的日志也是最新的。所以不能完全依靠判断日志的方式来决定是否允许一个节点发起新一轮的选举。</p>
+<p>Raft采用了另一种机制。如果leader节点一直保持着与其它节点的心跳消息，那么就认为leader节点是存活的，此时不允许发起一轮新的选举。这样follower节点处理 RequestVote 请求时，就需要加上判断，除了判断请求进行选举的节点日志是否最新以外，如果当前在一段时间内还收到过来自leader节点的心跳消息，那么也不允许发起新的选举。然而这种情况与前面描述的leader迁移的情况相悖，在leader迁移时是强制要求发起新的选举的，因此RequestVote请求的处理还要加上这种情况的判断。</p>
+<p>总体来说，RequestVote 请求的处理逻辑大致如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">follower处理RequestVote请求：</span><br><span class="line">  如果请求节点的日志不是最新的：</span><br><span class="line">    拒绝该请求，返回</span><br><span class="line">  如果此时是leader迁移的情况：</span><br><span class="line">    接收该请求，返回</span><br><span class="line">  如果最近一段时间还有收到来自leader节点的心跳消息：</span><br><span class="line">    拒绝该请求，返回</span><br><span class="line">  接收该请求    </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-日志压缩"><a href="#4-日志压缩" class="headerlink" title="4. 日志压缩"></a><p id="p4">4. 日志压缩</p></h2><p>日志数据如果不进行压缩处理掉的话，会一直增长下去。为此Raft使用<font color="red">快照数据</font>来进行日志压缩，比如针对键值a的几次操作日志：a=1、delete a、a=3 最后可以被压缩成为最后的结果数据即a=3。</p>
+<p><img src="/2022/01/15/Raft%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/snapshot.png" alt="snapshot"></p>
+<ul>
+<li>未压缩日志前，日志数据保存到了&lt;3,5&gt;的位置，而在&lt;2,3&gt;的位置之前的数据都已经进行提交了，所以可以对这部分数据进行压缩。</li>
+<li>压缩日志之后，快照文件中存放了几个值：压缩时最后一条日志的二元数据是&lt;2,3&gt;，而针对a的几次操作最后的值为a=3，b的值为2。</li>
+</ul>
+<hr>
+<h2 id="5-高效处理只读请求"><a href="#5-高效处理只读请求" class="headerlink" title="5. 高效处理只读请求"></a><p id="p5">5. 高效处理只读请求</p></h2><p>如前面所述，处理一个命令时，需要经历以下流程：leader向集群中其它节点广播日志，在日志被超过半数节点应答之后，leader提交该日志，最后应答客户端。这样的流程对于一个只读请求而言太久了，而且还涉及到日志落盘的操作，对于只读请求而言这些操作是不必要的。</p>
+<p>但是如果不经过上面的流程，leader节点在收到一个只读请求时就将本节点上保存的数据应答客户端，也是不安全的，因为这可能返回已经过期的数据。一方面leader节点可能已经发生了变化，只是这个节点并不知道；另一方面可能数据也发生了改变。返回过期的数据不符合一致性要求，因此这样的做法也是不合理的。</p>
+<p>Raft 对于只读请求是做如下处理：</p>
+<ol>
+<li>leader节点需要有当前已提交日志的信息。在前面提到过不能提交前面任期的日志条目，因此一个新leader产生之后，需要提交一条空日志，这样来确保上一个任期内的日志全部提交。</li>
+<li>leader节点保存该只读请求到来时的commit日志索引为readIndex，</li>
+<li>leader需要确认自己当前还是集群的leader，因为可能会由于有网络分区的原因导致leader已经被隔离出集群而不自知。为了达到这个目的，leader节点将广播一个heartbeat心跳消息给集群中其它节点，当收到半数以上节点的应答时，leader节点知道自己当前还是leader，同时readIndex索引也是当前集群日志提交的最大索引。</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Raft算法原理</p><p><a href="https://lameber1123.github.io/2022/01/15/Raft算法原理/">https://lameber1123.github.io/2022/01/15/Raft算法原理/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Lamber</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-01-15</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-01-19</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Raft/">Raft</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><a class="link-muted mr-2" rel="tag" href="/tags/RPC/">RPC</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/01/15/etcd-Raft%E5%BA%93%E8%A7%A3%E6%9E%90/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">etcd Raft库解析</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/01/11/etcd%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><span class="level-item">etcd快速入门</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Lamber"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Lamber</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">31</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lamber1123" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/167431968"><i class="iconfont icon-bilibili-fill"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/lamber-51"><i class="iconfont icon-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://Nancy0205.github.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Nancy的博客</span></span><span class="level-right"><span class="level-item tag">nancy0205.github.io</span></span></a></li><li><a class="level is-mobile" href="https://ecampus.nwpu.edu.cn/main.html#/Index" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">翱翔门户</span></span><span class="level-right"><span class="level-item tag">ecampus.nwpu.edu.cn</span></span></a></li><li><a class="level is-mobile" href="https://cnki.net/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">中国知网</span></span><span class="level-right"><span class="level-item tag">cnki.net</span></span></a></li><li><a class="level is-mobile" href="https://docs.pingcap.com/zh/tidb/stable/tikv-overview/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">PingCAP</span></span><span class="level-right"><span class="level-item tag">docs.pingcap.com</span></span></a></li><li><a class="level is-mobile" href="https://hardcore.feishu.cn/docs/doccnMRVFcMWn1zsEYBrbsDf8De#" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft讲稿</span></span><span class="level-right"><span class="level-item tag">hardcore.feishu.cn</span></span></a></li><li><a class="level is-mobile" href="https://liqul.github.io/blog/tags/Raft/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bucket&amp;Hammer</span></span><span class="level-right"><span class="level-item tag">liqul.github.io</span></span></a></li><li><a class="level is-mobile" href="https://www.codedump.info/post/20180922-etcd-raft/#%E8%BE%93%E5%85%A5%E5%8F%8A%E8%BE%93%E5%87%BA" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft源码解析</span></span><span class="level-right"><span class="level-item tag">www.codedump.info</span></span></a></li><li><a class="level is-mobile" href="https://gitee.com/opengauss/openGauss-server/blob/master/README.md" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">openGauss官方文档</span></span><span class="level-right"><span class="level-item tag">gitee.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/CentOS/"><span class="level-start"><span class="level-item">CentOS</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Raft%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">Raft笔记</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/TiKV%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">TiKV笔记</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/css%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">css笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/html%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">html笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/icarus/"><span class="level-start"><span class="level-item">icarus</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/js%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">js笔记</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/openGauss/"><span class="level-start"><span class="level-item">openGauss</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%91%B8%E9%B1%BC/"><span class="level-start"><span class="level-item">摸鱼</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-07T11:56:58.000Z">2022-12-07</time></p><p class="title"><a href="/2022/12/07/DCFTest%EF%BC%9ADCF%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1/">DCFTest：DCF框架的测试工具</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-17T07:59:47.000Z">2022-10-17</time></p><p class="title"><a href="/2022/10/17/%E8%85%BE%E8%AE%AF%E5%8F%AE%E5%BD%93%E9%9F%B3%E7%AE%B1%E5%88%B7%E5%85%A5Android8-1%E7%B3%BB%E7%BB%9F/">腾讯叮当音箱刷入Android8.1系统</a></p><p class="categories"><a href="/categories/%E6%91%B8%E9%B1%BC/">摸鱼</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-10T12:22:28.000Z">2022-10-10</time></p><p class="title"><a href="/2022/10/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%90%AF%E5%8A%A8OG%E7%9A%84DCF%E6%A8%A1%E5%9D%97/">服务器上启动OG的DCF模块</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-06T13:52:30.000Z">2022-05-06</time></p><p class="title"><a href="/2022/05/06/openGauss%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/">openGauss存储技术</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-18T08:20:22.000Z">2022-04-18</time></p><p class="title"><a href="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/">openGauss的DCF组件详解</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">December 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">October 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">May 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">April 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">March 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">February 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">January 2022</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">December 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CentOS/"><span class="tag">CentOS</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCF/"><span class="tag">DCF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCFTest/"><span class="tag">DCFTest</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Key-Value/"><span class="tag">Key-Value</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MVCC/"><span class="tag">MVCC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PD/"><span class="tag">PD</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paxos/"><span class="tag">Paxos</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RPC/"><span class="tag">RPC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Raft/"><span class="tag">Raft</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Region/"><span class="tag">Region</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RocksDB/"><span class="tag">RocksDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SQL/"><span class="tag">SQL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiDB/"><span class="tag">TiDB</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiFlash/"><span class="tag">TiFlash</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiKV/"><span class="tag">TiKV</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VMware/"><span class="tag">VMware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zab/"><span class="tag">Zab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zookeeper/"><span class="tag">Zookeeper</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/css/"><span class="tag">css</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/etcd/"><span class="tag">etcd</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/html/"><span class="tag">html</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/icarus/"><span class="tag">icarus</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ico/"><span class="tag">ico</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/js/"><span class="tag">js</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openGauss/"><span class="tag">openGauss</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%85%83%E4%BF%A1%E6%81%AF/"><span class="tag">元信息</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"><span class="tag">分布式</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/"><span class="tag">映射关系</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Lamber</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="msvalidate.01" content="D5358D241F26545F49E55D403F921D5D"><meta name="google-site-verification" content="7h0jWlXl61CeDREpTs47QhQ9Qz7CJptnpSUcrIxB_II"><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>CSS笔记（四） - Lamber&#039;s Blog: Lamber的个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="CSS 伪类 CSS 伪元素 CSS 导航栏 CSS 网页布局 CSS 总结"><meta property="og:type" content="blog"><meta property="og:title" content="CSS笔记（四）"><meta property="og:url" content="https://lameber1123.github.io/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="CSS 伪类 CSS 伪元素 CSS 导航栏 CSS 网页布局 CSS 总结"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2019/04/DBD1E737-47C5-445E-BFEC-7547210D88D5.jpg"><meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2019/04/D105F34E-6592-47AC-A9DF-EEDC1E2172B3.jpg"><meta property="article:published_time" content="2022-01-01T14:10:25.000Z"><meta property="article:modified_time" content="2022-01-05T06:20:03.825Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="css"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://www.runoob.com/wp-content/uploads/2019/04/DBD1E737-47C5-445E-BFEC-7547210D88D5.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://lameber1123.github.io"},"headline":"CSS笔记（四）","image":["https://www.runoob.com/wp-content/uploads/2019/04/DBD1E737-47C5-445E-BFEC-7547210D88D5.jpg","https://www.runoob.com/wp-content/uploads/2019/04/D105F34E-6592-47AC-A9DF-EEDC1E2172B3.jpg"],"datePublished":"2022-01-01T14:10:25.000Z","dateModified":"2022-01-05T06:20:03.825Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"https://lameber1123.github.io/img/logo.png"}},"description":"CSS 伪类 CSS 伪元素 CSS 导航栏 CSS 网页布局 CSS 总结"}</script><link rel="canonical" href="https://lameber1123.github.io/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-01-01T14:10:25.000Z" title="2022/1/1 下午10:10:25">2022-01-01</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-05T06:20:03.825Z" title="2022/1/5 下午2:20:03">2022-01-05</time></span><span class="level-item"><a class="link-muted" href="/categories/css%E7%AC%94%E8%AE%B0/">css笔记</a></span><span class="level-item">10 minutes read (About 1450 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">CSS笔记（四）</h1><div class="content"><ul>
+<li>CSS 伪类</li>
+<li>CSS 伪元素</li>
+<li>CSS 导航栏</li>
+<li>CSS 网页布局</li>
+<li>CSS 总结</li>
+</ul>
+<span id="more"></span>
+<br/>
+
+<h2 id="CSS-伪类"><a href="#CSS-伪类" class="headerlink" title="CSS 伪类"></a>CSS 伪类</h2><p>CSS伪类是用来添加一些选择器的特殊效果。</p>
+<br/>
+
+<h3 id="1-语法"><a href="#1-语法" class="headerlink" title="1. 语法"></a>1. 语法</h3><p>伪类的语法：</p>
+<blockquote>
+<p>selector:pseudo-class {property:value;}</p>
+</blockquote>
+<br/>
+
+<p>CSS类也可以使用伪类：</p>
+<blockquote>
+<p>selector.class:pseudo-class {property:value;}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-anchor-伪类"><a href="#2-anchor-伪类" class="headerlink" title="2. anchor 伪类"></a>2. anchor 伪类</h3><p>在支持 CSS 的浏览器中，链接的不同状态都可以以不同的方式显示</p>
+<blockquote>
+<p>a:link {color:#FF0000;} /* 未访问的链接 */<br>a:visited {color:#00FF00;} /* 已访问的链接 */<br>a:hover {color:#FF00FF;} /* 鼠标划过链接 */<br>a:active {color:#0000FF;} /* 已选中的链接 */</p>
+</blockquote>
+<p>注意：在CSS定义中，a:hover 必须被置于 a:link 和 a:visited 之后，才是有效的。<br>注意：在 CSS 定义中，a:active 必须被置于 a:hover 之后，才是有效的。<br>注意：伪类的名称不区分大小写。</p>
+<p>伪类和CSS类<br>伪类可以与 CSS 类配合使用：</p>
+<br/>
+
+<h3 id="3-伪类和-CSS-类"><a href="#3-伪类和-CSS-类" class="headerlink" title="3. 伪类和 CSS 类"></a>3. 伪类和 CSS 类</h3><blockquote>
+<p>a.red:visited {color:#FF0000;}<br>&lt;a class=”red” href=”css-syntax.html”&gt;CSS 语法&lt;/a&gt;</p>
+</blockquote>
+<p>如果在上面的例子的链接已被访问，它会显示为红色。</p>
+<br/>
+
+<h3 id="4-first-child-伪类"><a href="#4-first-child-伪类" class="headerlink" title="4. first-child 伪类"></a>4. first-child 伪类</h3><p>您可以使用 :<strong>first-child</strong> 伪类来选择父元素的第一个子元素。<br>注意：在IE8的之前版本必须声明&lt;!DOCTYPE&gt; ，这样 :first-child 才能生效。</p>
+<p>匹配第一个 &lt;p&gt; 元素<br>在下面的例子中，选择器匹配作为任何元素的第一个子元素的 &lt;p&gt; 元素：</p>
+<blockquote>
+<p>p:first-child<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;color:blue;<br>}</p>
+</blockquote>
+<p>在下面的例子中，选择相匹配的所有&lt;p&gt;元素的第一个 &lt;i&gt; 元素：</p>
+<p>p &gt; i:first-child<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;color:blue;<br>}</p>
+<p>在下面的例子中，选择器匹配所有作为元素的第一个子元素的 &lt;p&gt; 元素中的所有 &lt;i&gt; 元素：</p>
+<blockquote>
+<p>p:first-child i<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;color:blue;<br>}</p>
+</blockquote>
+<br/>
+
+<h2 id="CSS-伪元素"><a href="#CSS-伪元素" class="headerlink" title="CSS 伪元素"></a>CSS 伪元素</h2><p>CSS伪元素是用来添加一些选择器的特殊效果。</p>
+<br/>
+
+<h3 id="1-伪元素的语法："><a href="#1-伪元素的语法：" class="headerlink" title="1. 伪元素的语法："></a>1. 伪元素的语法：</h3><blockquote>
+<p>selector:pseudo-element {property:value;}</p>
+</blockquote>
+<p>CSS类也可以使用伪元素：</p>
+<blockquote>
+<p>selector.class:pseudo-element {property:value;}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-first-line-伪元素"><a href="#2-first-line-伪元素" class="headerlink" title="2. first-line 伪元素"></a>2. first-line 伪元素</h3><p><strong>first-line</strong> 伪元素用于向文本的首行设置特殊样式。</p>
+<p>在下面的例子中，浏览器会根据 <strong>first-line</strong> 伪元素中的样式对 <strong>p</strong> 元素的第一行文本进行格式化：</p>
+<blockquote>
+<p>p:first-line<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;color:#ff0000;<br>&nbsp;&nbsp;&nbsp;&nbsp;font-variant:small-caps;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-first-letter-伪元素"><a href="#3-first-letter-伪元素" class="headerlink" title="3. first-letter 伪元素"></a>3. first-letter 伪元素</h3><p><strong>first-letter</strong> 伪元素用于向文本的首字母设置特殊样式：</p>
+<blockquote>
+<p>p:first-letter<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;color:#ff0000;<br>&nbsp;&nbsp;&nbsp;&nbsp;font-size:xx-large;<br>}</p>
+</blockquote>
+<br/>
+
+<h2 id="CSS-导航栏"><a href="#CSS-导航栏" class="headerlink" title="CSS 导航栏"></a>CSS 导航栏</h2><p>熟练使用导航栏，对于任何网站都非常重要。<br>使用CSS你可以转换成好看的导航栏而不是枯燥的HTML菜单。</p>
+<p>具体流程看菜鸟教程：<a target="_blank" rel="noopener" href="https://www.runoob.com/css/css-navbar.html">https://www.runoob.com/css/css-navbar.html</a></p>
+<br/>
+
+<h2 id="CSS-网页布局"><a href="#CSS-网页布局" class="headerlink" title="CSS 网页布局"></a>CSS 网页布局</h2><p>网页布局有很多种方式，一般分为以下几个部分：头部区域、菜单导航区域、内容区域、底部区域。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2019/04/DBD1E737-47C5-445E-BFEC-7547210D88D5.jpg" alt="网页布局示意图"></p>
+<br/>
+
+<h3 id="1-头部区域"><a href="#1-头部区域" class="headerlink" title="1. 头部区域"></a>1. 头部区域</h3><p>头部区域位于整个网页的顶部，一般用于设置网页的标题或者网页的 logo：</p>
+<blockquote>
+<p>.header {<br>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #F1F1F1;<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align: center;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 20px;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-菜单导航区域"><a href="#2-菜单导航区域" class="headerlink" title="2. 菜单导航区域"></a>2. 菜单导航区域</h3><p>菜单导航条包含了一些链接，可以引导用户浏览其他页面：</p>
+<blockquote>
+<p>/* 导航条 */<br>.topnav {<br>&nbsp;&nbsp;&nbsp;&nbsp;overflow: hidden;<br>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #333;<br>}<br><br><br>/* 导航链接 */<br>.topnav a {<br>&nbsp;&nbsp;&nbsp;&nbsp;float: left;<br>&nbsp;&nbsp;&nbsp;&nbsp;display: block;<br>&nbsp;&nbsp;&nbsp;&nbsp;color: #f2f2f2;<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align: center;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 14px 16px;<br>&nbsp;&nbsp;&nbsp;&nbsp;text-decoration: none;<br>}<br><br><br>/* 链接 - 修改颜色 */<br>.topnav a:hover {<br>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #ddd;<br>&nbsp;&nbsp;&nbsp;&nbsp;color: black;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-内容区域"><a href="#3-内容区域" class="headerlink" title="3. 内容区域"></a>3. 内容区域</h3><p>内容区域一般有三种形式:</p>
+<ul>
+<li>1 列：一般用于移动端</li>
+<li>2 列：一般用于平板设备</li>
+<li>3 列：一般用于 PC 桌面设备</li>
+</ul>
+<p><img src="https://www.runoob.com/wp-content/uploads/2019/04/D105F34E-6592-47AC-A9DF-EEDC1E2172B3.jpg" alt="内容区域示意图"></p>
+<p>我们将创建一个 3 列布局，在小的屏幕上将会变成 1 列布局（响应式）：</p>
+<blockquote>
+<p>/* 创建三个相等的列 */<br>.column {<br>&nbsp;&nbsp;&nbsp;&nbsp;float: left;<br>&nbsp;&nbsp;&nbsp;&nbsp;width: 33.33%;<br>}<br><br><br>/* 列后清除浮动 */<br>.row:after {<br>&nbsp;&nbsp;&nbsp;&nbsp;content: “”;<br>&nbsp;&nbsp;&nbsp;&nbsp;display: table;<br>&nbsp;&nbsp;&nbsp;&nbsp;clear: both;<br>}<br><br><br>/* 响应式布局 - 小于 600 px 时改为上下布局 */<br>@media screen and (max-width: 600px) {<br>&nbsp;&nbsp;&nbsp;&nbsp;.column {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: 100%;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="4-底部区域"><a href="#4-底部区域" class="headerlink" title="4. 底部区域"></a>4. 底部区域</h3><p>底部区域在网页的最下方，一般包含版权信息和联系方式等。</p>
+<blockquote>
+<p>.footer {<br>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #F1F1F1;<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align: center;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 10px;<br>}</p>
+</blockquote>
+<br/>
+
+<h2 id="CSS-总结"><a href="#CSS-总结" class="headerlink" title="CSS 总结"></a>CSS 总结</h2><p>本教程已讲解了如何创建<strong>样式表</strong>来同时控制多重页面的样式和布局。<br>你已经学会如何使用 CSS 来添加背景、格式化文本、以及格式化边框，并定义元素的填充和边距。<br>同时，你也学会了如何定位元素、控制元素的可见性和尺寸、设置元素的形状、将一个元素置于另一个之后，以及向某些选择器添加特殊的效果，比如链接。</p>
+<p><strong>你已经学习了CSS，下一步学习什么呢？</strong></p>
+<p>下一步应该学习 JavaScript 。</p>
+<p>JavaScript 是最流行的语言之一。<br>JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。<br>JavaScript可以使您的网站更具活力。<br>许多 HTML 开发者都不是程序员，但是 JavaScript 却拥有非常简单的语法。几乎每个人都有能力将小的 JavaScript 片段添加到网页中。</p>
+<br/>
+</div><div class="article-licensing box"><div class="licensing-title"><p>CSS笔记（四）</p><p><a href="https://lameber1123.github.io/2022/01/01/CSS笔记（四）/">https://lameber1123.github.io/2022/01/01/CSS笔记（四）/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Lamber</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-01-01</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-01-05</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/css/">css</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/01/02/JS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">JS笔记（一）</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"><span class="level-item">CSS笔记（三）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Lamber"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Lamber</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">31</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lamber1123" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/167431968"><i class="iconfont icon-bilibili-fill"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/lamber-51"><i class="iconfont icon-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://Nancy0205.github.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Nancy的博客</span></span><span class="level-right"><span class="level-item tag">nancy0205.github.io</span></span></a></li><li><a class="level is-mobile" href="https://ecampus.nwpu.edu.cn/main.html#/Index" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">翱翔门户</span></span><span class="level-right"><span class="level-item tag">ecampus.nwpu.edu.cn</span></span></a></li><li><a class="level is-mobile" href="https://cnki.net/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">中国知网</span></span><span class="level-right"><span class="level-item tag">cnki.net</span></span></a></li><li><a class="level is-mobile" href="https://docs.pingcap.com/zh/tidb/stable/tikv-overview/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">PingCAP</span></span><span class="level-right"><span class="level-item tag">docs.pingcap.com</span></span></a></li><li><a class="level is-mobile" href="https://hardcore.feishu.cn/docs/doccnMRVFcMWn1zsEYBrbsDf8De#" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft讲稿</span></span><span class="level-right"><span class="level-item tag">hardcore.feishu.cn</span></span></a></li><li><a class="level is-mobile" href="https://liqul.github.io/blog/tags/Raft/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bucket&amp;Hammer</span></span><span class="level-right"><span class="level-item tag">liqul.github.io</span></span></a></li><li><a class="level is-mobile" href="https://www.codedump.info/post/20180922-etcd-raft/#%E8%BE%93%E5%85%A5%E5%8F%8A%E8%BE%93%E5%87%BA" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft源码解析</span></span><span class="level-right"><span class="level-item tag">www.codedump.info</span></span></a></li><li><a class="level is-mobile" href="https://gitee.com/opengauss/openGauss-server/blob/master/README.md" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">openGauss官方文档</span></span><span class="level-right"><span class="level-item tag">gitee.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/CentOS/"><span class="level-start"><span class="level-item">CentOS</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Raft%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">Raft笔记</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/TiKV%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">TiKV笔记</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/css%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">css笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/html%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">html笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/icarus/"><span class="level-start"><span class="level-item">icarus</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/js%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">js笔记</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/openGauss/"><span class="level-start"><span class="level-item">openGauss</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%91%B8%E9%B1%BC/"><span class="level-start"><span class="level-item">摸鱼</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-07T11:56:58.000Z">2022-12-07</time></p><p class="title"><a href="/2022/12/07/DCFTest%EF%BC%9ADCF%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1/">DCFTest：DCF框架的测试工具</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-17T07:59:47.000Z">2022-10-17</time></p><p class="title"><a href="/2022/10/17/%E8%85%BE%E8%AE%AF%E5%8F%AE%E5%BD%93%E9%9F%B3%E7%AE%B1%E5%88%B7%E5%85%A5Android8-1%E7%B3%BB%E7%BB%9F/">腾讯叮当音箱刷入Android8.1系统</a></p><p class="categories"><a href="/categories/%E6%91%B8%E9%B1%BC/">摸鱼</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-10T12:22:28.000Z">2022-10-10</time></p><p class="title"><a href="/2022/10/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%90%AF%E5%8A%A8OG%E7%9A%84DCF%E6%A8%A1%E5%9D%97/">服务器上启动OG的DCF模块</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-06T13:52:30.000Z">2022-05-06</time></p><p class="title"><a href="/2022/05/06/openGauss%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/">openGauss存储技术</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-18T08:20:22.000Z">2022-04-18</time></p><p class="title"><a href="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/">openGauss的DCF组件详解</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">December 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">October 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">May 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">April 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">March 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">February 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">January 2022</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">December 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CentOS/"><span class="tag">CentOS</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCF/"><span class="tag">DCF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCFTest/"><span class="tag">DCFTest</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Key-Value/"><span class="tag">Key-Value</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MVCC/"><span class="tag">MVCC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PD/"><span class="tag">PD</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paxos/"><span class="tag">Paxos</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RPC/"><span class="tag">RPC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Raft/"><span class="tag">Raft</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Region/"><span class="tag">Region</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RocksDB/"><span class="tag">RocksDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SQL/"><span class="tag">SQL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiDB/"><span class="tag">TiDB</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiFlash/"><span class="tag">TiFlash</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiKV/"><span class="tag">TiKV</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VMware/"><span class="tag">VMware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zab/"><span class="tag">Zab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zookeeper/"><span class="tag">Zookeeper</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/css/"><span class="tag">css</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/etcd/"><span class="tag">etcd</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/html/"><span class="tag">html</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/icarus/"><span class="tag">icarus</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ico/"><span class="tag">ico</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/js/"><span class="tag">js</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openGauss/"><span class="tag">openGauss</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%85%83%E4%BF%A1%E6%81%AF/"><span class="tag">元信息</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"><span class="tag">分布式</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/"><span class="tag">映射关系</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Lamber</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

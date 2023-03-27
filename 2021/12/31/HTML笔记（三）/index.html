@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="msvalidate.01" content="D5358D241F26545F49E55D403F921D5D"><meta name="google-site-verification" content="7h0jWlXl61CeDREpTs47QhQ9Qz7CJptnpSUcrIxB_II"><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>HTML笔记（三） - Lamber&#039;s Blog: Lamber的个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="HTML 框架 HTML 颜色 HTML 脚本 HTML 字符实体 HTML URL HTML 总结"><meta property="og:type" content="blog"><meta property="og:title" content="HTML笔记（三）"><meta property="og:url" content="https://lameber1123.github.io/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="HTML 框架 HTML 颜色 HTML 脚本 HTML 字符实体 HTML URL HTML 总结"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://lameber1123.github.io/img/og_image.png"><meta property="article:published_time" content="2021-12-31T03:45:26.000Z"><meta property="article:modified_time" content="2022-01-08T09:39:07.491Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="html"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://lameber1123.github.io"},"headline":"HTML笔记（三）","image":["https://lameber1123.github.io/img/og_image.png"],"datePublished":"2021-12-31T03:45:26.000Z","dateModified":"2022-01-08T09:39:07.491Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"https://lameber1123.github.io/img/logo.png"}},"description":"HTML 框架 HTML 颜色 HTML 脚本 HTML 字符实体 HTML URL HTML 总结"}</script><link rel="canonical" href="https://lameber1123.github.io/2021/12/31/HTML%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-12-31T03:45:26.000Z" title="2021/12/31 上午11:45:26">2021-12-31</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-08T09:39:07.491Z" title="2022/1/8 下午5:39:07">2022-01-08</time></span><span class="level-item"><a class="link-muted" href="/categories/html%E7%AC%94%E8%AE%B0/">html笔记</a></span><span class="level-item">15 minutes read (About 2277 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">HTML笔记（三）</h1><div class="content"><ul>
+<li>HTML 框架</li>
+<li>HTML 颜色</li>
+<li>HTML 脚本</li>
+<li>HTML 字符实体</li>
+<li>HTML URL</li>
+<li>HTML 总结</li>
+</ul>
+<span id="more"></span>
+<br/>
+
+<h2 id="HTML-框架"><a href="#HTML-框架" class="headerlink" title="HTML 框架"></a>HTML 框架</h2><p>通过使用框架，你可以在同一个浏览器窗口中显示不止一个页面，如：</p>
+<blockquote>
+<p>&lt;iframe src=”<a target="_blank" rel="noopener" href="https://space.bilibili.com/167431968&quot;">https://space.bilibili.com/167431968&quot;</a> width=”600” height=”400” &gt;&lt;/iframe&gt;</p>
+</blockquote>
+<br/>
+
+<iframe src="https://space.bilibili.com/167431968" width="600" height="400"></iframe>
+
+<h3 id="1-iframe-设置高度与宽度"><a href="#1-iframe-设置高度与宽度" class="headerlink" title="1. iframe - 设置高度与宽度"></a>1. iframe - 设置高度与宽度</h3><p>height 和 width 属性用来定义iframe标签的高度与宽度。<br>属性默认以像素为单位, 但是你可以指定其按比例显示 (如：”80%”)。</p>
+<blockquote>
+<p>&lt;iframe loading=”lazy” src=”<a target="_blank" rel="noopener" href="https://lamber1123.github.io/&quot;">https://lamber1123.github.io/&quot;</a> width=”200” height=”200” &gt;&lt;/iframe&gt;</p>
+</blockquote>
+<br/>
+
+<iframe loading="lazy" src="https://lamber1123.github.io/" height="200"></iframe>
+
+<p>其中 loading=”lazy” 代表允许延迟加载，避免不必要的流量浪费。</p>
+<br/>
+
+<h3 id="2-iframe-移除边框"><a href="#2-iframe-移除边框" class="headerlink" title="2. iframe - 移除边框"></a>2. iframe - 移除边框</h3><p>frameborder 属性用于定义iframe表示是否显示边框。<br>设置属性值为 “0” 移除iframe的边框:</p>
+<blockquote>
+<p>&lt;iframe src=”<a target="_blank" rel="noopener" href="https://lamber1123.github.io/&quot;">https://lamber1123.github.io/&quot;</a> frameborder=”0”&gt;&lt;/iframe&gt;</p>
+</blockquote>
+<br/>
+
+<iframe src="https://lamber1123.github.io/" frameborder="0"></iframe>
+
+<h3 id="3-使用-iframe-来显示目标链接页面"><a href="#3-使用-iframe-来显示目标链接页面" class="headerlink" title="3. 使用 iframe 来显示目标链接页面"></a>3. 使用 iframe 来显示目标链接页面</h3><p>iframe 可以显示一个目标链接的页面<br>目标链接的属性必须使用 iframe 的属性，如下实例:</p>
+<blockquote>
+<p>&lt;iframe src=”” name=”iframe_a”&gt;&lt;/iframe&gt;<br>&lt;p&gt;&lt;a href=”<a target="_blank" rel="noopener" href="https://lamber1123.github.io/&quot;">https://lamber1123.github.io/&quot;</a> target=”iframe_a” rel=”noopener”&gt;LAMBER的博客&lt;/a&gt;&lt;/p&gt;</p>
+</blockquote>
+<br/>
+
+<iframe src="" name="iframe_a"></iframe>
+<p><a href="https://lamber1123.github.io/" target="iframe_a" rel="noopener">LAMBER的博客</a></p>
+
+<br/>
+
+<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><br/>
+
+<h3 id="HTML-颜色名"><a href="#HTML-颜色名" class="headerlink" title="HTML 颜色名"></a>HTML 颜色名</h3><p>目前所有浏览器都支持以下颜色名。<br>141个颜色名称是在HTML和CSS颜色规范定义的（17标准颜色，再加124非标准颜色）。</p>
+<p>17标准颜色指的是：黑色，蓝色，水，紫红色，灰色，绿色，石灰，栗色，海军，橄榄，橙，紫，红，白，银，蓝绿色，黄色。</p>
+<p>查看所有颜色名：<a target="_blank" rel="noopener" href="https://www.w3school.com.cn/tags/html_ref_colornames.asp">https://www.w3school.com.cn/tags/html_ref_colornames.asp</a></p>
+<br/>
+
+<h3 id="HTML-颜色值"><a href="#HTML-颜色值" class="headerlink" title="HTML 颜色值"></a>HTML 颜色值</h3><p>HTML 颜色由一个十六进制符号来定义，这个符号由红色、绿色和蓝色的值组成（RGB）。</p>
+<p>每种颜色的最小值是0（十六进制：#00），最大值是255（十六进制：#FF）。</p>
+<p>查看更多颜色信息：<a target="_blank" rel="noopener" href="https://encycolorpedia.cn/00cdff">https://encycolorpedia.cn/00cdff</a></p>
+<br/>
+
+<h2 id="HTML-HTML-脚本"><a href="#HTML-HTML-脚本" class="headerlink" title="HTML HTML 脚本"></a>HTML HTML 脚本</h2><p>JavaScript 使 HTML 页面具有更强的动态和交互性。</p>
+<h3 id="1-HTML-lt-script-gt-标签"><a href="#1-HTML-lt-script-gt-标签" class="headerlink" title="1. HTML &lt;script&gt; 标签"></a>1. HTML &lt;script&gt; 标签</h3><p>&lt;script&gt; 标签用于定义客户端脚本，比如 JavaScript。<br>&lt;script&gt; 元素既可包含脚本语句，也可通过 src 属性指向外部脚本文件。<br>JavaScript 最常用于图片操作、表单验证以及内容动态更新。</p>
+<blockquote>
+<p>&lt;script&gt;<br>document.write(“Hello World!”);<br>&lt;/script&gt;</p>
+</blockquote>
+<br/>
+
+<h3 id="2-HTML-lt-noscript-gt-标签"><a href="#2-HTML-lt-noscript-gt-标签" class="headerlink" title="2. HTML &lt;noscript&gt; 标签"></a>2. HTML &lt;noscript&gt; 标签</h3><p>&lt;noscript&gt; 标签提供无法使用脚本时的替代内容，比方在浏览器禁用脚本时，或浏览器不支持客户端脚本时。<br>&lt;noscript&gt;元素可包含普通 HTML 页面的 body 元素中能够找到的所有元素。<br>只有在浏览器不支持脚本或者禁用脚本时，才会显示 &lt;noscript&gt; 元素中的内容：</p>
+<blockquote>
+<p>&lt;script&gt;<br>document.write(“Hello World!”)<br>&lt;/script&gt;<br>&lt;noscript&gt;抱歉，你的浏览器不支持 JavaScript!&lt;/noscript&gt;</p>
+</blockquote>
+<br/>
+
+<h2 id="HTML-字符实体"><a href="#HTML-字符实体" class="headerlink" title="HTML 字符实体"></a>HTML 字符实体</h2><p>HTML 中的预留字符必须被替换为字符实体。<br>一些在键盘上找不到的字符也可以使用字符实体来替换。</p>
+<br/>
+
+<h3 id="1-HTML-实体"><a href="#1-HTML-实体" class="headerlink" title="1. HTML 实体"></a>1. HTML 实体</h3><p>在 HTML 中，某些字符是预留的。<br>在 HTML 中不能使用小于号（&lt;）和大于号（&gt;），这是因为浏览器会误认为它们是标签。<br>如果希望正确地显示预留字符，我们必须在 HTML 源代码中使用字符实体。</p>
+<p>如需显示小于号，我们必须这样写：&amp;lt; 或 &amp;#60; 或 &amp;#060;</p>
+<br/>
+
+<h3 id="2-不间断空格"><a href="#2-不间断空格" class="headerlink" title="2. 不间断空格"></a>2. 不间断空格</h3><p>HTML 中的常用字符实体是不间断空格(&nbsp;)。<br>浏览器总是会截短 HTML 页面中的空格。如果您在文本中写 10 个空格，在显示该页面之前，浏览器会删除它们中的 9 个。如需在页面中增加空格的数量，需要使用 &nbsp; 字符实体。</p>
+<h3 id="3-HTML字符实体"><a href="#3-HTML字符实体" class="headerlink" title="3. HTML字符实体"></a>3. HTML字符实体</h3><p>实体名称对大小写敏感。</p>
+<table>
+<thead>
+<tr>
+<th>显示结果</th>
+<th>描述</th>
+<th>实体名称</th>
+<th>实体编号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>空格</td>
+<td>&amp;nbsp;</td>
+<td>&amp;#160;</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于号</td>
+<td>&amp;lt;</td>
+<td>&amp;#60;</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于号</td>
+<td>&amp;gt;</td>
+<td>&amp;#62;</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>和号</td>
+<td>&amp;amp;</td>
+<td>&amp;#38;</td>
+</tr>
+<tr>
+<td>&quot;</td>
+<td>引号</td>
+<td>&amp;quot;</td>
+<td>&amp;#34;</td>
+</tr>
+<tr>
+<td>&#39;</td>
+<td>撇号</td>
+<td>&amp;apos;</td>
+<td>(IE不支持)</td>
+</tr>
+<tr>
+<td>\￠</td>
+<td>分</td>
+<td>&amp;cent;</td>
+<td>&amp;#162;</td>
+</tr>
+<tr>
+<td>\£</td>
+<td>镑</td>
+<td>&amp;pound;</td>
+<td>&amp;#163;</td>
+</tr>
+<tr>
+<td>\¥</td>
+<td>人民币/日元</td>
+<td>&amp;yen;</td>
+<td>&amp;#165;</td>
+</tr>
+<tr>
+<td>\€</td>
+<td>欧元</td>
+<td>&amp;euro;</td>
+<td>&amp;#8364;</td>
+</tr>
+<tr>
+<td>\§</td>
+<td>小节</td>
+<td>&amp;sect;</td>
+<td>&amp;#167;</td>
+</tr>
+<tr>
+<td>\©</td>
+<td>版权</td>
+<td>&amp;copy;</td>
+<td>&amp;#169;</td>
+</tr>
+<tr>
+<td>\®</td>
+<td>注册商标</td>
+<td>&amp;reg;</td>
+<td>&amp;#174;</td>
+</tr>
+<tr>
+<td>\™</td>
+<td>商标</td>
+<td>&amp;trade;</td>
+<td>&amp;#8482;</td>
+</tr>
+<tr>
+<td>\×</td>
+<td>乘号</td>
+<td>&amp;times;</td>
+<td>&amp;#215;</td>
+</tr>
+<tr>
+<td>\÷</td>
+<td>除号</td>
+<td>&amp;divide;</td>
+<td>&amp;#247;</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="HTML-URL"><a href="#HTML-URL" class="headerlink" title="HTML URL"></a>HTML URL</h2><p>URL 是一个网页地址。</p>
+<p>URL可以由字母组成，如”runoob.com”，或互联网协议（IP）地址： 192.68.20.50。大多数人进入网站使用网站域名来访问，因为 名字比数字更容易记住。</p>
+<br/>
+
+<h3 id="1-URL-统一资源定位器"><a href="#1-URL-统一资源定位器" class="headerlink" title="1. URL - 统一资源定位器"></a>1. URL - 统一资源定位器</h3><p>Web浏览器通过URL从Web服务器请求页面。<br>当您点击 HTML 页面中的某个链接时，对应的 &lt;a&gt; 标签指向万维网上的一个地址。<br>一个统一资源定位器(URL) 用于定位万维网上的文档。<br>URL 只能使用 ASCII 字符集。</p>
+<p>一个网页地址语法规则:</p>
+<blockquote>
+<p>scheme://host.domain:port/path/filename</p>
+</blockquote>
+<ul>
+<li>scheme - 定义因特网服务的类型。最常见的类型是 http</li>
+<li>host - 定义域主机（http 的默认主机是 www）</li>
+<li>domain - 定义因特网域名，比如 runoob.com</li>
+<li>:port - 定义主机上的端口号（http 的默认端口号是 80）</li>
+<li>path - 定义服务器上的路径（如果省略，则文档必须位于网站的根目录中）。</li>
+<li>filename - 定义文档/资源的名称</li>
+</ul>
+<br/>
+
+<h3 id="2-常见的-URL-Scheme"><a href="#2-常见的-URL-Scheme" class="headerlink" title="2. 常见的 URL Scheme"></a>2. 常见的 URL Scheme</h3><p>以下是一些URL scheme：</p>
+<table>
+<thead>
+<tr>
+<th>Scheme</th>
+<th>访问</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>http</td>
+<td>超文本传输协议</td>
+<td>以 http:// 开头的普通网页。不加密。</td>
+</tr>
+<tr>
+<td>https</td>
+<td>安全超文本传输协议</td>
+<td>安全网页，加密所有信息交换。</td>
+</tr>
+<tr>
+<td>ftp</td>
+<td>文件传输协议</td>
+<td>用于将文件下载或上传至网站。</td>
+</tr>
+<tr>
+<td>file</td>
+<td></td>
+<td>您计算机上的文件。</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上教程已教你如何使用 HTML 制作页面。<br>HTML 是一种在 Web 上使用的通用标记语言。HTML 允许你格式化文本，添加图片，创建链接、输入表单、框架和表格等等，并可将之存为文本文件，浏览器即可读取和显示。<br>HTML 的关键是标签，其作用是指示将出现的内容。</p>
+<p><strong>那么学完HTML，接下来该学习什么呢？</strong></p>
+<br/>
+
+<h3 id="1-学习-CSS"><a href="#1-学习-CSS" class="headerlink" title="1. 学习 CSS"></a>1. 学习 CSS</h3><p>CSS被用来同时控制多重网页的样式和布局。<br>通过使用 CSS，所有的格式化均可从 HTML 中剥离出来，并存储于一个独立的文件中。<br>如需学习如何创建样式表，请访问我们的 CSS 教程 。</p>
+<br/>
+
+<h3 id="2-站点服务器"><a href="#2-站点服务器" class="headerlink" title="2. 站点服务器"></a>2. 站点服务器</h3><p>在自己的服务器上托管网站始终是一个选项。有几点需要考虑：</p>
+<p><strong>硬件支出</strong><br>如果要运行”真正”的网站，您不得不购买强大的服务器硬件。不要指望低价的 PC 能够应付这些工作。您还需要稳定的（一天 24 小时）高速连接。</p>
+<p><strong>软件支出</strong><br>请记住，服务器授权通常比客户端授权更昂贵。同时请注意，服务器授权也许有用户数量限制。</p>
+<p><strong>人工费</strong><br>不要指望低廉的人工费用。您必须安装自己的硬件和软件。您同时要处理漏洞和病毒，以确保您的服务器时刻正常地运行于一个”任何事都可能发生”的环境中。</p>
+<br/>
+
+<h3 id="3-使用因特网服务提供商（ISP）"><a href="#3-使用因特网服务提供商（ISP）" class="headerlink" title="3. 使用因特网服务提供商（ISP）"></a>3. 使用因特网服务提供商（ISP）</h3><p>从 ISP 租用服务器也很常见。<br>大多数小公司会把网站存放到由 ISP 提供的服务器上。其优势有以下几点：</p>
+<p><strong>连接速度</strong><br>大多数 ISP 都拥有连接因特网的高速连接。</p>
+<p><strong>强大的硬件</strong><br>ISP 的 web 服务器通常强大到能够由若干网站分享资源。您还要看一下 ISP 是否提供高效的负载平衡，以及必要的备份服务器。</p>
+<p><strong>安全性和可靠性</strong><br>ISP 是网站托管方面的专家。他们应该提供 99% 以上的在线时间，最新的软件补丁，以及最好的病毒防护。</p>
+<br/>
+
+<h3 id="4-选择-ISP-时的注意事项"><a href="#4-选择-ISP-时的注意事项" class="headerlink" title="4. 选择 ISP 时的注意事项"></a>4. 选择 ISP 时的注意事项</h3><p><strong>24 小时支持</strong><br>确保 ISP 提供 24 小时支持。不要使自己置于无法解决严重问题的尴尬境地，同时还必须等待第二个工作日。如果您不希望支付长途电话费，那么免费电话服务也是必要的。</p>
+<p><strong>每日备份</strong><br>确保 ISP 会执行每日备份的例行工作，否则您有可能损失有价值的数据。</p>
+<p><strong>流量</strong><br>研究一下 ISP 的流量限制。如果出现由于网站受欢迎而激增的不可预期的访问量，那么您要确保不会因此支付额外费用。</p>
+<p><strong>带宽或内容限制</strong><br>研究一下 ISP 的带宽和内容限制。如果您计划发布图片或播出视频或音频，请确保您有此权限。</p>
+<p><strong>E-mail 功能</strong><br>请确保 ISP 支持您需要的 e-mail 功能。</p>
+<p><strong>数据库访问</strong><br>如果您计划使用网站数据库中的数据，那么请确保您的 ISP 支持您需要的数据库访问。<br>在您选取一家 ISP 之前，请务必阅读菜鸟教程的 Web 主机教程。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>HTML笔记（三）</p><p><a href="https://lameber1123.github.io/2021/12/31/HTML笔记（三）/">https://lameber1123.github.io/2021/12/31/HTML笔记（三）/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Lamber</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-12-31</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-01-08</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/html/">html</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/12/31/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">CSS笔记（一）</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/12/31/%E7%BB%99hexo%E6%B7%BB%E5%8A%A0%E7%BD%91%E9%A1%B5%E5%9B%BE%E6%A0%87/"><span class="level-item">给hexo添加网页图标</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Lamber"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Lamber</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">31</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lamber1123" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/167431968"><i class="iconfont icon-bilibili-fill"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/lamber-51"><i class="iconfont icon-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://Nancy0205.github.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Nancy的博客</span></span><span class="level-right"><span class="level-item tag">nancy0205.github.io</span></span></a></li><li><a class="level is-mobile" href="https://ecampus.nwpu.edu.cn/main.html#/Index" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">翱翔门户</span></span><span class="level-right"><span class="level-item tag">ecampus.nwpu.edu.cn</span></span></a></li><li><a class="level is-mobile" href="https://cnki.net/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">中国知网</span></span><span class="level-right"><span class="level-item tag">cnki.net</span></span></a></li><li><a class="level is-mobile" href="https://docs.pingcap.com/zh/tidb/stable/tikv-overview/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">PingCAP</span></span><span class="level-right"><span class="level-item tag">docs.pingcap.com</span></span></a></li><li><a class="level is-mobile" href="https://hardcore.feishu.cn/docs/doccnMRVFcMWn1zsEYBrbsDf8De#" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft讲稿</span></span><span class="level-right"><span class="level-item tag">hardcore.feishu.cn</span></span></a></li><li><a class="level is-mobile" href="https://liqul.github.io/blog/tags/Raft/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bucket&amp;Hammer</span></span><span class="level-right"><span class="level-item tag">liqul.github.io</span></span></a></li><li><a class="level is-mobile" href="https://www.codedump.info/post/20180922-etcd-raft/#%E8%BE%93%E5%85%A5%E5%8F%8A%E8%BE%93%E5%87%BA" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft源码解析</span></span><span class="level-right"><span class="level-item tag">www.codedump.info</span></span></a></li><li><a class="level is-mobile" href="https://gitee.com/opengauss/openGauss-server/blob/master/README.md" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">openGauss官方文档</span></span><span class="level-right"><span class="level-item tag">gitee.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/CentOS/"><span class="level-start"><span class="level-item">CentOS</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Raft%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">Raft笔记</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/TiKV%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">TiKV笔记</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/css%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">css笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/html%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">html笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/icarus/"><span class="level-start"><span class="level-item">icarus</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/js%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">js笔记</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/openGauss/"><span class="level-start"><span class="level-item">openGauss</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%91%B8%E9%B1%BC/"><span class="level-start"><span class="level-item">摸鱼</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-07T11:56:58.000Z">2022-12-07</time></p><p class="title"><a href="/2022/12/07/DCFTest%EF%BC%9ADCF%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1/">DCFTest：DCF框架的测试工具</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-17T07:59:47.000Z">2022-10-17</time></p><p class="title"><a href="/2022/10/17/%E8%85%BE%E8%AE%AF%E5%8F%AE%E5%BD%93%E9%9F%B3%E7%AE%B1%E5%88%B7%E5%85%A5Android8-1%E7%B3%BB%E7%BB%9F/">腾讯叮当音箱刷入Android8.1系统</a></p><p class="categories"><a href="/categories/%E6%91%B8%E9%B1%BC/">摸鱼</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-10T12:22:28.000Z">2022-10-10</time></p><p class="title"><a href="/2022/10/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%90%AF%E5%8A%A8OG%E7%9A%84DCF%E6%A8%A1%E5%9D%97/">服务器上启动OG的DCF模块</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-06T13:52:30.000Z">2022-05-06</time></p><p class="title"><a href="/2022/05/06/openGauss%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/">openGauss存储技术</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-18T08:20:22.000Z">2022-04-18</time></p><p class="title"><a href="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/">openGauss的DCF组件详解</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">December 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">October 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">May 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">April 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">March 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">February 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">January 2022</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">December 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CentOS/"><span class="tag">CentOS</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCF/"><span class="tag">DCF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCFTest/"><span class="tag">DCFTest</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Key-Value/"><span class="tag">Key-Value</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MVCC/"><span class="tag">MVCC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PD/"><span class="tag">PD</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paxos/"><span class="tag">Paxos</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RPC/"><span class="tag">RPC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Raft/"><span class="tag">Raft</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Region/"><span class="tag">Region</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RocksDB/"><span class="tag">RocksDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SQL/"><span class="tag">SQL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiDB/"><span class="tag">TiDB</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiFlash/"><span class="tag">TiFlash</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiKV/"><span class="tag">TiKV</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VMware/"><span class="tag">VMware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zab/"><span class="tag">Zab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zookeeper/"><span class="tag">Zookeeper</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/css/"><span class="tag">css</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/etcd/"><span class="tag">etcd</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/html/"><span class="tag">html</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/icarus/"><span class="tag">icarus</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ico/"><span class="tag">ico</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/js/"><span class="tag">js</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openGauss/"><span class="tag">openGauss</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%85%83%E4%BF%A1%E6%81%AF/"><span class="tag">元信息</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"><span class="tag">分布式</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/"><span class="tag">映射关系</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Lamber</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

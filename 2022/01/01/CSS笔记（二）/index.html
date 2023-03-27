@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="msvalidate.01" content="D5358D241F26545F49E55D403F921D5D"><meta name="google-site-verification" content="7h0jWlXl61CeDREpTs47QhQ9Qz7CJptnpSUcrIxB_II"><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>CSS笔记（二） - Lamber&#039;s Blog: Lamber的个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充）"><meta property="og:type" content="blog"><meta property="og:title" content="CSS笔记（二）"><meta property="og:url" content="https://lameber1123.github.io/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充）"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.runoob.com/images/box-model.gif"><meta property="og:image" content="https://www.runoob.com/images/box_outline.gif"><meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2013/08/VlwVi.png"><meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2013/08/VlwVi.png"><meta property="article:published_time" content="2021-12-31T16:00:01.000Z"><meta property="article:modified_time" content="2022-01-05T06:20:16.829Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="css"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://www.runoob.com/images/box-model.gif"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://lameber1123.github.io"},"headline":"CSS笔记（二）","image":["https://www.runoob.com/images/box-model.gif","https://www.runoob.com/images/box_outline.gif","https://www.runoob.com/wp-content/uploads/2013/08/VlwVi.png","https://www.runoob.com/wp-content/uploads/2013/08/VlwVi.png"],"datePublished":"2021-12-31T16:00:01.000Z","dateModified":"2022-01-05T06:20:16.829Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"https://lameber1123.github.io/img/logo.png"}},"description":"CSS 列表 CSS Table(表格) CSS 盒子模型 CSS Border(边框) CSS 轮廓（outline）属性 CSS margin(外边距) CSS padding（填充）"}</script><link rel="canonical" href="https://lameber1123.github.io/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-12-31T16:00:01.000Z" title="2022/1/1 上午12:00:01">2022-01-01</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-05T06:20:16.829Z" title="2022/1/5 下午2:20:16">2022-01-05</time></span><span class="level-item"><a class="link-muted" href="/categories/css%E7%AC%94%E8%AE%B0/">css笔记</a></span><span class="level-item">23 minutes read (About 3488 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">CSS笔记（二）</h1><div class="content"><ul>
+<li>CSS 列表</li>
+<li>CSS Table(表格)</li>
+<li>CSS 盒子模型</li>
+<li>CSS Border(边框)</li>
+<li>CSS 轮廓（outline）属性</li>
+<li>CSS margin(外边距)</li>
+<li>CSS padding（填充）</li>
+</ul>
+<span id="more"></span>
+<br/>
+
+<h2 id="CSS-列表"><a href="#CSS-列表" class="headerlink" title="CSS 列表"></a>CSS 列表</h2><p>CSS 列表属性作用如下：</p>
+<ul>
+<li>设置不同的列表项标记为有序列表</li>
+<li>设置不同的列表项标记为无序列表</li>
+<li>设置列表项标记为图像</li>
+</ul>
+<br/>
+
+<h3 id="1-列表"><a href="#1-列表" class="headerlink" title="1. 列表"></a>1. 列表</h3><p>在 HTML中，有两种类型的列表：</p>
+<ul>
+<li>无序列表 ul - 列表项标记用特殊图形（如小黑点、小方框等）</li>
+<li>有序列表 ol - 列表项的标记有数字或字母<br>使用 CSS，可以列出进一步的样式，并可用图像作列表项标记。</li>
+</ul>
+<br/>
+
+<h3 id="2-不同的列表项标记"><a href="#2-不同的列表项标记" class="headerlink" title="2. 不同的列表项标记"></a>2. 不同的列表项标记</h3><p>list-style-type属性是指定列表项标记的类型。</p>
+<blockquote>
+<p>ul.a {list-style-type: circle;}<br>ul.b {list-style-type: square;}<br><br/><br>ol.c {list-style-type: upper-roman;}<br>ol.d {list-style-type: lower-alpha;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-作为列表项标记的图像"><a href="#3-作为列表项标记的图像" class="headerlink" title="3. 作为列表项标记的图像"></a>3. 作为列表项标记的图像</h3><p>要指定列表项标记的图像，使用列表样式图像属性，如：</p>
+<blockquote>
+<p>ul<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;list-style-image: url(‘sqpurple.gif’);<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="4-列表-简写属性"><a href="#4-列表-简写属性" class="headerlink" title="4. 列表 - 简写属性"></a>4. 列表 - 简写属性</h3><p>在单个属性中可以指定所有的列表属性。这就是所谓的简写属性。<br>为列表使用简写属性，列表样式属性设置如下：</p>
+<blockquote>
+<p>ul<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;list-style: square url(“sqpurple.gif”);<br>}</p>
+</blockquote>
+<p>要按顺序设置如下属性：</p>
+<ul>
+<li>list-style-type</li>
+<li>list-style-position </li>
+<li>list-style-image</li>
+</ul>
+<p>如果上述值丢失一个，其余仍在指定的顺序，就没关系。</p>
+<br/>
+
+<h3 id="5-移除默认设置"><a href="#5-移除默认设置" class="headerlink" title="5. 移除默认设置"></a>5. 移除默认设置</h3><p>list-style-type:none 属性可以用于移除小标记。<br>默认情况下列表 &lt;ul&gt; 或 &lt;ol&gt; 还设置了内边距和外边距，可使用 margin:0 和 padding:0 来移除:</p>
+<blockquote>
+<p>ul {<br>&nbsp;&nbsp;&nbsp;&nbsp;list-style-type: none;<br>&nbsp;&nbsp;&nbsp;&nbsp;margin: 0;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 0;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="6-所有的CSS列表属性"><a href="#6-所有的CSS列表属性" class="headerlink" title="6. 所有的CSS列表属性"></a>6. 所有的CSS列表属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>list-style</td>
+<td>简写属性。用于把所有用于列表的属性设置于一个声明中</td>
+</tr>
+<tr>
+<td>list-style-image</td>
+<td>将图像设置为列表项标志</td>
+</tr>
+<tr>
+<td>list-style-position</td>
+<td>设置列表中列表项标志的位置</td>
+</tr>
+<tr>
+<td>list-style-type</td>
+<td>设置列表项标志的类型</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-表格"><a href="#CSS-表格" class="headerlink" title="CSS 表格"></a>CSS 表格</h2><p>使用 CSS 可以使 HTML 表格更美观。</p>
+<br/>
+
+<h3 id="1-表格边框"><a href="#1-表格边框" class="headerlink" title="1. 表格边框"></a>1. 表格边框</h3><p>指定CSS表格边框，使用border属性。<br>下面的例子指定了一个表格的Th和TD元素的黑色边框：</p>
+<blockquote>
+<p>table, th, td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border: 1px solid black;<br>}</p>
+</blockquote>
+<p>请注意，在上面的例子中的表格有双边框。这是因为表、 th 和 td元素都有独立的边界。<br>为了显示一个表的单个边框，使用 border-collapse属性。</p>
+<br/>
+
+<h3 id="2-折叠边框"><a href="#2-折叠边框" class="headerlink" title="2. 折叠边框"></a>2. 折叠边框</h3><p>border-collapse 属性设置表格的边框是否被折叠成一个单一的边框或隔开：</p>
+<blockquote>
+<p>table<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-collapse: collapse;<br>}<br>table, th, td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border: 1px solid black;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-表格宽度和高度"><a href="#3-表格宽度和高度" class="headerlink" title="3. 表格宽度和高度"></a>3. 表格宽度和高度</h3><p>Width和height属性定义表格的宽度和高度。<br>下面的例子是设置100％的宽度，50像素的th元素的高度的表格：</p>
+<blockquote>
+<p>table<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;width:100%;<br>}<br>th<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;height:50px;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="4-表格文字对齐"><a href="#4-表格文字对齐" class="headerlink" title="4. 表格文字对齐"></a>4. 表格文字对齐</h3><p>包括表格中的文本对齐和垂直对齐属性。</p>
+<p>text-align 属性设置水平对齐方式，向左，右，或中心：</p>
+<blockquote>
+<p>td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align:right;<br>}</p>
+</blockquote>
+<p>vertical-align 属性设置垂直对齐方式，比如顶部，底部或中间：</p>
+<blockquote>
+<p>td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;height:50px;<br>&nbsp;&nbsp;&nbsp;&nbsp;vertical-align:bottom;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="5-表格填充"><a href="#5-表格填充" class="headerlink" title="5. 表格填充"></a>5. 表格填充</h3><p>修改td和th元素 padding 属性，控制边框和表格内容之间的间距：</p>
+<blockquote>
+<p>td<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;padding:15px;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="6-表格颜色"><a href="#6-表格颜色" class="headerlink" title="6. 表格颜色"></a>6. 表格颜色</h3><p>指定边框的颜色、th元素的文本和背景颜色：</p>
+<blockquote>
+<p>table, td, th<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border:1px solid green;<br>}<br>th<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;background-color:green;<br>&nbsp;&nbsp;&nbsp;&nbsp;color:white;<br>}</p>
+</blockquote>
+<br/>
+
+<h2 id="CSS-盒子模型"><a href="#CSS-盒子模型" class="headerlink" title="CSS 盒子模型"></a>CSS 盒子模型</h2><p>所有HTML元素可以看作盒子，在CSS中，”box model”这一术语是用来设计和布局时使用。<br>CSS盒模型封装周围的HTML元素，它包括：边距，边框，填充，和实际内容。<br>盒模型允许我们在其它元素和周围元素边框之间的空间放置元素。<br>下面的图片说明了盒子模型(Box Model)：</p>
+<p><img src="https://www.runoob.com/images/box-model.gif" alt="盒模型示意图"></p>
+<ul>
+<li>Margin(外边距) - 清除边框外的区域，外边距是透明的。</li>
+<li>Border(边框) - 围绕在内边距和内容外的边框。</li>
+<li>Padding(内边距) - 清除内容周围的区域，内边距是透明的。</li>
+<li>Content(内容) - 盒子的内容，显示文本和图像。</li>
+</ul>
+<br/>
+
+<p>当指定一个 CSS 元素的宽度和高度属性时，你只是设置内容区域的宽度和高度。要知道，完整大小的元素，你还必须添加内边距，边框和外边距。<br>试想一下，你只有 250 像素的空间。让总宽度为 250 像素的元素可以如下设置:</p>
+<blockquote>
+<p>div {<br>&nbsp;&nbsp;&nbsp;&nbsp;width: 220px;<br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 10px;<br>&nbsp;&nbsp;&nbsp;&nbsp;border: 5px solid gray;<br>&nbsp;&nbsp;&nbsp;&nbsp;margin: 0;<br>}</p>
+</blockquote>
+<br/>
+
+<p>最终元素的总宽度计算公式是这样的：<br>总元素的宽度 = 宽度 + 左填充 + 右填充 + 左边框 + 右边框 + 左边距 + 右边距</p>
+<p>元素的总高度最终计算公式是这样的：<br>总元素的高度 = 高度 + 顶部填充 + 底部填充 + 上边框 + 下边框 + 上边距 + 下边距</p>
+<br/>
+
+<h2 id="CSS-Border-边框"><a href="#CSS-Border-边框" class="headerlink" title="CSS Border(边框)"></a>CSS Border(边框)</h2><p>CSS边框属性允许你指定一个元素边框的<strong>样式</strong>和<strong>颜色</strong>。</p>
+<div style="border: 1px solid #ccc!important;    border-color: #000!important;padding: 10px;">
+    <p>在四边都有边框</p>
+</div>
+<br>
+<div style="border-bottom: 1px solid #ccc!important;padding:14px;border-color: #f44336!important;">
+    <p>红色底部边框</p>
+</div>
+<br>
+<div style="border: 1px solid #ccc!important;padding:14px;border-radius: 16px!important;">
+    <p>圆角边框</p>
+</div>
+<br>
+<div style="background-color: #ddffff!important;padding: 14px;border-left: 6px solid #ccc!important;border-color: #2196F3!important;">
+<p>左侧边框带宽度，颜色为蓝色</p>
+</div>
+
+<br/>
+
+<h3 id="1-边框样式"><a href="#1-边框样式" class="headerlink" title="1. 边框样式"></a>1. 边框样式</h3><p>边框样式属性指定要显示什么样的边界。<br><strong>border-style</strong> 属性用来定义边框的样式</p>
+<p style="border: 1px none #000000;padding:3px">none: 默认无边框</p>
+<p style="border: 1px dotted #000000;padding:3px">dotted: 定义一个点线边框</p>
+<p style="border: 1px dashed #000000;padding:3px">dashed: 定义一个虚线边框</p>
+<p style="border: 1px solid #000000;padding:3px">solid: 定义实线边框</p>
+<p style="border: 3px double #000000;padding:3px">double: 定义两个边框。 两个边框的宽度和 border-width 的值相同</p>
+<p style="border: 5px groove #98bf21;padding:3px">groove: 定义3D沟槽边框。效果取决于边框的颜色值</p>
+<p style="border: 5px ridge #98bf21;padding:3px">ridge: 定义3D脊边框。效果取决于边框的颜色值</p>
+<p style="border: 5px inset #98bf21;padding:3px">inset:定义一个3D的嵌入边框。效果取决于边框的颜色值</p>
+<p style="border: 5px outset #98bf21;padding:3px">outset: 定义一个3D突出边框。 效果取决于边框的颜色值</p>
+
+<br/>
+
+<h3 id="2-边框宽度"><a href="#2-边框宽度" class="headerlink" title="2. 边框宽度"></a>2. 边框宽度</h3><p>您可以通过 <strong>border-width</strong> 属性为边框指定宽度。<br>为边框指定宽度有两种方法：可以指定长度值，比如 2px 或 0.1em(单位为 px, pt, cm, em 等)，或者使用 3 个关键字之一，它们分别是 thick 、medium（默认） 和 thin。<br>注：CSS 没有定义 3 个关键字的具体宽度，所以一个用户可能把 thick 、medium 和 thin 分别设置为等于 5px、3px 和 2px，而另一个用户则分别设置为 3px、2px 和 1px。</p>
+<blockquote>
+<p>p.one<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-style:solid;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-width:5px;<br>}<br>p.two<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-style:solid;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-width:medium;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-边框-单独设置各边"><a href="#3-边框-单独设置各边" class="headerlink" title="3. 边框-单独设置各边"></a>3. 边框-单独设置各边</h3><p>在CSS中，可以指定不同的侧面不同的边框：</p>
+<blockquote>
+<p>p<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;border-top-style:dotted;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-right-style:solid;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-bottom-style:dotted;<br>&nbsp;&nbsp;&nbsp;&nbsp;border-left-style:solid;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="4-border-style-属性"><a href="#4-border-style-属性" class="headerlink" title="4. border-style 属性"></a>4. border-style 属性</h3><p>可以设置一个单一属性设置四个边框。<br>border-style属性可以有1-4个值：</p>
+<blockquote>
+<p>border-style:dotted solid double dashed;</p>
+</blockquote>
+<ul>
+<li>上边框是 dotted</li>
+<li>右边框是 solid</li>
+<li>底边框是 double</li>
+<li>左边框是 dashed</li>
+</ul>
+<blockquote>
+<p>border-style:dotted solid double;</p>
+</blockquote>
+<ul>
+<li>上边框是 dotted</li>
+<li>左、右边框是 solid</li>
+<li>底边框是 double</li>
+</ul>
+<blockquote>
+<p>border-style:dotted solid;</p>
+</blockquote>
+<ul>
+<li>上、底边框是 dotted</li>
+<li>右、左边框是 solid</li>
+</ul>
+<blockquote>
+<p>border-style:dotted;</p>
+</blockquote>
+<ul>
+<li>四面边框是 dotted</li>
+</ul>
+<p>上面的例子用了border-style。然而，它也可以和border-width 、 border-color一起使用。</p>
+<br/>
+
+<h3 id="5-边框-简写属性"><a href="#5-边框-简写属性" class="headerlink" title="5. 边框-简写属性"></a>5. 边框-简写属性</h3><p>上面的例子用了很多属性来设置边框，也可以在一个属性中设置边框。<br>你可以在 <strong>border</strong> 属性中设置：</p>
+<ul>
+<li>border-width</li>
+<li>border-style</li>
+<li>border-color</li>
+</ul>
+<p>对他们的先后顺序没有要求,如：</p>
+<blockquote>
+<p>border:5px solid red;</p>
+</blockquote>
+<br/>
+
+<h3 id="6-CSS-边框属性"><a href="#6-CSS-边框属性" class="headerlink" title="6. CSS 边框属性"></a>6. CSS 边框属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>border</td>
+<td>简写属性，用于把针对四个边的属性设置在一个声明</td>
+</tr>
+<tr>
+<td>border-style</td>
+<td>用于设置元素所有边框的样式，或者单独地为各边设置边框样式</td>
+</tr>
+<tr>
+<td>border-width</td>
+<td>简写属性，用于为元素的所有边框设置宽度，或者单独地为各边边框设置宽度</td>
+</tr>
+<tr>
+<td>border-color</td>
+<td>简写属性，设置元素的所有边框中可见部分的颜色，或为 4 个边分别设置颜色</td>
+</tr>
+<tr>
+<td>border-bottom</td>
+<td>简写属性，用于把下边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-bottom-color</td>
+<td>设置元素的下边框的颜色</td>
+</tr>
+<tr>
+<td>border-bottom-style</td>
+<td>设置元素的下边框的样式</td>
+</tr>
+<tr>
+<td>border-bottom-width</td>
+<td>设置元素的下边框的宽度</td>
+</tr>
+<tr>
+<td>border-left</td>
+<td>简写属性，用于把左边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-left-color</td>
+<td>设置元素的左边框的颜色</td>
+</tr>
+<tr>
+<td>border-left-style</td>
+<td>设置元素的左边框的样式</td>
+</tr>
+<tr>
+<td>border-left-width</td>
+<td>设置元素的左边框的宽度</td>
+</tr>
+<tr>
+<td>border-right</td>
+<td>简写属性，用于把右边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-right-color</td>
+<td>设置元素的右边框的颜色</td>
+</tr>
+<tr>
+<td>border-right-style</td>
+<td>设置元素的右边框的样式</td>
+</tr>
+<tr>
+<td>border-right-width</td>
+<td>设置元素的右边框的宽度</td>
+</tr>
+<tr>
+<td>border-top</td>
+<td>简写属性，用于把上边框的所有属性设置到一个声明中</td>
+</tr>
+<tr>
+<td>border-top-color</td>
+<td>设置元素的上边框的颜色</td>
+</tr>
+<tr>
+<td>border-top-style</td>
+<td>设置元素的上边框的样式</td>
+</tr>
+<tr>
+<td>border-top-width</td>
+<td>设置元素的上边框的宽度</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-轮廓（outline）"><a href="#CSS-轮廓（outline）" class="headerlink" title="CSS 轮廓（outline）"></a>CSS 轮廓（outline）</h2><ul>
+<li>轮廓（outline）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。</li>
+<li>轮廓（outline）属性指定元素轮廓的样式、颜色和宽度。</li>
+</ul>
+<p>轮廓（outline）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。<br><strong>outline</strong> 属性规定元素轮廓的样式、颜色和宽度。</p>
+<p><img src="https://www.runoob.com/images/box_outline.gif" alt="轮廓示意图"></p>
+<p>所有CSS 轮廓属性如下：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>outline</td>
+<td>在一个声明中设置所有的轮廓属性</td>
+<td>outline-color<br>outline-style<br>outline-width<br>inherit</td>
+</tr>
+<tr>
+<td>outline-color</td>
+<td>设置轮廓的颜色</td>
+<td>color-name<br>hex-number<br>rgb-number<br>invert<br>inherit</td>
+</tr>
+<tr>
+<td>outline-style</td>
+<td>设置轮廓的样式</td>
+<td>none<br>dotted<br>dashed<br>solid<br>double<br>groove<br>ridge<br>inset<br>outset<br>inherit</td>
+</tr>
+<tr>
+<td>outline-width</td>
+<td>设置轮廓的宽度</td>
+<td>thin<br>medium<br>thick<br>length<br>inherit</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-margin-外边距"><a href="#CSS-margin-外边距" class="headerlink" title="CSS margin(外边距)"></a>CSS margin(外边距)</h2><p>CSS margin(外边距)属性定义元素周围的空间。</p>
+<p>margin 清除周围的（外边框）元素区域。margin 没有背景颜色，是完全透明的。<br>margin 可以单独改变元素的上，下，左，右边距，也可以一次改变所有的属性。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/08/VlwVi.png" alt="margin示意图"></p>
+<br/>
+
+<h3 id="1-可能的值"><a href="#1-可能的值" class="headerlink" title="1. 可能的值"></a>1. 可能的值</h3><p>Margin可以使用负值，起到重叠的效果。</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>auto</td>
+<td>设置浏览器边距</td>
+</tr>
+<tr>
+<td>length</td>
+<td>定义一个固定的margin（使用px，pt，em等）</td>
+</tr>
+<tr>
+<td>%</td>
+<td>定义一个使用百分比的边距</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h3 id="2-Margin-单边外边距属性"><a href="#2-Margin-单边外边距属性" class="headerlink" title="2. Margin - 单边外边距属性"></a>2. Margin - 单边外边距属性</h3><p>在CSS中，它可以指定不同的侧面不同的边距：</p>
+<blockquote>
+<p>margin-top:100px;<br>margin-bottom:100px;<br>margin-right:50px;<br>margin-left:50px;</p>
+</blockquote>
+<br/>
+
+<h3 id="3-Margin-简写属性"><a href="#3-Margin-简写属性" class="headerlink" title="3. Margin - 简写属性"></a>3. Margin - 简写属性</h3><p>为了缩短代码，有可能使用一个属性中margin指定的所有边距属性。这就是所谓的简写属性。<br>所有边距属性的简写属性是 <strong>margin</strong> :</p>
+<p>margin属性可以有一到四个值。</p>
+<blockquote>
+<p>margin:25px 50px 75px 100px;</p>
+</blockquote>
+<ul>
+<li>上边距为25px</li>
+<li>右边距为50px</li>
+<li>下边距为75px</li>
+<li>左边距为100px</li>
+</ul>
+<br/>
+
+<blockquote>
+<p>margin:25px 50px 75px;</p>
+</blockquote>
+<ul>
+<li>上边距为25px</li>
+<li>左右边距为50px</li>
+<li>下边距为75px</li>
+</ul>
+<br/>
+
+<blockquote>
+<p>margin:25px 50px;</p>
+</blockquote>
+<ul>
+<li>上下边距为25px</li>
+<li>左右边距为50px</li>
+</ul>
+<br/>
+
+<blockquote>
+<p>margin:25px;</p>
+</blockquote>
+<ul>
+<li>所有的4个边距都是25px</li>
+</ul>
+<br/>
+
+<h3 id="4-所有的CSS边距属性"><a href="#4-所有的CSS边距属性" class="headerlink" title="4. 所有的CSS边距属性"></a>4. 所有的CSS边距属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>margin</td>
+<td>简写属性。在一个声明中设置所有外边距属性</td>
+</tr>
+<tr>
+<td>margin-bottom</td>
+<td>设置元素的下外边距</td>
+</tr>
+<tr>
+<td>margin-left</td>
+<td>设置元素的左外边距</td>
+</tr>
+<tr>
+<td>margin-right</td>
+<td>设置元素的右外边距</td>
+</tr>
+<tr>
+<td>margin-top</td>
+<td>设置元素的上外边距</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-padding（填充）"><a href="#CSS-padding（填充）" class="headerlink" title="CSS padding（填充）"></a>CSS padding（填充）</h2><p>CSS padding（填充）是一个简写属性，定义元素边框与元素内容之间的空间，即上下左右的内边距。</p>
+<p>当元素的 padding（填充）内边距被清除时，所释放的区域将会受到元素背景颜色的填充。<br>单独使用 padding 属性可以改变上下左右的填充。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/08/VlwVi.png" alt="padding示意图"></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>length</td>
+<td>定义一个固定的填充(像素, pt, em,等)</td>
+</tr>
+<tr>
+<td>%</td>
+<td>使用百分比值定义一个填充</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h3 id="1-填充-单边内边距属性"><a href="#1-填充-单边内边距属性" class="headerlink" title="1. 填充- 单边内边距属性"></a>1. 填充- 单边内边距属性</h3><p>在CSS中，它可以指定不同的侧面不同的填充。如：</p>
+<blockquote>
+<p>padding-top:25px;<br>padding-bottom:25px;<br>padding-right:50px;<br>padding-left:50px;</p>
+</blockquote>
+<br/>
+
+<h3 id="2-填充-简写属性"><a href="#2-填充-简写属性" class="headerlink" title="2. 填充 - 简写属性"></a>2. 填充 - 简写属性</h3><p>为了缩短代码，它可以在一个属性中指定的所有填充属性。<br>这就是所谓的简写属性。所有的填充属性的简写属性是 <strong>padding</strong> :</p>
+<p>Padding属性，可以有一到四个值。</p>
+<blockquote>
+<p>padding:25px 50px 75px 100px;</p>
+</blockquote>
+<ul>
+<li>上填充为25px</li>
+<li>右填充为50px</li>
+<li>下填充为75px</li>
+<li>左填充为100px</li>
+</ul>
+<br/>
+
+<blockquote>
+<p>padding:25px 50px 75px;</p>
+</blockquote>
+<ul>
+<li>上填充为25px</li>
+<li>左右填充为50px</li>
+<li>下填充为75px</li>
+</ul>
+<br/>
+
+<blockquote>
+<p>padding:25px 50px;</p>
+</blockquote>
+<ul>
+<li>上下填充为25px</li>
+<li>左右填充为50px</li>
+</ul>
+<br/>
+
+<blockquote>
+<p>padding:25px;</p>
+</blockquote>
+<ul>
+<li>所有的填充都是25px</li>
+</ul>
+<br/>
+
+<h3 id="3-所有的CSS填充属性"><a href="#3-所有的CSS填充属性" class="headerlink" title="3. 所有的CSS填充属性"></a>3. 所有的CSS填充属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>padding</td>
+<td>使用简写属性设置在一个声明中的所有填充属性</td>
+</tr>
+<tr>
+<td>padding-bottom</td>
+<td>设置元素的底部填充</td>
+</tr>
+<tr>
+<td>padding-left</td>
+<td>设置元素的左部填充</td>
+</tr>
+<tr>
+<td>padding-right</td>
+<td>设置元素的右部填充</td>
+</tr>
+<tr>
+<td>padding-top</td>
+<td>设置元素的顶部填充</td>
+</tr>
+</tbody></table>
+</div><div class="article-licensing box"><div class="licensing-title"><p>CSS笔记（二）</p><p><a href="https://lameber1123.github.io/2022/01/01/CSS笔记（二）/">https://lameber1123.github.io/2022/01/01/CSS笔记（二）/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Lamber</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-01-01</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-01-05</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/css/">css</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">CSS笔记（三）</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/12/31/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"><span class="level-item">CSS笔记（一）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Lamber"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Lamber</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">31</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lamber1123" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/167431968"><i class="iconfont icon-bilibili-fill"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/lamber-51"><i class="iconfont icon-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://Nancy0205.github.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Nancy的博客</span></span><span class="level-right"><span class="level-item tag">nancy0205.github.io</span></span></a></li><li><a class="level is-mobile" href="https://ecampus.nwpu.edu.cn/main.html#/Index" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">翱翔门户</span></span><span class="level-right"><span class="level-item tag">ecampus.nwpu.edu.cn</span></span></a></li><li><a class="level is-mobile" href="https://cnki.net/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">中国知网</span></span><span class="level-right"><span class="level-item tag">cnki.net</span></span></a></li><li><a class="level is-mobile" href="https://docs.pingcap.com/zh/tidb/stable/tikv-overview/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">PingCAP</span></span><span class="level-right"><span class="level-item tag">docs.pingcap.com</span></span></a></li><li><a class="level is-mobile" href="https://hardcore.feishu.cn/docs/doccnMRVFcMWn1zsEYBrbsDf8De#" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft讲稿</span></span><span class="level-right"><span class="level-item tag">hardcore.feishu.cn</span></span></a></li><li><a class="level is-mobile" href="https://liqul.github.io/blog/tags/Raft/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bucket&amp;Hammer</span></span><span class="level-right"><span class="level-item tag">liqul.github.io</span></span></a></li><li><a class="level is-mobile" href="https://www.codedump.info/post/20180922-etcd-raft/#%E8%BE%93%E5%85%A5%E5%8F%8A%E8%BE%93%E5%87%BA" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft源码解析</span></span><span class="level-right"><span class="level-item tag">www.codedump.info</span></span></a></li><li><a class="level is-mobile" href="https://gitee.com/opengauss/openGauss-server/blob/master/README.md" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">openGauss官方文档</span></span><span class="level-right"><span class="level-item tag">gitee.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/CentOS/"><span class="level-start"><span class="level-item">CentOS</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Raft%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">Raft笔记</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/TiKV%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">TiKV笔记</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/css%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">css笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/html%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">html笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/icarus/"><span class="level-start"><span class="level-item">icarus</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/js%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">js笔记</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/openGauss/"><span class="level-start"><span class="level-item">openGauss</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%91%B8%E9%B1%BC/"><span class="level-start"><span class="level-item">摸鱼</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-07T11:56:58.000Z">2022-12-07</time></p><p class="title"><a href="/2022/12/07/DCFTest%EF%BC%9ADCF%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1/">DCFTest：DCF框架的测试工具</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-17T07:59:47.000Z">2022-10-17</time></p><p class="title"><a href="/2022/10/17/%E8%85%BE%E8%AE%AF%E5%8F%AE%E5%BD%93%E9%9F%B3%E7%AE%B1%E5%88%B7%E5%85%A5Android8-1%E7%B3%BB%E7%BB%9F/">腾讯叮当音箱刷入Android8.1系统</a></p><p class="categories"><a href="/categories/%E6%91%B8%E9%B1%BC/">摸鱼</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-10T12:22:28.000Z">2022-10-10</time></p><p class="title"><a href="/2022/10/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%90%AF%E5%8A%A8OG%E7%9A%84DCF%E6%A8%A1%E5%9D%97/">服务器上启动OG的DCF模块</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-06T13:52:30.000Z">2022-05-06</time></p><p class="title"><a href="/2022/05/06/openGauss%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/">openGauss存储技术</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-18T08:20:22.000Z">2022-04-18</time></p><p class="title"><a href="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/">openGauss的DCF组件详解</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">December 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">October 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">May 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">April 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">March 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">February 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">January 2022</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">December 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CentOS/"><span class="tag">CentOS</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCF/"><span class="tag">DCF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCFTest/"><span class="tag">DCFTest</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Key-Value/"><span class="tag">Key-Value</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MVCC/"><span class="tag">MVCC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PD/"><span class="tag">PD</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paxos/"><span class="tag">Paxos</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RPC/"><span class="tag">RPC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Raft/"><span class="tag">Raft</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Region/"><span class="tag">Region</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RocksDB/"><span class="tag">RocksDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SQL/"><span class="tag">SQL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiDB/"><span class="tag">TiDB</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiFlash/"><span class="tag">TiFlash</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiKV/"><span class="tag">TiKV</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VMware/"><span class="tag">VMware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zab/"><span class="tag">Zab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zookeeper/"><span class="tag">Zookeeper</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/css/"><span class="tag">css</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/etcd/"><span class="tag">etcd</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/html/"><span class="tag">html</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/icarus/"><span class="tag">icarus</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ico/"><span class="tag">ico</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/js/"><span class="tag">js</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openGauss/"><span class="tag">openGauss</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%85%83%E4%BF%A1%E6%81%AF/"><span class="tag">元信息</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"><span class="tag">分布式</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/"><span class="tag">映射关系</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Lamber</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

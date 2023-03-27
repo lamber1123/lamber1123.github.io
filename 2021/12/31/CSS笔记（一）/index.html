@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="msvalidate.01" content="D5358D241F26545F49E55D403F921D5D"><meta name="google-site-verification" content="7h0jWlXl61CeDREpTs47QhQ9Qz7CJptnpSUcrIxB_II"><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>CSS笔记（一） - Lamber&#039;s Blog: Lamber的个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="CSS简介 CSS 语法 CSS Id 和 Class 选择器 CSS 创建 CSS Backgrounds(背景) CSS Text(文本) CSS Fonts(字体) CSS 链接(link)"><meta property="og:type" content="blog"><meta property="og:title" content="CSS笔记（一）"><meta property="og:url" content="https://lameber1123.github.io/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="CSS简介 CSS 语法 CSS Id 和 Class 选择器 CSS 创建 CSS Backgrounds(背景) CSS Text(文本) CSS Fonts(字体) CSS 链接(link)"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.w3school.com.cn/i/css/selector.gif"><meta property="og:image" content="https://s2.loli.net/2021/12/31/QFNj8UbmCuVxLHA.png"><meta property="og:image" content="https://s2.loli.net/2021/12/31/R6aDqSFCKn3MBIt.png"><meta property="og:image" content="https://www.runoob.com/images/serif.gif"><meta property="article:published_time" content="2021-12-31T14:11:03.000Z"><meta property="article:modified_time" content="2022-01-05T06:20:25.440Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="css"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://www.w3school.com.cn/i/css/selector.gif"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://lameber1123.github.io"},"headline":"CSS笔记（一）","image":["https://www.w3school.com.cn/i/css/selector.gif","https://s2.loli.net/2021/12/31/QFNj8UbmCuVxLHA.png","https://s2.loli.net/2021/12/31/R6aDqSFCKn3MBIt.png","https://www.runoob.com/images/serif.gif"],"datePublished":"2021-12-31T14:11:03.000Z","dateModified":"2022-01-05T06:20:25.440Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"https://lameber1123.github.io/img/logo.png"}},"description":"CSS简介 CSS 语法 CSS Id 和 Class 选择器 CSS 创建 CSS Backgrounds(背景) CSS Text(文本) CSS Fonts(字体) CSS 链接(link)"}</script><link rel="canonical" href="https://lameber1123.github.io/2021/12/31/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-12-31T14:11:03.000Z" title="2021/12/31 下午10:11:03">2021-12-31</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-01-05T06:20:25.440Z" title="2022/1/5 下午2:20:25">2022-01-05</time></span><span class="level-item"><a class="link-muted" href="/categories/css%E7%AC%94%E8%AE%B0/">css笔记</a></span><span class="level-item">25 minutes read (About 3690 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">CSS笔记（一）</h1><div class="content"><ul>
+<li>CSS简介</li>
+<li>CSS 语法</li>
+<li>CSS Id 和 Class 选择器</li>
+<li>CSS 创建</li>
+<li>CSS Backgrounds(背景)</li>
+<li>CSS Text(文本)</li>
+<li>CSS Fonts(字体)</li>
+<li>CSS 链接(link)</li>
+</ul>
+<span id="more"></span>
+<br/>
+
+<h2 id="CSS-简介"><a href="#CSS-简介" class="headerlink" title="CSS 简介"></a>CSS 简介</h2><p>在学习 CSS 之前，你需要对 HTML / XHTML 的知识有基本的了解。</p>
+<br/>
+
+<h3 id="1-什么是-CSS"><a href="#1-什么是-CSS" class="headerlink" title="1. 什么是 CSS ?"></a>1. 什么是 CSS ?</h3><ul>
+<li>CSS 指层叠样式表 (Cascading Style Sheets)</li>
+<li>样式定义如何显示 HTML 元素</li>
+<li>样式通常存储在样式表中</li>
+<li>把样式添加到 HTML 4.0 中，是为了解决内容与表现分离的问题</li>
+<li>外部样式表可以极大提高工作效率</li>
+<li>外部样式表通常存储在 CSS 文件中</li>
+<li>多个样式定义可层叠为一个</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/try/demo_source/demo_default.htm">点击查看菜鸟教程的CSS的示例</a></p>
+<br/>
+
+<h3 id="2-CSS-解决了什么问题"><a href="#2-CSS-解决了什么问题" class="headerlink" title="2. CSS 解决了什么问题?"></a>2. CSS 解决了什么问题?</h3><p>HTML 标签原本被设计为用于定义文档内容。</p>
+<p>样式表定义如何显示 HTML 元素，就像 HTML 中的字体标签和颜色属性所起的作用那样。样式通常保存在外部的 .css 文件中。我们只需要编辑一个简单的 CSS 文档就可以改变所有页面的布局和外观。</p>
+<br/>
+
+<h2 id="CSS-语法"><a href="#CSS-语法" class="headerlink" title="CSS 语法"></a>CSS 语法</h2><p>CSS 规则由两个主要的部分构成：选择器，以及一条或多条声明:</p>
+<p><img src="https://www.w3school.com.cn/i/css/selector.gif" alt="CSS语法结构"></p>
+<p>选择器通常是您需要改变样式的 HTML 元素。<br>每条声明由一个属性和一个值组成。<br>属性（property）是您希望设置的样式属性（style attribute）。每个属性有一个值。属性和值被冒号分开。</p>
+<br/>
+
+<h3 id="1-CSS-实例"><a href="#1-CSS-实例" class="headerlink" title="1. CSS 实例"></a>1. CSS 实例</h3><p>CSS声明总是以分号(;)结束，声明总以大括号({})括起来:</p>
+<blockquote>
+<p>p {<br>&nbsp;&nbsp;&nbsp;&nbsp;color:red;<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align:center;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-CSS-注释"><a href="#2-CSS-注释" class="headerlink" title="2. CSS 注释"></a>2. CSS 注释</h3><p>注释是用来解释你的代码，并且可以随意编辑它，浏览器会忽略它。<br>CSS注释以 /* 开始, 以 */ 结束, 实例如下:</p>
+<blockquote>
+<p>/*这是个注释*/<br>p<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align:center;<br>&nbsp;&nbsp;&nbsp;&nbsp;/*这是另一个注释*/<br>&nbsp;&nbsp;&nbsp;&nbsp;color:black;<br>&nbsp;&nbsp;&nbsp;&nbsp;font-family:arial;<br>}</p>
+</blockquote>
+<br/>
+
+<h2 id="CSS-Id-和-Class-选择器"><a href="#CSS-Id-和-Class-选择器" class="headerlink" title="CSS Id 和 Class 选择器"></a>CSS Id 和 Class 选择器</h2><p>如果你要在HTML元素中设置CSS样式，你需要在元素中设置”id” 和 “class”选择器。</p>
+<br/>
+
+<h3 id="1-id-选择器"><a href="#1-id-选择器" class="headerlink" title="1. id 选择器"></a>1. id 选择器</h3><p>id 选择器可以为标有特定 id 的 HTML 元素指定特定的样式。<br>HTML元素以id属性来设置id选择器,CSS 中 id 选择器以 “#” 来定义。<br>以下的样式规则应用于元素属性 id=”para1”:</p>
+<blockquote>
+<p>#para1<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align:center;<br>&nbsp;&nbsp;&nbsp;&nbsp;color:red;<br>}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-class-选择器"><a href="#2-class-选择器" class="headerlink" title="2. class 选择器"></a>2. class 选择器</h3><p>class 选择器用于描述一组元素的样式，class 选择器有别于id选择器，class可以在多个元素中使用。<br>class 选择器在HTML中以class属性表示, 在 CSS 中，类选择器以一个点”.”号显示：</p>
+<p>在以下的例子中，所有拥有 center 类的 HTML 元素均为居中。</p>
+<blockquote>
+<p>.center {<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align:center;<br>}</p>
+</blockquote>
+<p>也可以指定特定的HTML元素使用class。</p>
+<p>在以下实例中, 所有的 p 元素使用 class=”center” 让该元素的文本居中:</p>
+<blockquote>
+<p>p.center {<br>&nbsp;&nbsp;&nbsp;&nbsp;text-align:center;<br>}</p>
+</blockquote>
+<br/>
+
+<h2 id="CSS-创建"><a href="#CSS-创建" class="headerlink" title="CSS 创建"></a>CSS 创建</h2><p>当读到一个样式表时，浏览器会根据它来格式化 HTML 文档。</p>
+<br/>
+
+<h3 id="1-如何插入样式表？"><a href="#1-如何插入样式表？" class="headerlink" title="1. 如何插入样式表？"></a>1. 如何插入样式表？</h3><p>插入样式表的方法有三种:</p>
+<ul>
+<li>外部样式表(External style sheet)</li>
+<li>内部样式表(Internal style sheet)</li>
+<li>内联样式(Inline style)</li>
+</ul>
+<br/>
+
+<h3 id="2-外部样式表"><a href="#2-外部样式表" class="headerlink" title="2. 外部样式表"></a>2. 外部样式表</h3><p>当样式需要应用于很多页面时，外部样式表将是理想的选择。在使用外部样式表的情况下，你可以通过改变一个文件来改变整个站点的外观。每个页面使用 &lt;link&gt; 标签链接到样式表。 &lt;link&gt; 标签在（文档的）头部：</p>
+<blockquote>
+<p>&lt;head&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;link rel=”stylesheet” type=”text/css” href=”mystyle.css”&gt;<br>&lt;/head&gt;</p>
+</blockquote>
+<p>浏览器会从文件 mystyle.css 中读到样式声明，并根据它来格式文档。<br>外部样式表可以在任何文本编辑器中进行编辑。文件不能包含任何的 html 标签。样式表应该以 .css 扩展名进行保存。</p>
+<br/>
+
+<h3 id="3-内部样式表"><a href="#3-内部样式表" class="headerlink" title="3. 内部样式表"></a>3. 内部样式表</h3><p>当单个文档需要特殊的样式时，就应该使用内部样式表。你可以使用 &lt;style&gt; 标签在文档头部定义内部样式表，就像这样:</p>
+<blockquote>
+<p>&lt;head&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hr {color:sienna;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p {margin-left:20px;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body {background-image:url(“images/back40.gif”);}<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/style&gt;<br>&lt;/head&gt;</p>
+</blockquote>
+<br/>
+
+<h3 id="4-内联样式"><a href="#4-内联样式" class="headerlink" title="4. 内联样式"></a>4. 内联样式</h3><p>由于要将表现和内容混杂在一起，内联样式会损失掉样式表的许多优势。请慎用这种方法，例如当样式仅需要在一个元素上应用一次时。<br>要使用内联样式，你需要在相关的标签内使用样式（style）属性。Style 属性可以包含任何 CSS 属性。本例展示如何改变段落的颜色和左外边距：</p>
+<blockquote>
+<p>&lt;p style=”color:sienna;margin-left:20px”&gt;这是一个段落。&lt;/p&gt;</p>
+</blockquote>
+<br/>
+
+<h3 id="5-多重样式"><a href="#5-多重样式" class="headerlink" title="5. 多重样式"></a>5. 多重样式</h3><p>如果某些属性在不同的样式表中被同样的选择器定义，那么属性值将从更具体的样式表中被继承过来。<br>这涉及到：<strong>多重样式优先级问题</strong></p>
+<p>一般情况下，优先级如下：内联样式 &gt; 内部样式 &gt; 外部样式 &gt; 浏览器默认样式</p>
+<br/>
+
+<h2 id="CSS-背景"><a href="#CSS-背景" class="headerlink" title="CSS 背景"></a>CSS 背景</h2><p>CSS 背景属性用于定义HTML元素的背景。<br>CSS 属性定义背景效果:</p>
+<ul>
+<li>background-color</li>
+<li>background-image</li>
+<li>background-repeat</li>
+<li>background-attachment</li>
+<li>background-position</li>
+</ul>
+<br/>
+
+<h3 id="1-background-color"><a href="#1-background-color" class="headerlink" title="1. background-color"></a>1. background-color</h3><p>background-color 属性定义了元素的背景颜色。<br>页面的背景颜色使用在body的选择器中:</p>
+<blockquote>
+<p>body {background-color:#b0c4de;}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-background-image"><a href="#2-background-image" class="headerlink" title="2. background-image"></a>2. background-image</h3><p>background-image 属性描述了元素的背景图像。<br>默认情况下，背景图像进行平铺重复显示，以覆盖整个元素实体。</p>
+<p>页面背景图片设置实例:</p>
+<blockquote>
+<p>body {background-image:url(‘paper.gif’);}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-background-repeat"><a href="#3-background-repeat" class="headerlink" title="3. background-repeat"></a>3. background-repeat</h3><p>一些图像如果在水平方向与垂直方向平铺，这样看起来很不协调。<br>background-repeat 属性定义了图像的平铺模式。</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>repeat</td>
+<td>默认。背景图像将在垂直方向和水平方向重复</td>
+</tr>
+<tr>
+<td>repeat-x</td>
+<td>背景图像将在水平方向重复</td>
+</tr>
+<tr>
+<td>repeat-y</td>
+<td>背景图像将在垂直方向重复</td>
+</tr>
+<tr>
+<td>no-repeat</td>
+<td>背景图像将仅显示一次</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>规定应该从父元素继承 background-repeat 属性的设置</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h3 id="4-background-position"><a href="#4-background-position" class="headerlink" title="4. background-position"></a>4. background-position</h3><p>background-position 属性设置背景图像的起始位置。<br>这个属性设置背景原图像（由 background-image 定义）的位置，背景图像如果要重复，将从这一点开始。<br>注：需要把 background-attachment 属性设置为 “fixed”，才能保证该属性正常工作。</p>
+<br/>
+
+<h3 id="5-background-attachment"><a href="#5-background-attachment" class="headerlink" title="5. background-attachment"></a>5. background-attachment</h3><p>background-attachment 属性设置背景图像是否固定或者随着页面的其余部分滚动。</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scroll</td>
+<td>默认值。背景图像会随着页面其余部分的滚动而移动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>当页面的其余部分滚动时，背景图像不会移动</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>规定应该从父元素继承 background-attachment 属性的设置</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h3 id="6-background-origin"><a href="#6-background-origin" class="headerlink" title="6. background-origin"></a>6. background-origin</h3><p>background-origin 属性规定 background-position 属性相对于什么位置来定位。<br>如果背景图像的 background-attachment 属性为 “fixed”，则该属性没有效果。</p>
+<blockquote>
+<p>background-origin: padding-box|border-box|content-box;</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>padding-box</td>
+<td>背景图像相对于内边距框来定位</td>
+</tr>
+<tr>
+<td>border-box</td>
+<td>背景图像相对于边框盒来定位</td>
+</tr>
+<tr>
+<td>content-box</td>
+<td>背景图像相对于内容框来定位</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-Text-文本"><a href="#CSS-Text-文本" class="headerlink" title="CSS Text(文本)"></a>CSS Text(文本)</h2><br/>
+
+<h3 id="1-文本颜色"><a href="#1-文本颜色" class="headerlink" title="1. 文本颜色"></a>1. 文本颜色</h3><p>颜色属性被用来设置文字的颜色。<br>颜色是通过CSS最经常的指定：</p>
+<ul>
+<li>十六进制值 - 如: ＃FF0000</li>
+<li>一个RGB值 - 如: RGB(255,0,0)</li>
+<li>颜色的名称 - 如: red</li>
+</ul>
+<p>一个网页的背景颜色是指在主体内的选择：</p>
+<blockquote>
+<p>body {color:red;}<br>h1 {color:#00ff00;}<br>h2 {color:rgb(255,0,0);}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-文本的对齐方式"><a href="#2-文本的对齐方式" class="headerlink" title="2. 文本的对齐方式"></a>2. 文本的对齐方式</h3><p>文本排列属性是用来设置文本的水平对齐方式。<br>文本可居中或对齐到左或右,两端对齐.<br>当text-align设置为”justify”，每一行被展开为宽度相等，左，右外边距是对齐（如杂志和报纸）。</p>
+<blockquote>
+<p>h1 {text-align:center;}<br>p.date {text-align:right;}<br>p.main {text-align:justify;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-文本修饰"><a href="#3-文本修饰" class="headerlink" title="3. 文本修饰"></a>3. 文本修饰</h3><p>text-decoration 属性用来设置或删除文本的装饰。<br>从设计的角度看 text-decoration属性主要是用来删除链接的下划线：</p>
+<blockquote>
+<p>a {text-decoration:none;}</p>
+</blockquote>
+<p>也可以为非链接文本加划线:</p>
+<blockquote>
+<p>h1 {text-decoration:overline;}<br>h2 {text-decoration:line-through;}<br>h3 {text-decoration:underline;}</p>
+</blockquote>
+<p>浏览器显示效果如下:</p>
+<p><img src="https://s2.loli.net/2021/12/31/QFNj8UbmCuVxLHA.png" alt="文本修饰效果图"></p>
+<br/>
+
+<h3 id="4-文本转换"><a href="#4-文本转换" class="headerlink" title="4. 文本转换"></a>4. 文本转换</h3><p>文本转换属性是用来指定在一个文本中的大写和小写字母。<br>可用于所有字句变成大写或小写字母，或每个单词的首字母大写。</p>
+<blockquote>
+<p>p.uppercase {text-transform:uppercase;}<br>p.lowercase {text-transform:lowercase;}<br>p.capitalize {text-transform:capitalize;}</p>
+</blockquote>
+<p>浏览器显示效果如下:</p>
+<p><img src="https://s2.loli.net/2021/12/31/R6aDqSFCKn3MBIt.png" alt="文本转换效果图"></p>
+<br/>
+
+<h3 id="5-文本缩进"><a href="#5-文本缩进" class="headerlink" title="5. 文本缩进"></a>5. 文本缩进</h3><p>文本缩进属性是用来指定文本的第一行的缩进。</p>
+<blockquote>
+<p>p {text-indent:50px;}</p>
+</blockquote>
+<br/>
+
+<h3 id="6-所有文本属性"><a href="#6-所有文本属性" class="headerlink" title="6. 所有文本属性"></a>6. 所有文本属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>color</td>
+<td>设置文本颜色</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>设置文本方向</td>
+</tr>
+<tr>
+<td>letter-spacing</td>
+<td>设置字符间距</td>
+</tr>
+<tr>
+<td>line-height</td>
+<td>设置行高</td>
+</tr>
+<tr>
+<td>text-align</td>
+<td>对齐元素中的文本</td>
+</tr>
+<tr>
+<td>text-decoration</td>
+<td>向文本添加修饰</td>
+</tr>
+<tr>
+<td>text-indent</td>
+<td>缩进元素中文本的首行</td>
+</tr>
+<tr>
+<td>text-shadow</td>
+<td>设置文本阴影</td>
+</tr>
+<tr>
+<td>text-transform</td>
+<td>控制元素中的字母</td>
+</tr>
+<tr>
+<td>unicode-bidi</td>
+<td>设置或返回文本是否被重写</td>
+</tr>
+<tr>
+<td>vertical-align</td>
+<td>设置元素的垂直对齐</td>
+</tr>
+<tr>
+<td>white-space</td>
+<td>设置元素中空白的处理方式</td>
+</tr>
+<tr>
+<td>word-spacing</td>
+<td>设置字间距</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-Fonts-字体"><a href="#CSS-Fonts-字体" class="headerlink" title="CSS Fonts(字体)"></a>CSS Fonts(字体)</h2><p>CSS字体属性定义字体，加粗，大小，文字样式。<br>在计算机屏幕上，sans-serif字体被认为是比serif字体容易阅读。</p>
+<p><img src="https://www.runoob.com/images/serif.gif" alt="CSS字体效果图"></p>
+<br/>
+
+<h3 id="1-CSS字型"><a href="#1-CSS字型" class="headerlink" title="1. CSS字型"></a>1. CSS字型</h3><p>font-family 规定元素的字体系列。<br>font-family 可以把多个字体名称作为一个“回退”系统来保存。如果浏览器不支持第一个字体，则会尝试下一个。也就是说，font-family 属性的值是用于某个元素的字体族名称或/及类族名称的一个优先表。浏览器会使用它可识别的第一个值。<br>使用逗号分割每个值，并始终提供一个类族名称作为最后的选择。推荐使用一个通用字体系列名作为后路。</p>
+<p>有两种类型的字体系列名称：</p>
+<ul>
+<li>指定的系列名称：具体字体的名称，比如：”times”、”courier”、”arial”。</li>
+<li>通常字体系列名称：比如：”serif”、”sans-serif”、”cursive”、”fantasy”、”monospace”。</li>
+</ul>
+<blockquote>
+<p>p{font-family:Arial, Times, serif;}</p>
+</blockquote>
+<br/>
+
+<h3 id="2-字体样式"><a href="#2-字体样式" class="headerlink" title="2. 字体样式"></a>2. 字体样式</h3><p>主要是用于指定斜体文字的字体样式属性。</p>
+<p>这个属性有三个值：</p>
+<ul>
+<li>正常 - 正常显示文本</li>
+<li>斜体 - 以斜体字显示的文字</li>
+<li>倾斜的文字 - 文字向一边倾斜（和斜体非常类似，但不太支持）</li>
+</ul>
+<blockquote>
+<p>p.normal {font-style:normal;}<br>p.italic {font-style:italic;}<br>p.oblique {font-style:oblique;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-字体大小"><a href="#3-字体大小" class="headerlink" title="3. 字体大小"></a>3. 字体大小</h3><p>font-size 属性设置文本的大小。<br>能否管理文字的大小，在网页设计中是非常重要的。但是，你不能通过调整字体大小使段落看上去像标题，或者使标题看上去像段落。<br>请务必使用正确的HTML标签，就&lt;h1&gt; - &lt;h6&gt;表示标题和&lt;p&gt;表示段落：<br>字体大小的值可以是绝对或相对的大小。</p>
+<p>绝对大小：</p>
+<ul>
+<li>设置一个指定大小的文本</li>
+<li>不允许用户在所有浏览器中改变文本大小</li>
+<li>确定了输出的物理尺寸时绝对大小很有用</li>
+</ul>
+<p>相对大小：</p>
+<ul>
+<li>相对于周围的元素来设置大小</li>
+<li>允许用户在浏览器中改变文字大小</li>
+<li>Remark 如果你不指定一个字体的大小，默认大小和普通文本段落一样，是16像素（16px=1em）。</li>
+</ul>
+<br/>
+
+<h3 id="4-设置字体大小像素"><a href="#4-设置字体大小像素" class="headerlink" title="4. 设置字体大小像素"></a>4. 设置字体大小像素</h3><p>设置文字的大小与像素，让您完全控制文字大小：</p>
+<blockquote>
+<p>h1 {font-size:40px;}<br>h2 {font-size:30px;}<br>p {font-size:14px;}</p>
+</blockquote>
+<br/>
+
+<h3 id="5-用em来设置字体大小"><a href="#5-用em来设置字体大小" class="headerlink" title="5. 用em来设置字体大小"></a>5. 用em来设置字体大小</h3><p>为了避免Internet Explorer 中无法调整文本的问题，许多开发者使用 em 单位代替像素。<br>em的尺寸单位由W3C建议。<br>1em和当前字体大小相等。在浏览器中默认的文字大小是16px。<br>因此，1em的默认大小是16px。可以通过下面这个公式将像素转换为em：px/16=em</p>
+<blockquote>
+<p>h1 {font-size:2.5em;} /* 40px/16=2.5em <em>/<br>h2 {font-size:1.875em;} /</em> 30px/16=1.875em <em>/<br>p {font-size:0.875em;} /</em> 14px/16=0.875em */</p>
+</blockquote>
+<br/>
+
+<h3 id="6-使用百分比和EM组合"><a href="#6-使用百分比和EM组合" class="headerlink" title="6. 使用百分比和EM组合"></a>6. 使用百分比和EM组合</h3><p>在所有浏览器的解决方案中，设置 <body>元素的默认字体大小的是百分比：</p>
+<blockquote>
+<p>body {font-size:100%;}<br>h1 {font-size:2.5em;}<br>h2 {font-size:1.875em;}<br>p {font-size:0.875em;}</p>
+</blockquote>
+<br/>
+
+<h3 id="7-所有CSS字体属性"><a href="#7-所有CSS字体属性" class="headerlink" title="7. 所有CSS字体属性"></a>7. 所有CSS字体属性</h3><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>font</td>
+<td>在一个声明中设置所有的字体属性</td>
+</tr>
+<tr>
+<td>font-family</td>
+<td>指定文本的字体系列</td>
+</tr>
+<tr>
+<td>font-size</td>
+<td>指定文本的字体大小</td>
+</tr>
+<tr>
+<td>font-style</td>
+<td>指定文本的字体样式</td>
+</tr>
+<tr>
+<td>font-variant</td>
+<td>以小型大写字体或者正常字体显示文本</td>
+</tr>
+<tr>
+<td>font-weight</td>
+<td>指定字体的粗细</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h2 id="CSS-链接"><a href="#CSS-链接" class="headerlink" title="CSS 链接"></a>CSS 链接</h2><p>不同的链接可以有不同的样式。</p>
+<br/>
+
+<h3 id="1-链接样式"><a href="#1-链接样式" class="headerlink" title="1. 链接样式"></a>1. 链接样式</h3><p>链接的样式，可以用任何CSS属性（如颜色，字体，背景等）。<br>特别的链接，可以有不同的样式，这取决于他们是什么状态。<br>这四个链接状态是：</p>
+<ul>
+<li>a:link - 正常，未访问过的链接</li>
+<li>a:visited - 用户已访问过的链接</li>
+<li>a:hover - 当用户鼠标放在链接上时</li>
+<li>a:active - 链接被点击的那一刻</li>
+</ul>
+<p>使用方式如下:</p>
+<blockquote>
+<p>a:link {color:#000000;}      /* 未访问链接*/<br>a:visited {color:#00FF00;}  /* 已访问链接 <em>/<br>a:hover {color:#FF00FF;}  /</em> 鼠标移动到链接上 <em>/<br>a:active {color:#0000FF;}  /</em> 鼠标点击时 */</p>
+</blockquote>
+<br/>
+
+<p>当设置为若干链路状态的样式，也有一些顺序规则：<br>a:hover 必须跟在 a:link 和 a:visited后面<br>a:active 必须跟在 a:hover后面</p>
+<br/>
+
+<h3 id="2-文本修饰"><a href="#2-文本修饰" class="headerlink" title="2. 文本修饰"></a>2. 文本修饰</h3><p>text-decoration 属性主要用于删除链接中的下划线：</p>
+<blockquote>
+<p>a:link {text-decoration:none;}<br>a:visited {text-decoration:none;}<br>a:hover {text-decoration:underline;}<br>a:active {text-decoration:underline;}</p>
+</blockquote>
+<br/>
+
+<h3 id="3-背景颜色"><a href="#3-背景颜色" class="headerlink" title="3. 背景颜色"></a>3. 背景颜色</h3><p>背景颜色属性指定链接背景色：</p>
+<blockquote>
+<p>a:link {background-color:#B2FF99;}<br>a:visited {background-color:#FFFF85;}<br>a:hover {background-color:#FF704D;}<br>a:active {background-color:#FF704D;}</p>
+</blockquote>
+</div><div class="article-licensing box"><div class="licensing-title"><p>CSS笔记（一）</p><p><a href="https://lameber1123.github.io/2021/12/31/CSS笔记（一）/">https://lameber1123.github.io/2021/12/31/CSS笔记（一）/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Lamber</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-12-31</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-01-05</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/css/">css</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/01/01/CSS%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">CSS笔记（二）</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/12/31/HTML%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"><span class="level-item">HTML笔记（三）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Lamber"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Lamber</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">31</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lamber1123" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/167431968"><i class="iconfont icon-bilibili-fill"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/lamber-51"><i class="iconfont icon-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://Nancy0205.github.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Nancy的博客</span></span><span class="level-right"><span class="level-item tag">nancy0205.github.io</span></span></a></li><li><a class="level is-mobile" href="https://ecampus.nwpu.edu.cn/main.html#/Index" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">翱翔门户</span></span><span class="level-right"><span class="level-item tag">ecampus.nwpu.edu.cn</span></span></a></li><li><a class="level is-mobile" href="https://cnki.net/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">中国知网</span></span><span class="level-right"><span class="level-item tag">cnki.net</span></span></a></li><li><a class="level is-mobile" href="https://docs.pingcap.com/zh/tidb/stable/tikv-overview/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">PingCAP</span></span><span class="level-right"><span class="level-item tag">docs.pingcap.com</span></span></a></li><li><a class="level is-mobile" href="https://hardcore.feishu.cn/docs/doccnMRVFcMWn1zsEYBrbsDf8De#" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft讲稿</span></span><span class="level-right"><span class="level-item tag">hardcore.feishu.cn</span></span></a></li><li><a class="level is-mobile" href="https://liqul.github.io/blog/tags/Raft/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bucket&amp;Hammer</span></span><span class="level-right"><span class="level-item tag">liqul.github.io</span></span></a></li><li><a class="level is-mobile" href="https://www.codedump.info/post/20180922-etcd-raft/#%E8%BE%93%E5%85%A5%E5%8F%8A%E8%BE%93%E5%87%BA" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft源码解析</span></span><span class="level-right"><span class="level-item tag">www.codedump.info</span></span></a></li><li><a class="level is-mobile" href="https://gitee.com/opengauss/openGauss-server/blob/master/README.md" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">openGauss官方文档</span></span><span class="level-right"><span class="level-item tag">gitee.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/CentOS/"><span class="level-start"><span class="level-item">CentOS</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Raft%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">Raft笔记</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/TiKV%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">TiKV笔记</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/css%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">css笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/html%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">html笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/icarus/"><span class="level-start"><span class="level-item">icarus</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/js%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">js笔记</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/openGauss/"><span class="level-start"><span class="level-item">openGauss</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%91%B8%E9%B1%BC/"><span class="level-start"><span class="level-item">摸鱼</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-07T11:56:58.000Z">2022-12-07</time></p><p class="title"><a href="/2022/12/07/DCFTest%EF%BC%9ADCF%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1/">DCFTest：DCF框架的测试工具</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-17T07:59:47.000Z">2022-10-17</time></p><p class="title"><a href="/2022/10/17/%E8%85%BE%E8%AE%AF%E5%8F%AE%E5%BD%93%E9%9F%B3%E7%AE%B1%E5%88%B7%E5%85%A5Android8-1%E7%B3%BB%E7%BB%9F/">腾讯叮当音箱刷入Android8.1系统</a></p><p class="categories"><a href="/categories/%E6%91%B8%E9%B1%BC/">摸鱼</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-10T12:22:28.000Z">2022-10-10</time></p><p class="title"><a href="/2022/10/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%90%AF%E5%8A%A8OG%E7%9A%84DCF%E6%A8%A1%E5%9D%97/">服务器上启动OG的DCF模块</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-06T13:52:30.000Z">2022-05-06</time></p><p class="title"><a href="/2022/05/06/openGauss%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/">openGauss存储技术</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-18T08:20:22.000Z">2022-04-18</time></p><p class="title"><a href="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/">openGauss的DCF组件详解</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">December 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">October 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">May 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">April 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">March 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">February 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">January 2022</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">December 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CentOS/"><span class="tag">CentOS</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCF/"><span class="tag">DCF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCFTest/"><span class="tag">DCFTest</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Key-Value/"><span class="tag">Key-Value</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MVCC/"><span class="tag">MVCC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PD/"><span class="tag">PD</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paxos/"><span class="tag">Paxos</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RPC/"><span class="tag">RPC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Raft/"><span class="tag">Raft</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Region/"><span class="tag">Region</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RocksDB/"><span class="tag">RocksDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SQL/"><span class="tag">SQL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiDB/"><span class="tag">TiDB</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiFlash/"><span class="tag">TiFlash</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiKV/"><span class="tag">TiKV</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VMware/"><span class="tag">VMware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zab/"><span class="tag">Zab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zookeeper/"><span class="tag">Zookeeper</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/css/"><span class="tag">css</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/etcd/"><span class="tag">etcd</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/html/"><span class="tag">html</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/icarus/"><span class="tag">icarus</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ico/"><span class="tag">ico</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/js/"><span class="tag">js</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openGauss/"><span class="tag">openGauss</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%85%83%E4%BF%A1%E6%81%AF/"><span class="tag">元信息</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"><span class="tag">分布式</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/"><span class="tag">映射关系</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Lamber</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

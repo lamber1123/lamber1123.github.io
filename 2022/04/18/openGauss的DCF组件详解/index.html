@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="msvalidate.01" content="D5358D241F26545F49E55D403F921D5D"><meta name="google-site-verification" content="7h0jWlXl61CeDREpTs47QhQ9Qz7CJptnpSUcrIxB_II"><meta name="baidu-site-verification" content="code-Ob43MMYNMI"><title>openGauss的DCF组件详解 - Lamber&#039;s Blog: Lamber的个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lamber&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lamber&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="组件介绍 功能介绍 模块介绍 代码仓库 数据库对接"><meta property="og:type" content="blog"><meta property="og:title" content="openGauss的DCF组件详解"><meta property="og:url" content="https://lameber1123.github.io/"><meta property="og:site_name" content="Lamber&#039;s Blog"><meta property="og:description" content="组件介绍 功能介绍 模块介绍 代码仓库 数据库对接"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure1.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure2.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure3.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure4.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure5.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure6.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure7.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure8.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure9.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure10.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure11.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure12.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure14.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure15.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure16.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure17.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure18.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure19.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure20.png"><meta property="og:image" content="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure21.png"><meta property="article:published_time" content="2022-04-18T08:20:22.000Z"><meta property="article:modified_time" content="2022-04-25T06:12:43.902Z"><meta property="article:author" content="Lamber"><meta property="article:tag" content="openGauss"><meta property="article:tag" content="Raft"><meta property="article:tag" content="Paxos"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure1.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://lameber1123.github.io"},"headline":"openGauss的DCF组件详解","image":["https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure1.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure2.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure3.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure4.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure5.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure6.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure7.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure8.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure9.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure10.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure11.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure12.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure14.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure15.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure16.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure17.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure18.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure19.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure20.png","https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure21.png"],"datePublished":"2022-04-18T08:20:22.000Z","dateModified":"2022-04-25T06:12:43.902Z","author":{"@type":"Person","name":"Lamber"},"publisher":{"@type":"Organization","name":"Lamber's Blog","logo":{"@type":"ImageObject","url":"https://lameber1123.github.io/img/logo.png"}},"description":"组件介绍 功能介绍 模块介绍 代码仓库 数据库对接"}</script><link rel="canonical" href="https://lameber1123.github.io/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="/css/font.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4edd89be4e1594bf8520dcaf7b48bcce";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><script type="text/javascript" src="/js/clicklove.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-04-18T08:20:22.000Z" title="2022/4/18 下午4:20:22">2022-04-18</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-04-25T06:12:43.902Z" title="2022/4/25 下午2:12:43">2022-04-25</time></span><span class="level-item"><a class="link-muted" href="/categories/openGauss/">openGauss</a></span><span class="level-item">20 minutes read (About 2929 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">openGauss的DCF组件详解</h1><div class="content"><ul>
+<li>组件介绍</li>
+<li>功能介绍</li>
+<li>模块介绍</li>
+<li>代码仓库</li>
+<li>数据库对接</li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#p1">1 组件介绍</a><ul>
+<li><a href="#p1_1">1.1 需求背景与优势</a></li>
+<li><a href="#p1_2">1.2 一致性协议</a></li>
+</ul>
+</li>
+<li><a href="#p2">2 功能介绍</a></li>
+<li><a href="#p3">3 模块介绍</a><ul>
+<li><a href="#p3_1">3.1 选举流程</a></li>
+<li><a href="#p3_2">3.2 主机异常的处理</a></li>
+<li><a href="#p3_3">3.3 网络分区的处理</a></li>
+<li><a href="#p3_4">3.4 复制流程</a></li>
+</ul>
+</li>
+<li><a href="#p4">4 代码仓库</a></li>
+<li><a href="#p5">5 数据库对接</a></li>
+</ul>
+<hr>
+<h2 id="1-DCF-组件介绍"><a href="#1-DCF-组件介绍" class="headerlink" title="1 DCF 组件介绍"></a><p id="p1">1 DCF 组件介绍</p></h2><p>DCF（分布式共识框架）目标：构建稳定可靠、低时延、高吞吐的一致性数据复制组件。</p>
+<p>这一技术组件需要承载以下工作：</p>
+<ul>
+<li>副本高可用<ul>
+<li>主备之间备份</li>
+<li>容灾性自动/手动升主降备</li>
+<li>跨AZ（可用区）的多副本复制</li>
+<li>多日志流的复制</li>
+</ul>
+</li>
+<li>简化集群管理<ul>
+<li>集群状态发布</li>
+<li>集群配置管理</li>
+<li>委托选主</li>
+<li>分布式全局锁</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="1-1-需求背景与优势"><a href="#1-1-需求背景与优势" class="headerlink" title="1.1 需求背景与优势"></a><p id="p1_1">1.1 需求背景与优势</p></h3><p>传统主备集群管理常采用第三方仲裁，如采用Etcd集群实现主备节点间的切换：</p>
+<div style="width: 500px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure1.png" alt="第三方仲裁管理"></p>
+</div></br>
+
+<p>这样的第三方仲裁会出现一些问题，如脑裂。有可能第三方仲裁认为节点故障，但实际上没有，此时会出现脑裂的情况。此外，还会出现因中间状态而出现的日志分叉的情况。</p>
+<div style="width: 375px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure2.png" alt="自仲裁管理"></p>
+</div></br>
+
+<p>openGauss引入DCF自仲裁，DCF作为一个动态库集成在openGauss存储引擎中，在DB内核中自检测。DCF通过一致性协议，协商哪一节点作为主节点，以保证在任何情况下都不会出现脑裂既双主的情况，也不会出现日志分叉的情况。并且相比传统主备集群管理，大大简化了故障检测环节，进而减小集群RTO（容许服务中断的时间长度）。</p>
+<p>自仲裁具有很多优势：</p>
+<div style="margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure3.png" alt="自终裁优势"></p>
+</div></br>
+
+<p>并且在openGauss中，同过解耦使得DCF作为一个独立模块，既降低了复杂度，又使得后续的优化更方便。</p>
+<hr>
+<h3 id="1-2-一致性协议"><a href="#1-2-一致性协议" class="headerlink" title="1.2 一致性协议"></a><p id="p1_2">1.2 一致性协议</p></h3><div style="width: 375px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure4.png" alt="一致性协议"></p>
+</div></br>
+
+<p>DCF组件采用Paxos协议。当前被广泛采用的一致性协议还是Paxos族协议，Paxos算法在这些年已经经过了很多代演进。</p>
+<h4 id="1-2-1-两阶段Paxos"><a href="#1-2-1-两阶段Paxos" class="headerlink" title="1.2.1 两阶段Paxos"></a>1.2.1 两阶段Paxos</h4><div style="width: 450px;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure5.png"></p>
+</div></br>
+
+<h4 id="1-2-2-Multi-Paxos"><a href="#1-2-2-Multi-Paxos" class="headerlink" title="1.2.2 Multi-Paxos"></a>1.2.2 Multi-Paxos</h4><div style="width: 320px;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure6.png"></p>
+</div></br>
+
+<p>在经典Paxos基础上添加租约机制，维持Leader节点状态。</p>
+<div style="width: 250px;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure7.png"></p>
+</div></br>
+
+<h4 id="1-2-3-Raft"><a href="#1-2-3-Raft" class="headerlink" title="1.2.3 Raft"></a>1.2.3 Raft</h4><div style="width: 450px;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure8.png"></p>
+</div></br>
+
+<p>在Multi-Paxos上进一步做了简化，更容易实现可靠性。</p>
+<h4 id="1-2-4-Paxos演进趋势"><a href="#1-2-4-Paxos演进趋势" class="headerlink" title="1.2.4 Paxos演进趋势"></a>1.2.4 Paxos演进趋势</h4><div style="margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure9.png" alt="Paxos的演进"></p>
+</div></br>
+
+<p>不同的Paxos算法都是在经典Paxos基础上，根据业务的情况选择了不同的侧重点。</p>
+<p>DCF的目标是做一个适用于数据库的一致性日志复制组件。</p>
+<hr>
+<h2 id="2-功能介绍"><a href="#2-功能介绍" class="headerlink" title="2 功能介绍"></a><p id="p2">2 功能介绍</p></h2><p>对照数据库中想实现的一些特性，总结出以下想实现的功能：</p>
+<div style="width: 500px;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure10.png"></p>
+</div></br>
+
+<div style="width: 500px;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure11.png"></p>
+</div></br>
+
+<p>设计的DCF为一个独立的组件，与内核解耦，最终实现一个位于底层的Paxos日志复制的共识框架，使得DCF不仅可以用在内核中，还可以用于集群管理等地方。DCF通过对节点进行多种角色的分类，使得集群管理更加灵活，降低容灾、数据备份等过程中的成本。</p>
+<p>关键设计: </p>
+<ul>
+<li>支持自选主</li>
+<li>支持异步多线程框架和无锁cache设计</li>
+<li>支持多级batch. pipeline操作， 以及日志压缩能力V支持日志多流多复制</li>
+<li>不同分区主备副本可以在同-节点，方便实现负载均衡和异地多活</li>
+<li>基于网络带宽及网络时延自动探测的流控算法</li>
+<li>支持batch size、pipeline并发数自适应调整, 提升系统最大吞吐量</li>
+</ul>
+<p>openGauss引入基于Paxos协议的DCF组件，能够保证数据一致性的同时，在高可用方面得到极大增强，主要包括:</p>
+<ul>
+<li>通过自仲裁、多数派选主能力摆脱第三方仲裁组件,极大缩短RTO时间,且可预防任何故障下的脑裂双主</li>
+<li>基于Paxos协议拓展的多样化节点角色，能够提供节点同步同异步混合部署等多种集群部署方式</li>
+<li>高性能、低时延的复制能力，使得openGauss在高可用方面得到极大增强的同时，还提升了主备节点间日志复制效率，提升系统最大吞吐能力</li>
+</ul>
+<hr>
+<h2 id="3-模块介绍"><a href="#3-模块介绍" class="headerlink" title="3 模块介绍"></a><p id="p3">3 模块介绍</p></h2><div style="width: 400px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure12.png" alt="DCF模块"></p>
+</div></br>
+
+<p>DCF模块划分如上图所示，作为一个动态库集成到数据库内核中。</p>
+<ul>
+<li>interface：DCF通过interface接口层与数据库日志模块对接，提供读写等接口。flash刷盘的时候，数据库调DCF的interface接口写入，达成共识后，DCF会异步的通知上层写入成功。</li>
+<li>metadata：元数据管理，定义集群节点信息，如IP端口，角色类型，选举超时时间等。</li>
+<li>election：负责主节点的选举、心跳维持、状态发布。</li>
+<li>replication：推进日志的分发并达成一致。</li>
+<li>storage：负责日志数据的持久化。</li>
+<li>communication：提供节点间的数据通信能力（TCP/UDP）。</li>
+<li>Base：提供基础能力，如线程、日志、锁、队列等。</li>
+</ul>
+<p>Gitee上可以查到<a target="_blank" rel="noopener" href="https://gitee.com/opengauss/DCF">DCF仓库</a>。</p>
+<hr>
+<h3 id="3-1-选举流程"><a href="#3-1-选举流程" class="headerlink" title="3.1 选举流程"></a><p id="p3_1">3.1 选举流程</p></h3><div style="width: 620px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure14.png" alt="DCF选举流程"></p>
+</div></br>
+
+<p>preVote优化:</p>
+<ul>
+<li>为防止网络断连导致节点频繁发起选主请求，term持续增加</li>
+<li>在Follower变为Candidate前加入pre-candidate状态，发起term不变的预选举流程，成功后才将term++发起正式选主流程</li>
+</ul>
+<p>Lease优化:</p>
+<ul>
+<li>Leader与多数派断连主动降备，防止事实双主</li>
+<li>在lease时间内不响应term更高的选主消息</li>
+</ul>
+<p>DCF在Paxos上增添了预选举环节，增加一次探测，当与大多数节点通信正常时才会发起选举，获得大多数节点的投票后当选为主节点，然后所有Follower跟随主节点做日志的同步。</p>
+<div style="width: 550px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure15.png" alt="DCF节点类型"></p>
+</div></br>
+
+<p>选举核心之一是多数派原则，通过逻辑推理可以证明数据一定不会丢，因为无论是当选还是日志推进，多数派总是重叠的，以保证数据不丢失。</p>
+<hr>
+<h3 id="3-2-主机异常的处理"><a href="#3-2-主机异常的处理" class="headerlink" title="3.2 主机异常的处理"></a><p id="p3_2">3.2 主机异常的处理</p></h3><div style="width: 600px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure16.png" alt="主机异常"></p>
+</div></br>
+
+<ol>
+<li>网络异常或节点宕机，导致Leader心跳停止，日志复制停止。</li>
+<li>Follower检测到心跳超时， 转换为candidate, 发起新任期选举</li>
+<li>Follower若接收到其他节 点发起的选举，则判断任期和日志长度，确定是否投票给他</li>
+<li>candidate若得到超过半数的选票，则成为leader</li>
+<li>新leader开始将自 己的日志发送给其他follower</li>
+<li>Follower接收新leader来的日志信息，判断日志是否跟自己连续匹配，连续匹配则接受。若不连续则返回，leader重新发送前段日志;若term不匹配，则将新leader的日志覆盖到原来的位置，并将后面的日志truncate掉</li>
+</ol>
+<hr>
+<h3 id="3-3-网络分区的处理"><a href="#3-3-网络分区的处理" class="headerlink" title="3.3 网络分区的处理"></a><p id="p3_3">3.3 网络分区的处理</p></h3><div style="width: 675px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure17.png" alt="网络分区"></p>
+</div></br>
+
+<ol>
+<li>集群网络异常分区,分裂出两个小集群</li>
+<li>一个集群存在一个原leader, 新集群选举一个新leader, 任期增1</li>
+<li>原leader也能接受写请求进行写入操作，但是无法达成大多数一致,导致无法提交</li>
+<li>新leader也能接受写请求进行写入操作，能够达成一致,进行日志提交脑裂消失之后，由于原leader的term比较旧，会切换成follower</li>
+<li>新leader的日 志复制给就leader，将就leader未提交日志覆盖</li>
+</ol>
+<p>主机异常和网络分区都是每个自己检测的，所以节点的状态切换是根据自身的状态，不需要第三方去通知节点状态变更。</p>
+<hr>
+<h3 id="3-4-复制流程"><a href="#3-4-复制流程" class="headerlink" title="3.4 复制流程"></a><p id="p3_4">3.4 复制流程</p></h3><div style="margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure18.png" alt="复制流程"></p>
+</div></br>
+
+<p>client thread指的是xlog中负责落盘的线程，通过调DCF的write接口，把数据写到buffer队列里面，写完后无阻塞立即返回。当本次写入得到大多认可后，会异步的write callback。而buffer里的数据会经过一系列的复制流水线，经过组包发送给备机。备机收到数据包后会回调Replay callback通知数据库内核，然后将数据拷贝到xlog日志里面。</p>
+<div style="width: 200px;margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure19.png" alt="异步流水"></p>
+</div></br>
+
+<p>异步流水线</p>
+<ul>
+<li>日志采用全异步进行发送，不采用一问一答同步方式，提高系统整体吞吐量</li>
+<li>Leader发送完一批log之后，直接更新next index,下次发送从这个点持续发送，不等follower响应回来;</li>
+<li>Follower等落盘线程写完一批log之后，将最新的落盘match_index发送给leader，持续反馈最新的落盘index;</li>
+<li>Leader通过这个来更新各节点的最新match_index，推进commit_index;</li>
+</ul>
+<p>数据合并&amp;压缩</p>
+<ul>
+<li>通信模块将包按大小进行压缩发送，减少网络带宽;</li>
+<li>根据发送队列情况自动合并数据包;</li>
+</ul>
+<p>批量并行落盘</p>
+<ul>
+<li>应用端调用API write接口，写入内存buffer就返回，不阻塞应用其他流程处理，批量写盘和批量发送，日志到buffer之后，并行的将日志落入本地磁盘和发送到follower节点</li>
+</ul>
+<p>多日志流</p>
+<ul>
+<li>支持DN粒度和分区粒度日志分组能力</li>
+</ul>
+<div style="margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure20.png" alt="吞吐量测试"></p>
+</div></br>
+
+<p>吞吐量随时间变化平滑，平且相比同类产品吞吐量有提升。</p>
+<hr>
+<h2 id="4-代码仓库"><a href="#4-代码仓库" class="headerlink" title="4 代码仓库"></a><p id="p4">4 代码仓库</p></h2><p>DCF作者在Gitee上建有<a target="_blank" rel="noopener" href="https://gitee.com/opengauss/DCF">代码仓库</a>，DCF编译后在数据库中以动态库的形式存在，内核通过 DCF/src/interface/dcf_interface.h 文件调用DCF的能力，那么打开<a target="_blank" rel="noopener" href="https://gitee.com/opengauss/DCF/blob/master/src/interface/dcf_interface.h">dcf_interface.h</a>看一下几个最核心的接口：</p>
+<ul>
+<li>dcf_start：<br>启动DCF模块，内核调用 dcf_start 将模块拉起。</li>
+<li>dcf_write：<br>拉起后调用 dcf_write 做数据写，DCF支持多日志流，但目前鸿蒙gauss里面只需要用一份日志。其中，通过 key 标识哪一份数据得到了承认，index 则标识着序列中的第几个数据得到了承认。</li>
+<li>dcf_read：<br>dcf_read 方法可以根据 dcf_write 方法中的 index 关键字读取DCF中对应的数据。</li>
+<li>dcf_start：<br>停止DCF模块。</li>
+</ul>
+<p>使用步骤:</p>
+<ol>
+<li>参数设置:设置buffer大小、压缩参数、心跳超时时间等</li>
+<li>注册回调函数：leader方 日志达成一致的回调函数、follower apply/replay回调函数、身份变更通知回调函数</li>
+<li>初始化启动：初始化模块，启动各线程</li>
+<li>写入log</li>
+<li>读取已存储的log</li>
+<li>查询集群状态</li>
+</ol>
+<hr>
+<h2 id="5-数据库对接"><a href="#5-数据库对接" class="headerlink" title="5 数据库对接"></a><p id="p5">5 数据库对接</p></h2><div style="margin: auto;">
+
+<p><img src="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/Figure21.png" alt="数据库对接"></p>
+</div></br>
+
+<p>数据库参数配置：</p>
+<ul>
+<li>enable_ dcf = on</li>
+<li>dcf_ node_ id = 3</li>
+<li>dcf_ data_ path = ‘/dcf_ perf_ 03/px01/cluster/data/dn1/dcf_ _data’</li>
+<li>dcf_ log_ path = ‘/dcf_ perf_ 03/px01/cluster/gaussdb_ log/px01/dcf_ log’</li>
+<li>dcf_ config =<br>‘[“stream_ id”:1,”node_ id”:1,”ip”:”8.92.1.85”,”port”:16683,”role”:”LEADER”),(“stream_ id”:1,”node_ id”:2,”ipp”:”8.92.1 .86”,”port”:16683,”role”:”FOLLOWER”),”stream_ id”:1,”node_ id”:3,”ip”:”8.92.1.87”,”port”:16683,”role”:”FOLLOWER”]]</li>
+<li>dcf_ Ssl = off</li>
+<li>dcf_ mec_ batch_ size=0</li>
+</ul>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>openGauss的DCF组件详解</p><p><a href="https://lameber1123.github.io/2022/04/18/openGauss的DCF组件详解/">https://lameber1123.github.io/2022/04/18/openGauss的DCF组件详解/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Lamber</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-04-18</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-04-25</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/openGauss/">openGauss</a><a class="link-muted mr-2" rel="tag" href="/tags/Raft/">Raft</a><a class="link-muted mr-2" rel="tag" href="/tags/Paxos/">Paxos</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/05/06/openGauss%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">openGauss存储技术</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/03/22/openGauss-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/"><span class="level-item">openGauss 存储引擎概述</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Lamber"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Lamber</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">31</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lamber1123" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Bilibili" href="https://space.bilibili.com/167431968"><i class="iconfont icon-bilibili-fill"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/lamber-51"><i class="iconfont icon-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://Nancy0205.github.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Nancy的博客</span></span><span class="level-right"><span class="level-item tag">nancy0205.github.io</span></span></a></li><li><a class="level is-mobile" href="https://ecampus.nwpu.edu.cn/main.html#/Index" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">翱翔门户</span></span><span class="level-right"><span class="level-item tag">ecampus.nwpu.edu.cn</span></span></a></li><li><a class="level is-mobile" href="https://cnki.net/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">中国知网</span></span><span class="level-right"><span class="level-item tag">cnki.net</span></span></a></li><li><a class="level is-mobile" href="https://docs.pingcap.com/zh/tidb/stable/tikv-overview/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">PingCAP</span></span><span class="level-right"><span class="level-item tag">docs.pingcap.com</span></span></a></li><li><a class="level is-mobile" href="https://hardcore.feishu.cn/docs/doccnMRVFcMWn1zsEYBrbsDf8De#" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft讲稿</span></span><span class="level-right"><span class="level-item tag">hardcore.feishu.cn</span></span></a></li><li><a class="level is-mobile" href="https://liqul.github.io/blog/tags/Raft/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bucket&amp;Hammer</span></span><span class="level-right"><span class="level-item tag">liqul.github.io</span></span></a></li><li><a class="level is-mobile" href="https://www.codedump.info/post/20180922-etcd-raft/#%E8%BE%93%E5%85%A5%E5%8F%8A%E8%BE%93%E5%87%BA" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Raft源码解析</span></span><span class="level-right"><span class="level-item tag">www.codedump.info</span></span></a></li><li><a class="level is-mobile" href="https://gitee.com/opengauss/openGauss-server/blob/master/README.md" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">openGauss官方文档</span></span><span class="level-right"><span class="level-item tag">gitee.com</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/CentOS/"><span class="level-start"><span class="level-item">CentOS</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Raft%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">Raft笔记</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/TiKV%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">TiKV笔记</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/css%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">css笔记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/html%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">html笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/icarus/"><span class="level-start"><span class="level-item">icarus</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/js%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">js笔记</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/openGauss/"><span class="level-start"><span class="level-item">openGauss</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%91%B8%E9%B1%BC/"><span class="level-start"><span class="level-item">摸鱼</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-07T11:56:58.000Z">2022-12-07</time></p><p class="title"><a href="/2022/12/07/DCFTest%EF%BC%9ADCF%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1/">DCFTest：DCF框架的测试工具</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-17T07:59:47.000Z">2022-10-17</time></p><p class="title"><a href="/2022/10/17/%E8%85%BE%E8%AE%AF%E5%8F%AE%E5%BD%93%E9%9F%B3%E7%AE%B1%E5%88%B7%E5%85%A5Android8-1%E7%B3%BB%E7%BB%9F/">腾讯叮当音箱刷入Android8.1系统</a></p><p class="categories"><a href="/categories/%E6%91%B8%E9%B1%BC/">摸鱼</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-10T12:22:28.000Z">2022-10-10</time></p><p class="title"><a href="/2022/10/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%90%AF%E5%8A%A8OG%E7%9A%84DCF%E6%A8%A1%E5%9D%97/">服务器上启动OG的DCF模块</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-06T13:52:30.000Z">2022-05-06</time></p><p class="title"><a href="/2022/05/06/openGauss%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/">openGauss存储技术</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-04-18T08:20:22.000Z">2022-04-18</time></p><p class="title"><a href="/2022/04/18/openGauss%E7%9A%84DCF%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3/">openGauss的DCF组件详解</a></p><p class="categories"><a href="/categories/openGauss/">openGauss</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">December 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">October 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">May 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">April 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">March 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/02/"><span class="level-start"><span class="level-item">February 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">January 2022</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">December 2021</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CentOS/"><span class="tag">CentOS</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCF/"><span class="tag">DCF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DCFTest/"><span class="tag">DCFTest</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Key-Value/"><span class="tag">Key-Value</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MVCC/"><span class="tag">MVCC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PD/"><span class="tag">PD</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paxos/"><span class="tag">Paxos</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RPC/"><span class="tag">RPC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Raft/"><span class="tag">Raft</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Region/"><span class="tag">Region</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RocksDB/"><span class="tag">RocksDB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SQL/"><span class="tag">SQL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiDB/"><span class="tag">TiDB</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiFlash/"><span class="tag">TiFlash</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TiKV/"><span class="tag">TiKV</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VMware/"><span class="tag">VMware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zab/"><span class="tag">Zab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zookeeper/"><span class="tag">Zookeeper</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/css/"><span class="tag">css</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/etcd/"><span class="tag">etcd</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/html/"><span class="tag">html</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/icarus/"><span class="tag">icarus</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ico/"><span class="tag">ico</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/js/"><span class="tag">js</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openGauss/"><span class="tag">openGauss</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%85%83%E4%BF%A1%E6%81%AF/"><span class="tag">元信息</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"><span class="tag">分布式</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/"><span class="tag">映射关系</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Lamber&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Lamber</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/u/6859290371"><i class="fab fa-weibo"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="WeiChat" href="/img/weixin.png"><i class="fab fa-weixin"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="GitHub" href="https://github.com/lamber1123"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
